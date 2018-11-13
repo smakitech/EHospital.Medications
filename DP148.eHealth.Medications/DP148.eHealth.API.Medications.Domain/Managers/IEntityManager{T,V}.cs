@@ -17,21 +17,23 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
         /// <summary>
         /// Gets all items.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>All of the items.</returns>
         IEnumerable<T> GetAll();
 
         /// <summary>
         /// Gets the item by identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns></returns>
+        /// <returns>Item.</returns>
         T GetById(long id);
 
         /// <summary>
         /// Adds the specified item.
         /// </summary>
         /// <param name="item">The item.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Operation success.
+        /// </returns>
         bool Add(T item);
 
         /// <summary>
@@ -39,14 +41,18 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="item">The item.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Operation success.
+        /// </returns>
         bool Update(V id, T item);
 
         /// <summary>
         /// Deletes the specified item by identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Operation success.
+        /// </returns>
         bool Delete(V id);
     }
 }
