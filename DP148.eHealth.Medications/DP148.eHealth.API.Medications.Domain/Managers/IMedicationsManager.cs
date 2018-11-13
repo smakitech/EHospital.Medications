@@ -1,4 +1,6 @@
-﻿namespace DP148.eHealth.API.Medications.Domain.Managers
+﻿using System.Collections.Generic;
+
+namespace DP148.eHealth.API.Medications.Domain.Managers
 {
     /// <summary>
     /// Provides prototypes of method
@@ -13,6 +15,6 @@
         /// </summary>
         /// <param name="name">The name.</param>
         /// <returns>Medication record.</returns>
-        Models.Medications GetByName(string name);
+        IEnumerable<Models.Medications> GetByName(string name);
     }
 }

@@ -9,7 +9,7 @@ namespace DP148.eHealth.API.Medications.Domain.Models
     {
         public Images()
         {
-            PatientInfo = new HashSet<PatientInfo>();
+            this.PatientInfo = new HashSet<PatientInfo>();
         }
 
         [Key]

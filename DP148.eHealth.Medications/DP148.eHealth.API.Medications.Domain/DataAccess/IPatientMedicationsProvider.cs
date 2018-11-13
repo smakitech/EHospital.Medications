@@ -16,5 +16,7 @@ namespace DP148.eHealth.API.Medications.Domain.DataAccess
         long DeletePatientMedication(long id);
 
         bool ChangePatientMedicationStatus(long id);
+
+        bool IsIdentifierExists(long id);
     }
 }

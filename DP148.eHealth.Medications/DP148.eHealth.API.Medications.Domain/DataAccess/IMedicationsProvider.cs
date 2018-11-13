@@ -11,12 +11,14 @@ namespace DP148.eHealth.API.Medications.Domain.DataAccess
 
         Models.Medications GetMedicationById(long id);
 
-        Models.Medications GetMedicationByName(string name);
+        IEnumerable<Models.Medications> GetMedicationsByName(string name);
 
         long AddMedication(Models.Medications item);
 
         long UpdateMedication(long id, Models.Medications item);
 
         long DeleteMedication(long id);
+
+        bool IsIdentifierExists(long id);
     }
 }

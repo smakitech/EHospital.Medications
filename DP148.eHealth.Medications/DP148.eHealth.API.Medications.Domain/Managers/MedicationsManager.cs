@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DP148.eHealth.API.Medications.Domain.DataAccess;
+using DP148.eHealth.API.Medications.Domain.Models;
 
 namespace DP148.eHealth.API.Medications.Domain.Managers
 {
@@ -11,6 +12,7 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
     /// <seealso cref="IMedicationsManager"/>
     public class MedicationsManager : IMedicationsManager
     {
+        private const string ID_EXCEPTION = "Item with such id doesn't exist";
         private IMedicationsProvider provider;
 
         /// <summary>
@@ -25,34 +27,55 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
             this.provider = provider;
         }
 
-        public bool Add(Models.Medications item)
+        public long Add(Models.Medications item)
         {
-            throw new NotImplementedException();
+            return this.provider.AddMedication(item);
         }
 
-        public bool Delete(long id)
+        public long Delete(long id)
         {
-            throw new NotImplementedException();
+            if (this.provider.IsIdentifierExists(id))
+            {
+                return this.provider.DeleteMedication(id);
+            }
+            else
+            {
+                throw new ArgumentException(ID_EXCEPTION);
+            }
         }
 
         public IEnumerable<Models.Medications> GetAll()
         {
-            throw new NotImplementedException();
+            return this.provider.GetMedications();
         }
 
         public Models.Medications GetById(long id)
         {
-            throw new NotImplementedException();
+            if (this.provider.IsIdentifierExists(id))
+            {
+                return this.provider.GetMedicationById(id);
+            }
+            else
+            {
+                throw new ArgumentException(ID_EXCEPTION);
+            }
         }
 
-        public Models.Medications GetByName(string name)
+        public IEnumerable<Models.Medications> GetByName(string name)
         {
-            throw new NotImplementedException();
+            return this.provider.GetMedicationsByName(name);
         }
 
-        public bool Update(long id, Models.Medications item)
+        public long Update(long id, Models.Medications item)
         {
-            throw new NotImplementedException();
+            if (this.provider.IsIdentifierExists(id))
+            {
+                return this.provider.UpdateMedication(id, item);
+            }
+            else
+            {
+                throw new ArgumentException(ID_EXCEPTION);
+            }
         }
     }
 }

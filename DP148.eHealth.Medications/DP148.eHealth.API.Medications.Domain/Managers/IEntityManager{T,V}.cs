@@ -25,7 +25,7 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Item.</returns>
-        T GetById(long id);
+        T GetById(V id);
 
         /// <summary>
         /// Adds the specified item.
@@ -34,7 +34,7 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
         /// <returns>
         /// Operation success.
         /// </returns>
-        bool Add(T item);
+        V Add(T item);
 
         /// <summary>
         /// Updates the specified identifier.
@@ -44,7 +44,7 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
         /// <returns>
         /// Operation success.
         /// </returns>
-        bool Update(V id, T item);
+        V Update(V id, T item);
 
         /// <summary>
         /// Deletes the specified item by identifier.
@@ -53,6 +53,6 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
         /// <returns>
         /// Operation success.
         /// </returns>
-        bool Delete(V id);
+        V Delete(V id);
     }
 }

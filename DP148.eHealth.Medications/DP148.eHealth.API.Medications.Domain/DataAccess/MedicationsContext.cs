@@ -67,9 +67,9 @@ namespace DP148.eHealth.API.Medications.Domain.DataAccess
             return this.Medications.FirstOrDefault(m => m.MedicationId == id);
         }
 
-        public Models.Medications GetMedicationByName(string name)
+        public IEnumerable<Models.Medications> GetMedicationByName(string name)
         {
-            return this.Medications.FirstOrDefault(m => m.InternationalName == name);
+            return this.Medications.Where(m => m.InternationalName == name);
         }
 
         public IEnumerable<Models.Medications> GetMedications()
@@ -101,6 +101,16 @@ namespace DP148.eHealth.API.Medications.Domain.DataAccess
             target.Clone(item);
             this.SaveChanges();
             return target.PatientMedicationsId;
+        }
+
+        bool IMedicationsProvider.IsIdentifierExists(long id)
+        {
+            return this.Medications.Any(m => m.MedicationId == id);
+        }
+
+        bool IPatientMedicationsProvider.IsIdentifierExists(long id)
+        {
+            return this.PatientMedications.Any(pm => pm.PatientMedicationsId == id);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
