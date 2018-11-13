@@ -97,7 +97,10 @@ namespace DP148.eHealth.API.Medications.Domain.DataAccess
 
         public long UpdatePatientMedication(long id, PatientMedications item)
         {
-            throw new NotImplementedException();
+            Models.PatientMedications target = this.PatientMedications.FirstOrDefault(m => m.PatientMedicationsId == id);
+            target.Clone(item);
+            this.SaveChanges();
+            return target.PatientMedicationsId;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
