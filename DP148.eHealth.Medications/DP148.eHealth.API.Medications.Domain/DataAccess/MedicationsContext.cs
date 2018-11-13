@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace DP148.eHealth.API.Medications.Domain.Models
+namespace DP148.eHealth.API.Medications.Domain.DataAccess
 {
     public partial class MedicationsContext : DbContext
     {
@@ -24,8 +24,10 @@ namespace DP148.eHealth.API.Medications.Domain.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-VNR4KA5\\MSQLEXPRESS2K16;Database=eHealthDB;Trusted_Connection=True;");
+                // TODO: Set up config in api and pass constring via parameter
+                //http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                //"Server=DESKTOP-VNR4KA5\\MSQLEXPRESS2K16;Database=eHealthDB;Trusted_Connection=True;"
+                optionsBuilder.UseSqlServer(this.Database.GetDbConnection().ConnectionString);
             }
         }
 
