@@ -10,7 +10,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using DP148.eHealth.API.Medications.Domain.DataAccess;
+using DP148.eHealth.API.Medications.Domain.Models;
+using DP148.eHealth.API.Medications.Domain.Managers;
+using System.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace DP148.eHealth.API.Medications
 {
@@ -31,6 +38,11 @@ namespace DP148.eHealth.API.Medications
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connection = this.Configuration.GetConnectionString("eHealthDB");
+            services.AddDbContext<IMedicationsProvider, MedicationsContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<IPatientMedicationsProvider, MedicationsContext>(options => options.UseSqlServer(connection));
+            services.AddScoped<IMedicationsManager, MedicationsManager>();
+            services.AddScoped<IPatientMedicationsManager, PatientMedicationsManager>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             ///* Swagger Setting
