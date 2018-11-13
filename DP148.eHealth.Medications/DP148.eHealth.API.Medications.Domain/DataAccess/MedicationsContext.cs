@@ -67,7 +67,7 @@ namespace DP148.eHealth.API.Medications.Domain.DataAccess
             return this.Medications.FirstOrDefault(m => m.MedicationId == id);
         }
 
-        public IEnumerable<Models.Medications> GetMedicationByName(string name)
+        public IEnumerable<Models.Medications> GetMedicationsByName(string name)
         {
             return this.Medications.Where(m => m.InternationalName == name);
         }

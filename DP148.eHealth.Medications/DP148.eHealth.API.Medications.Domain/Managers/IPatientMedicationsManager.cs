@@ -15,6 +15,6 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
         /// Changes the status of prescription.
         /// </summary>
         /// <returns>Current status.</returns>
-        bool ChangeStatus();
+        bool ChangeStatus(long id);
     }
 }
