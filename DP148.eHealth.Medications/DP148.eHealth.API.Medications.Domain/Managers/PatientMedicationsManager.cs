@@ -21,6 +21,17 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
             return this.provider.AddPatientMedication(item);
         }
 
+        /// <summary>
+        /// Changes the status of prescription.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>
+        /// Current status.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Item with such id doesn't exist.
+        /// </exception>
+        /// TODO: Clerify logic.
         public bool ChangeStatus(long id)
         {
             if (this.provider.IsIdentifierExists(id))
@@ -33,6 +44,16 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
             }
         }
 
+        /// <summary>
+        /// Deletes the specified item by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// Operation success.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Item with such id doesn't exist.
+        /// </exception>
         public long Delete(long id)
         {
             if (this.provider.IsIdentifierExists(id))
@@ -50,6 +71,16 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
             return this.provider.GetPatientMedications();
         }
 
+        /// <summary>
+        /// Gets the item by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// Item.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Item with such id doesn't exist.
+        /// </exception>
         public PatientMedications GetById(long id)
         {
             if (this.provider.IsIdentifierExists(id))
@@ -62,6 +93,17 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
             }
         }
 
+        /// <summary>
+        /// Updates the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="item">The item.</param>
+        /// <returns>
+        /// Operation success.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Item with such id doesn't exist.
+        /// </exception>
         public long Update(long id, PatientMedications item)
         {
             if (this.provider.IsIdentifierExists(id))

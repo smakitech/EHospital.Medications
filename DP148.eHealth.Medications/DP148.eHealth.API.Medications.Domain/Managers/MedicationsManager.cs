@@ -27,11 +27,22 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
             this.provider = provider;
         }
 
+
         public long Add(Models.Medications item)
         {
             return this.provider.AddMedication(item);
         }
 
+        /// <summary>
+        /// Deletes the specified item by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// Operation success.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Item with such id doesn't exist.
+        /// </exception>
         public long Delete(long id)
         {
             if (this.provider.IsIdentifierExists(id))
@@ -49,6 +60,16 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
             return this.provider.GetMedications();
         }
 
+        /// <summary>
+        /// Gets the item by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// Item.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Item with such id doesn't exist.
+        /// </exception>
         public Models.Medications GetById(long id)
         {
             if (this.provider.IsIdentifierExists(id))
@@ -66,6 +87,17 @@ namespace DP148.eHealth.API.Medications.Domain.Managers
             return this.provider.GetMedicationsByName(name);
         }
 
+        /// <summary>
+        /// Updates the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="item">The item.</param>
+        /// <returns>
+        /// Operation success.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Item with such id doesn't exist.
+        /// </exception>
         public long Update(long id, Models.Medications item)
         {
             if (this.provider.IsIdentifierExists(id))
