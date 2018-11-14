@@ -15,8 +15,8 @@ namespace DP148.eHealth.API.Medications.Controllers
     public class MedicationsController : ControllerBase
     {
         private const string NO_MEDICATIONS = "Medications was not founded.";
-        private const string NON_EXISTED_ID = "No medication with such id";
-        private const string VALIDATION_INVALID = "Imposible to use invalid data";
+        private const string NON_EXISTED_ID = "No medication with such id.";
+        private const string VALIDATION_INVALID = "Imposible to use invalid data.";
 
         private IMedicationsManager manager;
 
@@ -71,5 +71,66 @@ namespace DP148.eHealth.API.Medications.Controllers
 
             return result;
         }
+
+        [Route("add")]
+        [HttpPost]
+        public IActionResult AddMedication([FromBody] Domain.Models.Medications medicine)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.ValidationProblem(this.ModelState);
+            }
+            else
+            {
+                long newMedicationId = this.manager.Add(medicine);
+                return this.Created("medications/", newMedicationId);
+            }
+        }
+
+        [Route("delete/{medicationId}")]
+        [HttpDelete]
+        public IActionResult RemoveMedication(long medicationId)
+        {
+            IActionResult result;
+
+            try
+            {
+                long removedMedicationId = this.manager.Delete(medicationId);
+                result = this.Ok(removedMedicationId);
+            }
+            catch (ArgumentException)
+            {
+                result = this.BadRequest(NON_EXISTED_ID);
+            }
+
+            return result;
+        }
+
+        [Route("edit/{medicationId}")]
+        [HttpPut]
+        public IActionResult EditMedication(long medicationId, Domain.Models.Medications medication)
+        {
+            IActionResult result;
+
+            if (!this.ModelState.IsValid)
+            {
+                result = this.ValidationProblem(this.ModelState);
+            }
+            else
+            {
+                try
+                {
+                    long updatedMedicationId = this.manager.Update(medicationId, medication);
+                    result = this.Ok(updatedMedicationId);
+                }
+                catch (ArgumentException)
+                {
+                    result = this.BadRequest(NON_EXISTED_ID);
+                }
+            }
+
+            return result;
+        }
+
     }
 }

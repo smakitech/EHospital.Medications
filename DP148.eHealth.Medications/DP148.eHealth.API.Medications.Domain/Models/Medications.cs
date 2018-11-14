@@ -23,6 +23,7 @@ namespace DP148.eHealth.API.Medications.Domain.Models
         [StringLength(50)]
         public string Type { get; set; }
 
+        [Range(1, float.MaxValue - 1)]
         public double Dose { get; set; }
 
         [Required]
