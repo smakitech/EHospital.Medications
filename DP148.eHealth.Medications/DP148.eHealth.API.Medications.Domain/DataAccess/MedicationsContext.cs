@@ -43,7 +43,14 @@ namespace DP148.eHealth.API.Medications.Domain.DataAccess
         public bool ChangePatientMedicationStatus(long id)
         {
             PatientMedications target = this.PatientMedications.FirstOrDefault(pm => pm.PatientMedicationsId == id);
-            target.IsFinished = true;
+            if (target.IsFinished)
+            {
+                target.IsFinished = false;
+            }
+            else
+            {
+                target.IsFinished = true;
+            }
             this.SaveChanges();
             return target.IsFinished;
         }

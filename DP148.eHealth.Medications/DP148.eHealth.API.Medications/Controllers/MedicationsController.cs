@@ -14,7 +14,7 @@ namespace DP148.eHealth.API.Medications.Controllers
     [ApiController]
     public class MedicationsController : ControllerBase
     {
-        private const string NO_MEDICATIONS = "Medications was not founded.";
+        private const string NO_CONTENT = "Medications were not founded.";
         private const string NON_EXISTED_ID = "No medication with such id.";
         private const string VALIDATION_INVALID = "Imposible to use invalid data.";
 
@@ -28,7 +28,7 @@ namespace DP148.eHealth.API.Medications.Controllers
         [HttpGet]
         public IActionResult GetMedications()
         {
-            IActionResult result = this.NotFound(NO_MEDICATIONS);
+            IActionResult result = this.NotFound(NO_CONTENT);
 
             IEnumerable<Domain.Models.Medications> items = this.manager.GetAll();
             if (items.Any())
@@ -61,7 +61,7 @@ namespace DP148.eHealth.API.Medications.Controllers
         [HttpGet]
         public IActionResult GetByName([FromQuery] string medicationName)
         {
-            IActionResult result = this.NotFound(NO_MEDICATIONS);
+            IActionResult result = this.NotFound(NO_CONTENT);
 
             IEnumerable<Domain.Models.Medications> items = this.manager.GetByName(medicationName);
             if (items.Any())
@@ -95,8 +95,8 @@ namespace DP148.eHealth.API.Medications.Controllers
 
             try
             {
-                long removedMedicationId = this.manager.Delete(medicationId);
-                result = this.Ok(removedMedicationId);
+                this.manager.Delete(medicationId);
+                result = this.Ok(medicationId);
             }
             catch (ArgumentException)
             {
@@ -120,8 +120,8 @@ namespace DP148.eHealth.API.Medications.Controllers
             {
                 try
                 {
-                    long updatedMedicationId = this.manager.Update(medicationId, medication);
-                    result = this.Ok(updatedMedicationId);
+                    this.manager.Update(medicationId, medication);
+                    result = this.Ok(medicationId);
                 }
                 catch (ArgumentException)
                 {
@@ -131,6 +131,5 @@ namespace DP148.eHealth.API.Medications.Controllers
 
             return result;
         }
-
     }
 }

@@ -1,0 +1,352 @@
+{
+	"info": {
+		"_postman_id": "2ade80fd-3cb3-4b19-95b2-b07336272822",
+		"name": "eHealth.API.Medictions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetAllMediacations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/medications",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"medications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMedicationById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/medications/9",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"medications",
+						"9"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMedicationsByName",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/medications/filter?medicationName=Quixx",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"medications",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "medicationName",
+							"value": "Quixx"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddNewMedication",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\n        \"medicationId\": 0,\n        \"internationalName\": \"NZT48\",\n        \"type\": \"Pill\",\n        \"dose\": 30,\n        \"doseUnit\": \"mg\",\n        \"direction\": \"Nasal\",\n        \"instruction\": \"NZT48 instruction.\",\n        \"isDeleted\": false,\n        \"patientMedications\": []\n  }"
+				},
+				"url": {
+					"raw": "https://localhost:44346/medications/add",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"medications",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoveMedication",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/medications/delete/19",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"medications",
+						"delete",
+						"19"
+					]
+				},
+				"description": "Soft delete. Attribute IsDeleted changing in the model."
+			},
+			"response": []
+		},
+		{
+			"name": "EditMedication",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"medicationId\": 11,\n        \"internationalName\": \"Parasetamol\",\n        \"type\": \"Pill\",\n        \"dose\": 500,\n        \"doseUnit\": \"mg\",\n        \"direction\": \"Oral\",\n        \"instruction\": \"Parasetamol instruction.\",\n        \"isDeleted\": false,\n        \"patientMedications\": []\n    }"
+				},
+				"url": {
+					"raw": "https://localhost:44346/medications/edit/11",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"medications",
+						"edit",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllPatientMedications",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/patient/medications",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"patient",
+						"medications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPatientMedicationsById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/patient/medications/14",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"patient",
+						"medications",
+						"14"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddPatientMedication",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"patientMedicationsId\": 0,\r\n  \"patientId\": 1,\r\n  \"userId\": 1,\r\n  \"medicationId\": 1,\r\n  \"assignmentDate\": \"2018-11-14T06:40:20.104Z\",\r\n  \"duration\": \"7 days\",\r\n  \"notes\": \"note\",\r\n  \"isFinished\": false,\r\n  \"isDeleted\": false,\r\n  \"medication\": null\r\n  }"
+				},
+				"url": {
+					"raw": "https://localhost:44346/patient/medications/add",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"patient",
+						"medications",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeletePatientMedication",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346//patient/medications/delete/14",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"",
+						"patient",
+						"medications",
+						"delete",
+						"14"
+					]
+				},
+				"description": "Soft delete. Attribute IsDeleted changing in the model."
+			},
+			"response": []
+		},
+		{
+			"name": "AddPatientMedication",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"patientMedicationsId\": 0,\r\n  \"patientId\": 2,\r\n  \"userId\": 2,\r\n  \"medicationId\": 2,\r\n  \"assignmentDate\": \"2018-11-14T06:40:20.104Z\",\r\n  \"duration\": \"7 days\",\r\n  \"notes\": \"note\",\r\n  \"isFinished\": false,\r\n  \"isDeleted\": false,\r\n  \"medication\": null\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44346/patient/medications/edit/14",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"patient",
+						"medications",
+						"edit",
+						"14"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ChangePatientMedicationStatus",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/patient/medications/edit/status/change/14",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"patient",
+						"medications",
+						"edit",
+						"status",
+						"change",
+						"14"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
