@@ -1,10 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
+using EHospital.Medications.Model;
 
 namespace EHospital.Medications.Data
 {
-    public partial class MedicationDbContext : DbContext
+    public class MedicationDbContext : DbContext
     {
         public MedicationDbContext()
         {
@@ -24,8 +23,9 @@ namespace EHospital.Medications.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-VNR4KA5\\MSQLEXPRESS2K16;Database=EHospitalDB;Trusted_Connection=True;");
+                // TODO: set connection string in EHospital.Medications.WebApi
+                // "Server=DESKTOP-VNR4KA5\\MSQLEXPRESS2K16;Database=EHospitalDB;Trusted_Connection=True;"
+                optionsBuilder.UseSqlServer(this.Database.GetDbConnection().ConnectionString);
             }
         }
 

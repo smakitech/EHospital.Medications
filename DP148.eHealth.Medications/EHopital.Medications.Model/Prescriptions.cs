@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EHospital.Medications.Data
+namespace EHospital.Medications.Model
 {
-    public partial class Prescription
+    public class Prescription
     {
         public long Id { get; set; }
         public int PatientId { get; set; }

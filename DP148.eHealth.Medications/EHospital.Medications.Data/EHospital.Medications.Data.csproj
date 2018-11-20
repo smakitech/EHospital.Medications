@@ -17,4 +17,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EHopital.Medications.Model\EHopital.Medications.Model.csproj" />
+  </ItemGroup>
+
 </Project>

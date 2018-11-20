@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EHospital.Medications.Data
+namespace EHospital.Medications.Model
 {
-    public partial class Image
+    public class Image
     {
         public Image()
         {
