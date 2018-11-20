@@ -1,0 +1,1 @@
+﻿Scaffold-DbContext "Server=DESKTOP-VNR4KA5\MSQLEXPRESS2K16;Database=EHospitalDB;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -Tables "Drugs","Prescriptions", "PatientInfo", "Images" -Context MedicationDbContext -DataAnnotations -Project EHospital.Medications.Data
