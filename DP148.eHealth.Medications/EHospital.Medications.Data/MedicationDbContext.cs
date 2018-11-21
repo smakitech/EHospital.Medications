@@ -23,8 +23,6 @@ namespace EHospital.Medications.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                // TODO: set connection string in EHospital.Medications.WebApi
-                // "Server=DESKTOP-VNR4KA5\\MSQLEXPRESS2K16;Database=EHospitalDB;Trusted_Connection=True;"
                 optionsBuilder.UseSqlServer(this.Database.GetDbConnection().ConnectionString);
             }
         }

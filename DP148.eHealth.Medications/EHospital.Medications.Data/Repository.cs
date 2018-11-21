@@ -60,6 +60,7 @@ namespace EHospital.Medications.Data
 
         public T Delete(T entity)
         {
+            //TODO: Store procedure
             T item = this.entities.Find(entity.Id);
             if (item != null)
             {

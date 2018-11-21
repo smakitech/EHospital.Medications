@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace DP148.eHealth.API.Medications
+namespace EHospital.Medications.WebAPI
 {
     public class Program
     {

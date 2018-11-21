@@ -10,16 +10,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using DP148.eHealth.API.Medications.Domain.DataAccess;
-using DP148.eHealth.API.Medications.Domain.Models;
-using DP148.eHealth.API.Medications.Domain.Managers;
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
+using EHospital.Medications.BusinessLogic.Contracts;
+using EHospital.Medications.BusinessLogic.Services;
+using EHospital.Medications.Data;
+using EHospital.Medications.Model;
 
-namespace DP148.eHealth.API.Medications
+
+namespace EHospital.Medications.WebAPI
 {
     public class Startup
     {
@@ -38,11 +38,13 @@ namespace DP148.eHealth.API.Medications
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = this.Configuration.GetConnectionString("eHealthDB");
-            services.AddDbContext<IMedicationsProvider, MedicationsContext>(options => options.UseSqlServer(connection));
-            services.AddDbContext<IPatientMedicationsProvider, MedicationsContext>(options => options.UseSqlServer(connection));
-            services.AddScoped<IMedicationsManager, MedicationsManager>();
-            services.AddScoped<IPatientMedicationsManager, PatientMedicationsManager>();
+            string connection = this.Configuration.GetConnectionString("EHospitalDB");
+            services.AddDbContext<MedicationDbContext>(options => options.UseSqlServer(connection));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IRepository<Drug>, Repository<Drug>>();
+            services.AddScoped<IRepository<Prescription>, Repository<Prescription>>();
+            services.AddScoped<IDrugService, DrugService>();
+            services.AddScoped<IPrescriptionService, PrescriptionService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             ///* Swagger Setting

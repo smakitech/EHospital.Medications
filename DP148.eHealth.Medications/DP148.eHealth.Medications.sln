@@ -3,19 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DP148.eHealth.API.Medications", "DP148.eHealth.API.Medications\DP148.eHealth.API.Medications.csproj", "{93641AAA-41EE-4D09-9D2B-0FD509ED159F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DP148.eHealth.API.Medications.Domain", "DP148.eHealth.API.Medications.Domain\DP148.eHealth.API.Medications.Domain.csproj", "{722A5E53-AA63-4C19-B67B-4A0B3A758C1A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EHospital.Medications.Model", "EHopital.Medications.Model\EHospital.Medications.Model.csproj", "{7D4A586E-2F38-4861-8F90-05EF377B6E79}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EHospital.Medications.Data", "EHospital.Medications.Data\EHospital.Medications.Data.csproj", "{37B7A43B-5C14-4D25-B57F-15C0F9365DFC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EHospital.Medications.BusinessLogic", "EHospital.Medications.BusinessLogic\EHospital.Medications.BusinessLogic.csproj", "{758D6525-3AC2-4BEF-ACB9-84CC0BC49E15}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EHospital.Medications.WebAPI", "EHospital.Medications.WebAPI\EHospital.Medications.WebAPI.csproj", "{BF633C67-DB21-4CFB-8928-48767D94CE9D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EHospital.Medications.Tests", "EHospital.Medications.Tests\EHospital.Medications.Tests.csproj", "{16FBBDC9-532D-4769-97FF-596D728853DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHospital.Medications.WebAPI", "EHospital.Medications.WebAPI\EHospital.Medications.WebAPI.csproj", "{C19BA45B-323A-4046-B01E-ED357BD9C244}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,14 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{93641AAA-41EE-4D09-9D2B-0FD509ED159F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93641AAA-41EE-4D09-9D2B-0FD509ED159F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93641AAA-41EE-4D09-9D2B-0FD509ED159F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93641AAA-41EE-4D09-9D2B-0FD509ED159F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{722A5E53-AA63-4C19-B67B-4A0B3A758C1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{722A5E53-AA63-4C19-B67B-4A0B3A758C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{722A5E53-AA63-4C19-B67B-4A0B3A758C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{722A5E53-AA63-4C19-B67B-4A0B3A758C1A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7D4A586E-2F38-4861-8F90-05EF377B6E79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7D4A586E-2F38-4861-8F90-05EF377B6E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D4A586E-2F38-4861-8F90-05EF377B6E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,14 +31,14 @@ Global
 		{758D6525-3AC2-4BEF-ACB9-84CC0BC49E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{758D6525-3AC2-4BEF-ACB9-84CC0BC49E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{758D6525-3AC2-4BEF-ACB9-84CC0BC49E15}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BF633C67-DB21-4CFB-8928-48767D94CE9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF633C67-DB21-4CFB-8928-48767D94CE9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF633C67-DB21-4CFB-8928-48767D94CE9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF633C67-DB21-4CFB-8928-48767D94CE9D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{16FBBDC9-532D-4769-97FF-596D728853DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16FBBDC9-532D-4769-97FF-596D728853DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16FBBDC9-532D-4769-97FF-596D728853DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16FBBDC9-532D-4769-97FF-596D728853DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C19BA45B-323A-4046-B01E-ED357BD9C244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C19BA45B-323A-4046-B01E-ED357BD9C244}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C19BA45B-323A-4046-B01E-ED357BD9C244}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C19BA45B-323A-4046-B01E-ED357BD9C244}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

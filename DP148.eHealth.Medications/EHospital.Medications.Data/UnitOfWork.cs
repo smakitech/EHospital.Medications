@@ -8,7 +8,7 @@ namespace EHospital.Medications.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly static  MedicationDbContext context;
+        private static  MedicationDbContext context;
 
         private readonly Lazy<Repository<Drug>> drugs
             = new Lazy<Repository<Drug>>(() => new Repository<Drug>(UnitOfWork.context));
@@ -17,9 +17,9 @@ namespace EHospital.Medications.Data
 
         private bool disposed = false;
 
-        static UnitOfWork()
+        public UnitOfWork(MedicationDbContext context)
         {
-            UnitOfWork.context = new MedicationDbContext();
+            UnitOfWork.context = context;
         }
 
         public UnitOfWork()

@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:57605",
-      "sslPort": 44346
+      "applicationUrl": "http://localhost:59145",
+      "sslPort": 44393
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "DP148.eHealth.API.Medications": {
+    "EHospital.Medications.WebAPI": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
