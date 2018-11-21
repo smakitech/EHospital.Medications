@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DP148.eHealth.API.Medicatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DP148.eHealth.API.Medications.Domain", "DP148.eHealth.API.Medications.Domain\DP148.eHealth.API.Medications.Domain.csproj", "{722A5E53-AA63-4C19-B67B-4A0B3A758C1A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DP148.eHealth.API.Medications.Domain.Tests", "DP148.eHealth.API.Medications.Domain.Tests\DP148.eHealth.API.Medications.Domain.Tests.csproj", "{0E9C759B-B84D-4153-A97B-1DD6019523AF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EHospital.Medications.Model", "EHopital.Medications.Model\EHospital.Medications.Model.csproj", "{7D4A586E-2F38-4861-8F90-05EF377B6E79}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EHospital.Medications.Data", "EHospital.Medications.Data\EHospital.Medications.Data.csproj", "{37B7A43B-5C14-4D25-B57F-15C0F9365DFC}"
@@ -33,10 +31,6 @@ Global
 		{722A5E53-AA63-4C19-B67B-4A0B3A758C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{722A5E53-AA63-4C19-B67B-4A0B3A758C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{722A5E53-AA63-4C19-B67B-4A0B3A758C1A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0E9C759B-B84D-4153-A97B-1DD6019523AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E9C759B-B84D-4153-A97B-1DD6019523AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E9C759B-B84D-4153-A97B-1DD6019523AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E9C759B-B84D-4153-A97B-1DD6019523AF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7D4A586E-2F38-4861-8F90-05EF377B6E79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7D4A586E-2F38-4861-8F90-05EF377B6E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D4A586E-2F38-4861-8F90-05EF377B6E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
