@@ -31,7 +31,7 @@ namespace EHospital.Medications.Data
         public T Get(int id)
         {
             T item = this.entities.Find(id);
-            if(item == null && item.IsDeleted == true)
+            if(item == null || item.IsDeleted == true)
             {
                 return null;
             }

@@ -8,6 +8,7 @@ using EHospital.Medications.Model;
 
 namespace EHospital.Medications.WebAPI.Controllers
 {
+    // TODO: Navigation Property
     [Route("drugs")]
     [ApiController]
     public class DrugController : ControllerBase
@@ -51,13 +52,19 @@ namespace EHospital.Medications.WebAPI.Controllers
         [HttpGet]
         public IActionResult GetDrugsByName([FromQuery] string drugName)
         {
-            IQueryable<Drug> drugs = this.service.GetAllByName(drugName);
-            if (!drugs.Any())
+            try
             {
-                return this.NotFound(NO_CONTENT);
+                IQueryable<Drug> drugs = this.service.GetAllByName(drugName);
+                if (!drugs.Any())
+                {
+                    return this.NotFound(NO_CONTENT);
+                }
+                return Ok(drugs);
             }
-
-            return Ok(drugs);
+            catch (ArgumentNullException ex)
+            {
+                return this.NotFound(ex.Message);
+            }
         }
 
         [Route("add")]
