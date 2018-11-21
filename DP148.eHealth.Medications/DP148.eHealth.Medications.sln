@@ -9,15 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DP148.eHealth.API.Medicatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DP148.eHealth.API.Medications.Domain.Tests", "DP148.eHealth.API.Medications.Domain.Tests\DP148.eHealth.API.Medications.Domain.Tests.csproj", "{0E9C759B-B84D-4153-A97B-1DD6019523AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHopital.Medications.Model", "EHopital.Medications.Model\EHopital.Medications.Model.csproj", "{7D4A586E-2F38-4861-8F90-05EF377B6E79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EHospital.Medications.Model", "EHopital.Medications.Model\EHospital.Medications.Model.csproj", "{7D4A586E-2F38-4861-8F90-05EF377B6E79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHospital.Medications.Data", "EHospital.Medications.Data\EHospital.Medications.Data.csproj", "{37B7A43B-5C14-4D25-B57F-15C0F9365DFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EHospital.Medications.Data", "EHospital.Medications.Data\EHospital.Medications.Data.csproj", "{37B7A43B-5C14-4D25-B57F-15C0F9365DFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHospital.Medications.BusinessLogic", "EHospital.Medications.BusinessLogic\EHospital.Medications.BusinessLogic.csproj", "{758D6525-3AC2-4BEF-ACB9-84CC0BC49E15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EHospital.Medications.BusinessLogic", "EHospital.Medications.BusinessLogic\EHospital.Medications.BusinessLogic.csproj", "{758D6525-3AC2-4BEF-ACB9-84CC0BC49E15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHospital.Medications.WebAPI", "EHospital.Medications.WebAPI\EHospital.Medications.WebAPI.csproj", "{BF633C67-DB21-4CFB-8928-48767D94CE9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EHospital.Medications.WebAPI", "EHospital.Medications.WebAPI\EHospital.Medications.WebAPI.csproj", "{BF633C67-DB21-4CFB-8928-48767D94CE9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHospital.Medications.Tests", "EHospital.Medications.Tests\EHospital.Medications.Tests.csproj", "{16FBBDC9-532D-4769-97FF-596D728853DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EHospital.Medications.Tests", "EHospital.Medications.Tests\EHospital.Medications.Tests.csproj", "{16FBBDC9-532D-4769-97FF-596D728853DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

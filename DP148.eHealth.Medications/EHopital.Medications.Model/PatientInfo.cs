@@ -5,14 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EHospital.Medications.Model
 {
-    public class PatientInfo
+    public class PatientInfo : BaseEntity
     {
         public PatientInfo()
         {
             Prescriptions = new HashSet<Prescription>();
         }
 
-        public int Id { get; set; }
         [Required]
         [StringLength(50)]
         public string FirstName { get; set; }
@@ -32,7 +31,6 @@ namespace EHospital.Medications.Model
         [StringLength(50)]
         public string Email { get; set; }
         public int? ImageId { get; set; }
-        public bool IsDeleted { get; set; }
 
         [ForeignKey("ImageId")]
         [InverseProperty("PatientInfo")]

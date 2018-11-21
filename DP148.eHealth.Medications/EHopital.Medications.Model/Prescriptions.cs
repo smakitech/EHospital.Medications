@@ -7,10 +7,10 @@ namespace EHospital.Medications.Model
 {
     public class Prescription
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public int PatientId { get; set; }
         public int UserId { get; set; }
-        public long DrugId { get; set; }
+        public int DrugId { get; set; }
         [Column(TypeName = "date")]
         public DateTime AssignmentDate { get; set; }
         public short Duration { get; set; }

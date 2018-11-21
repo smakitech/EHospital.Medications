@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EHopital.Medications.Model\EHopital.Medications.Model.csproj" />
+    <ProjectReference Include="..\EHopital.Medications.Model\EHospital.Medications.Model.csproj" />
   </ItemGroup>
 
 </Project>
