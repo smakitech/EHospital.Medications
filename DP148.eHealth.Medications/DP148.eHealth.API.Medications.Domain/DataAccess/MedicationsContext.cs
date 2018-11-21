@@ -124,7 +124,6 @@ namespace DP148.eHealth.API.Medications.Domain.DataAccess
         {
             if (!optionsBuilder.IsConfigured)
             {
-                // TODO: Set up config in api and pass constring via parameter
                 // http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 // "Server=DESKTOP-VNR4KA5\\MSQLEXPRESS2K16;Database=eHealthDB;Trusted_Connection=True;"
                 optionsBuilder.UseSqlServer(this.Database.GetDbConnection().ConnectionString);
