@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2ade80fd-3cb3-4b19-95b2-b07336272822",
+		"_postman_id": "1884145d-be22-48f4-acf7-62ceb54b4679",
 		"name": "eHealth.API.Medictions",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,14 +15,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://localhost:44346/medications",
+					"raw": "https://localhost:44346/drugs",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
 					"port": "44346",
 					"path": [
-						"medications"
+						"drugs"
 					]
 				}
 			},
@@ -38,14 +38,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://localhost:44346/medications/9",
+					"raw": "https://localhost:44346/drugs/9",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
 					"port": "44346",
 					"path": [
-						"medications",
+						"drugs",
 						"9"
 					],
 					"query": [
@@ -69,19 +69,19 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://localhost:44346/medications/filter?medicationName=Quixx",
+					"raw": "https://localhost:44346/drugs/filter?drugName=Quixx",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
 					"port": "44346",
 					"path": [
-						"medications",
+						"drugs",
 						"filter"
 					],
 					"query": [
 						{
-							"key": "medicationName",
+							"key": "drugName",
 							"value": "Quixx"
 						}
 					]
@@ -106,14 +106,14 @@
 					"raw": "  {\n        \"medicationId\": 0,\n        \"internationalName\": \"NZT48\",\n        \"type\": \"Pill\",\n        \"dose\": 30,\n        \"doseUnit\": \"mg\",\n        \"direction\": \"Nasal\",\n        \"instruction\": \"NZT48 instruction.\",\n        \"isDeleted\": false,\n        \"patientMedications\": []\n  }"
 				},
 				"url": {
-					"raw": "https://localhost:44346/medications/add",
+					"raw": "https://localhost:44346/drugs/add",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
 					"port": "44346",
 					"path": [
-						"medications",
+						"drugs",
 						"add"
 					]
 				}
@@ -130,14 +130,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://localhost:44346/medications/delete/19",
+					"raw": "https://localhost:44346/drugs/delete/19",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
 					"port": "44346",
 					"path": [
-						"medications",
+						"drugs",
 						"delete",
 						"19"
 					]
@@ -163,14 +163,14 @@
 					"raw": "    {\n        \"medicationId\": 11,\n        \"internationalName\": \"Parasetamol\",\n        \"type\": \"Pill\",\n        \"dose\": 500,\n        \"doseUnit\": \"mg\",\n        \"direction\": \"Oral\",\n        \"instruction\": \"Parasetamol instruction.\",\n        \"isDeleted\": false,\n        \"patientMedications\": []\n    }"
 				},
 				"url": {
-					"raw": "https://localhost:44346/medications/edit/11",
+					"raw": "https://localhost:44346/drugs/edit/11",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
 					"port": "44346",
 					"path": [
-						"medications",
+						"drugs",
 						"edit",
 						"11"
 					]
@@ -188,7 +188,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://localhost:44346/patient/medications",
+					"raw": "https://localhost:44346/patient/drugs",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -196,7 +196,7 @@
 					"port": "44346",
 					"path": [
 						"patient",
-						"medications"
+						"drugs"
 					]
 				}
 			},
@@ -212,7 +212,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://localhost:44346/patient/medications/14",
+					"raw": "https://localhost:44346/patient/drugs/14",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -220,7 +220,7 @@
 					"port": "44346",
 					"path": [
 						"patient",
-						"medications",
+						"drugs",
 						"14"
 					]
 				}
@@ -244,7 +244,7 @@
 					"raw": "{\r\n  \"patientMedicationsId\": 0,\r\n  \"patientId\": 1,\r\n  \"userId\": 1,\r\n  \"medicationId\": 1,\r\n  \"assignmentDate\": \"2018-11-14T06:40:20.104Z\",\r\n  \"duration\": \"7 days\",\r\n  \"notes\": \"note\",\r\n  \"isFinished\": false,\r\n  \"isDeleted\": false,\r\n  \"medication\": null\r\n  }"
 				},
 				"url": {
-					"raw": "https://localhost:44346/patient/medications/add",
+					"raw": "https://localhost:44346/patient/drugs/add",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -252,7 +252,7 @@
 					"port": "44346",
 					"path": [
 						"patient",
-						"medications",
+						"drugs",
 						"add"
 					]
 				}
@@ -269,16 +269,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://localhost:44346//patient/medications/delete/14",
+					"raw": "https://localhost:44346/patient/drugs/delete/14",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
 					"port": "44346",
 					"path": [
-						"",
 						"patient",
-						"medications",
+						"drugs",
 						"delete",
 						"14"
 					]
@@ -304,7 +303,7 @@
 					"raw": "{\r\n  \"patientMedicationsId\": 0,\r\n  \"patientId\": 2,\r\n  \"userId\": 2,\r\n  \"medicationId\": 2,\r\n  \"assignmentDate\": \"2018-11-14T06:40:20.104Z\",\r\n  \"duration\": \"7 days\",\r\n  \"notes\": \"note\",\r\n  \"isFinished\": false,\r\n  \"isDeleted\": false,\r\n  \"medication\": null\r\n}"
 				},
 				"url": {
-					"raw": "https://localhost:44346/patient/medications/edit/14",
+					"raw": "https://localhost:44346/patient/drugs/edit/14",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -312,7 +311,7 @@
 					"port": "44346",
 					"path": [
 						"patient",
-						"medications",
+						"drugs",
 						"edit",
 						"14"
 					]
@@ -330,7 +329,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://localhost:44346/patient/medications/edit/status/change/14",
+					"raw": "https://localhost:44346/patient/drugs/edit/status/change/14",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -338,7 +337,7 @@
 					"port": "44346",
 					"path": [
 						"patient",
-						"medications",
+						"drugs",
 						"edit",
 						"status",
 						"change",
