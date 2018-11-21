@@ -18,6 +18,7 @@ namespace EHospital.Medications.Model
         [Required]
         [StringLength(50)]
         public string Type { get; set; }
+        [Range(1, float.MaxValue - 1)]
         public double Dose { get; set; }
         [Required]
         [StringLength(4)]
