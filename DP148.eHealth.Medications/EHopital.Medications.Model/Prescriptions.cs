@@ -5,9 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EHospital.Medications.Model
 {
-    public class Prescription
+    public class Prescription : BaseEntity
     {
-        public int Id { get; set; }
         public int PatientId { get; set; }
         public int UserId { get; set; }
         public int DrugId { get; set; }
@@ -16,7 +15,6 @@ namespace EHospital.Medications.Model
         public short Duration { get; set; }
         public string Notes { get; set; }
         public bool IsFinished { get; set; }
-        public bool IsDeleted { get; set; }
 
         [ForeignKey("DrugId")]
         [InverseProperty("Prescriptions")]
