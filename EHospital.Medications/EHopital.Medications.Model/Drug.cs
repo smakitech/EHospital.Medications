@@ -8,7 +8,7 @@ namespace EHospital.Medications.Model
     /// Represents model of the
     /// Drugs table in the database.
     /// </summary>
-    /// <seealso cref="BaseEntity" />
+    /// <seealso cref="BaseEntity"/>
     public class Drug : BaseEntity
     {
         /// <summary>

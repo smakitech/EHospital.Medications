@@ -7,7 +7,7 @@ namespace EHospital.Medications.Model
     /// Represents model of the
     /// Prescriptions table in the database.
     /// </summary>
-    /// <seealso cref="BaseEntity" />
+    /// <seealso cref="BaseEntity"/>
     public class Prescription : BaseEntity
     {
         /// <summary>Gets or sets the patient identifier.</summary>

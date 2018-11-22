@@ -7,7 +7,7 @@ namespace EHospital.Medications.Data
     /// Represents database context for medication.
     /// Provide access to medications data.
     /// </summary>
-    /// <seealso cref="DbContext" />
+    /// <seealso cref="DbContext"/>
     public class MedicationDbContext : DbContext
     {
         /// <summary>

@@ -7,7 +7,7 @@ using EHospital.Medications.BusinessLogic.Contracts;
 namespace EHospital.Medications.BusinessLogic.Services
 {
     /// <summary>Represents prescription service.</summary>
-    /// <seealso cref="EHospital.Medications.BusinessLogic.Contracts.IPrescriptionService" />
+    /// <seealso cref="IPrescriptionService"/>
     public class PrescriptionService : IPrescriptionService
     {
         /// <summary>

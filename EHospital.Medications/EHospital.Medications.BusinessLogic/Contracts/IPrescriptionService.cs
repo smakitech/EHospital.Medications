@@ -6,7 +6,7 @@ namespace EHospital.Medications.BusinessLogic.Contracts
     /// <summary>
     /// Provides CRUD operations methods for prescription service.
     /// </summary>
-    /// <seealso cref="IService{Prescription}" />
+    /// <seealso cref="IService{Prescription}"/>
     public interface IPrescriptionService : IService<Prescription>
     {
         // TODO: Change logic and add documentation
