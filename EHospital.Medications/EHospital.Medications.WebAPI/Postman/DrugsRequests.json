@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1884145d-be22-48f4-acf7-62ceb54b4679",
+		"_postman_id": "d2f4d685-4079-418c-a0b7-71c28ca295a5",
 		"name": "EHospital.Medications.Drugs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -38,7 +38,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://localhost:44346/drugs/9",
+					"raw": "https://localhost:44346/drugs/5",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -46,7 +46,7 @@
 					"port": "44346",
 					"path": [
 						"drugs",
-						"9"
+						"5"
 					],
 					"query": [
 						{
@@ -103,7 +103,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "  {\n        \"medicationId\": 0,\n        \"internationalName\": \"NZT48\",\n        \"type\": \"Pill\",\n        \"dose\": 30,\n        \"doseUnit\": \"mg\",\n        \"direction\": \"Nasal\",\n        \"instruction\": \"NZT48 instruction.\",\n        \"isDeleted\": false,\n        \"patientMedications\": []\n  }"
+					"raw": "    {\n        \"Id\": 0,\n        \"Name\": \"Parasetamol\",\n        \"type\": \"Pill\",\n        \"dose\": 500,\n        \"doseUnit\": \"mg\",\n        \"direction\": \"Oral\",\n        \"instruction\": \"Parasetamol instruction.\",\n        \"isDeleted\": false,\n        \"patientMedications\": []\n    }"
 				},
 				"url": {
 					"raw": "https://localhost:44346/drugs/add",
@@ -173,34 +173,6 @@
 						"drugs",
 						"edit",
 						"11"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "UpdateDrugStatus",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "https://localhost:44346/patient/drugs/edit/status/change/14",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "44346",
-					"path": [
-						"patient",
-						"drugs",
-						"edit",
-						"status",
-						"change",
-						"14"
 					]
 				}
 			},
