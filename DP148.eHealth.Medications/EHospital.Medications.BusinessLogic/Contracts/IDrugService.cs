@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EHospital.Medications.BusinessLogic.Contracts
 {
-    public interface IDrugService : IEntityManager<Drug>
+    public interface IDrugService : IService<Drug>
     {
         IQueryable<Drug> GetAllByName(string name);
     }

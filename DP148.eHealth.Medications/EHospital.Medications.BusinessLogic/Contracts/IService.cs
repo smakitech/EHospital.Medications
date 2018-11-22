@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace EHospital.Medications.BusinessLogic.Contracts
 {
-    public interface IEntityManager<T>
+    public interface IService<T>
     {
         // TODO: make async
         IQueryable<T> GetAll();

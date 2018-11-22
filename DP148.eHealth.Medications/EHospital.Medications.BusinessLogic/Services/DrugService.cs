@@ -59,7 +59,7 @@ namespace EHospital.Medications.BusinessLogic.Services
             
         }
 
-        IQueryable<Drug> IEntityManager<Drug>.GetAll()
+        public IQueryable<Drug> GetAll()
         {
             IQueryable<Drug> result = this.unitOfWork.Drugs.GetAll();
             if(result.Count() == 0)
