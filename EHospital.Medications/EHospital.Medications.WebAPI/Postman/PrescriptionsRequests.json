@@ -1,178 +1,178 @@
 {
-	"info": {
-		"_postman_id": "fd941721-005b-45c9-bb2d-d2f0d5c120fa",
-		"name": "EHospital.Medications.Prescriptions",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "GetAllPrescriptions",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "https://localhost:44346/patient/drugs",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "44346",
-					"path": [
-						"patient",
-						"drugs"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetPrescriptionById",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "https://localhost:44346/patient/drugs/16",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "44346",
-					"path": [
-						"patient",
-						"drugs",
-						"16"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "AddPrescription",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"patientId\": 1,\r\n  \"userId\": 1,\r\n  \"drugId\": 1,\r\n  \"assignmentDate\": \"2018-11-22T08:07:00.391Z\",\r\n  \"duration\": 7,\r\n  \"notes\": \"notes\",\r\n  \"isFinished\": true,\r\n  \"id\": 0,\r\n  \"isDeleted\": false\r\n}"
-				},
-				"url": {
-					"raw": "https://localhost:44346/patient/drugs/add",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "44346",
-					"path": [
-						"patient",
-						"drugs",
-						"add"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "DeletePrescription",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "https://localhost:44346/patient/drugs/delete/18",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "44346",
-					"path": [
-						"patient",
-						"drugs",
-						"delete",
-						"18"
-					]
-				},
-				"description": "Soft delete. Attribute IsDeleted changing in the model."
-			},
-			"response": []
-		},
-		{
-			"name": "EditPrescription",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"patientId\": 1,\r\n  \"userId\": 1,\r\n  \"drugId\": 1,\r\n  \"assignmentDate\": \"2018-11-22T08:07:00.391Z\",\r\n  \"duration\": 7,\r\n  \"notes\": \"Some notes 15\",\r\n  \"isFinished\": true,\r\n  \"id\": 7,\r\n  \"isDeleted\": false\r\n}"
-				},
-				"url": {
-					"raw": "https://localhost:44346/patient/drugs/edit/7",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "44346",
-					"path": [
-						"patient",
-						"drugs",
-						"edit",
-						"7"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "UpdatePrescriptionStatus",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "https://localhost:44346/patient/drugs/edit/status/change/10",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "44346",
-					"path": [
-						"patient",
-						"drugs",
-						"edit",
-						"status",
-						"change",
-						"10"
-					]
-				}
-			},
-			"response": []
-		}
-	]
+    "info": {
+        "_postman_id": "fd941721-005b-45c9-bb2d-d2f0d5c120fa",
+        "name": "EHospital.Medications.Prescriptions",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "GetAllPrescriptions",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": ""
+                },
+                "url": {
+                    "raw": "https://localhost:44346/patient/drugs",
+                    "protocol": "https",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "44346",
+                    "path": [
+                        "patient",
+                        "drugs"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GetPrescriptionById",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": ""
+                },
+                "url": {
+                    "raw": "https://localhost:44346/patient/drugs/16",
+                    "protocol": "https",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "44346",
+                    "path": [
+                        "patient",
+                        "drugs",
+                        "16"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "AddPrescription",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"patientId\": 1,\r\n  \"userId\": 1,\r\n  \"drugId\": 1,\r\n  \"assignmentDate\": \"2018-11-22T08:07:00.391Z\",\r\n  \"duration\": 7,\r\n  \"notes\": \"notes\",\r\n  \"isFinished\": true,\r\n  \"id\": 0,\r\n  \"isDeleted\": false\r\n}"
+                },
+                "url": {
+                    "raw": "https://localhost:44346/patient/drugs/add",
+                    "protocol": "https",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "44346",
+                    "path": [
+                        "patient",
+                        "drugs",
+                        "add"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "DeletePrescription",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": ""
+                },
+                "url": {
+                    "raw": "https://localhost:44346/patient/drugs/delete/18",
+                    "protocol": "https",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "44346",
+                  "path": [
+                    "patient",
+                    "drugs",
+                    "delete",
+                    "18"
+                  ]
+                },
+                "description": "Soft delete. Attribute IsDeleted changing in the model."
+            },
+            "response": []
+        },
+        {
+            "name": "EditPrescription",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"patientId\": 1,\r\n  \"userId\": 1,\r\n  \"drugId\": 1,\r\n  \"assignmentDate\": \"2018-11-22T08:07:00.391Z\",\r\n  \"duration\": 7,\r\n  \"notes\": \"Some notes 15\",\r\n  \"isFinished\": true,\r\n  \"id\": 7,\r\n  \"isDeleted\": false\r\n}"
+                },
+                "url": {
+                    "raw": "https://localhost:44346/patient/drugs/edit/7",
+                    "protocol": "https",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "44346",
+                    "path": [
+                        "patient",
+                        "drugs",
+                        "edit",
+                        "7"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "UpdatePrescriptionStatus",
+            "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": ""
+                },
+                "url": {
+                    "raw": "https://localhost:44346/patient/drugs/edit/status/change/10",
+                    "protocol": "https",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "44346",
+                    "path": [
+                        "patient",
+                        "drugs",
+                        "edit",
+                        "status",
+                        "change",
+                        "10"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
 }

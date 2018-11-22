@@ -1,44 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
-using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using EHospital.Medications.BusinessLogic.Contracts;
 using EHospital.Medications.BusinessLogic.Services;
 using EHospital.Medications.Data;
 using EHospital.Medications.Model;
 
-
 namespace EHospital.Medications.WebAPI
 {
+    /// <summary>
+    /// Represent application startup settings and configuration.
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// The connection string name defined in application settings.
+        /// </summary>
+        private const string CONNECTION_STRING_NAME = "EHospitalDB";
+
         ///* Swagger constants
-        private const string VERSION = "v.1.0";
-        private const string API_NAME = "eHealth.Medications.API";
+        private const string VERSION = "v.2.0";
+        private const string API_NAME = "EHospital.Medications.WebAPI";
         //*/
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Startup"/> class.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
+        /// <summary>
+        /// Gets the configuration.
+        /// </summary>
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// Configures the services.
+        /// This method gets called by the runtime.
+        /// This method is used to add services to the container.
+        /// </summary>
+        /// <param name="services">The services.</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = this.Configuration.GetConnectionString("EHospitalDB");
+            string connection = this.Configuration.GetConnectionString(CONNECTION_STRING_NAME);
             services.AddDbContext<MedicationDbContext>(options => options.UseSqlServer(connection));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IRepository<Drug>, Repository<Drug>>();
@@ -52,7 +63,7 @@ namespace EHospital.Medications.WebAPI
             {
                 Version = VERSION,
                 Title = API_NAME,
-                Description = "Microservic contain business logic "
+                Description = "Micro service contains business logic "
                             + "to manage medications and prescriptions to patient.",
                 Contact = new Contact()
                 {
@@ -65,7 +76,12 @@ namespace EHospital.Medications.WebAPI
             //*/
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime.
+        /// This method is used to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app">The application.</param>
+        /// <param name="env">The hosting environment.</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
