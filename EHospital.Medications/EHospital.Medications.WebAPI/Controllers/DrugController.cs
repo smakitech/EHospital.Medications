@@ -8,7 +8,6 @@ using EHospital.Medications.Model;
 
 namespace EHospital.Medications.WebAPI.Controllers
 {
-    // TODO: Navigation Property
     [Route("drugs")]
     [ApiController]
     public class DrugController : ControllerBase

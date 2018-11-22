@@ -3,22 +3,67 @@ using EHospital.Medications.Model;
 
 namespace EHospital.Medications.Data
 {
+    /// <summary>
+    /// Represents database context for medication.
+    /// Provide access to medications data.
+    /// </summary>
+    /// <seealso cref="DbContext" />
     public class MedicationDbContext : DbContext
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MedicationDbContext"/> class.
+        /// </summary>
         public MedicationDbContext()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MedicationDbContext"/> class.
+        /// </summary>
+        /// <param name="options">The options.</param>
         public MedicationDbContext(DbContextOptions<MedicationDbContext> options)
             : base(options)
         {
         }
 
+        /// <summary>
+        /// Gets or sets the drugs.
+        /// Represents set of drugs which store in the database.
+        /// Helps to interact with Drugs table placed in the database.
+        /// </summary>
         public virtual DbSet<Drug> Drugs { get; set; }
-        public virtual DbSet<Image> Images { get; set; }
-        public virtual DbSet<PatientInfo> PatientInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the prescriptions.
+        /// Represents set of prescriptions which store in the database.
+        /// Helps to interact with Prescriptions table placed in the database.
+        /// </summary>
         public virtual DbSet<Prescription> Prescriptions { get; set; }
 
+        /// <summary>
+        /// Gets or sets the images.
+        /// Represents set of drugs which store in the database.
+        /// Helps to interact with Images table placed in the database.
+        /// </summary>
+        /// <remarks>
+        /// Using only for mapping models and tables correctly.
+        /// </remarks>
+        public virtual DbSet<Image> Images { get; set; }
+
+        /// <summary>
+        /// Gets or sets the patient info.
+        /// Represents set of patient information records which store in the database.
+        /// Helps to interact with PatientInfo table placed in the database.
+        /// </summary>
+        /// <remarks>Using only for mapping models and tables correctly.</remarks>
+        public virtual DbSet<PatientInfo> PatientInfo { get; set; }
+
+        /// <summary>
+        /// Defines configuration of the connection to database.
+        /// </summary>
+        /// <param name="optionsBuilder">
+        /// A builder used to create or modify options for this context.
+        /// </param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -27,6 +72,12 @@ namespace EHospital.Medications.Data
             }
         }
 
+        /// <summary>
+        /// Maps classes of models on database tables.
+        /// </summary>
+        /// <param name="modelBuilder">
+        /// The builder being used to construct the model for this context
+        /// </param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Drug>(entity =>

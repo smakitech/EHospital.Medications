@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using EHospital.Medications.Model;
 using Microsoft.EntityFrameworkCore;
+using EHospital.Medications.Model;
 
 namespace EHospital.Medications.Data
 {
-    public class Repository<T> : IRepository<T> where T: BaseEntity
+
+    public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly MedicationDbContext context;
 

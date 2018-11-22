@@ -16,7 +16,6 @@ namespace EHospital.Medications.Model
 
         T Update(T entity);
 
-        // TODO: Softdelete + fulldelete
         T Delete(T entity);
     }
 }
