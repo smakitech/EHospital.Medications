@@ -9,7 +9,9 @@ namespace EHospital.Medications.Model
     /// which serves as mediate tier between
     /// business logic and data source.
     /// </summary>
-    /// <typeparam name="T">Entity type.</typeparam>
+    /// <typeparam name="T">
+    /// Entity type, which inherit <see cref="BaseEntity"/>.
+    /// </typeparam>
     /// <seealso cref="IDisposable"/>
     public interface IRepository<T> : IDisposable where T : BaseEntity
     {
