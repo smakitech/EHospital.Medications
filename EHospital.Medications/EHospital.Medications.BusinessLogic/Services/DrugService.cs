@@ -11,9 +11,11 @@ namespace EHospital.Medications.BusinessLogic.Services
     public class DrugService : IDrugService
     {
         /// <summary>
-        /// Exception message in case drug is already exist in the database.
+        /// Exception message in case drug is already exist in the database
+        /// or soft deleted - has value <c>true</c> in property IsDeleted.
         /// </summary>
-        private const string DRUG_IS_EXIST = "Such drug is already exist in the database.";
+        private const string DRUG_IS_EXIST_OR_STORES_AS_SOFT_DELETED 
+            = "Such drug is already exist in database or stores with deleted status.";
 
         /// <summary>
         /// Exception message in case drug with specified identifier isn't found.
@@ -52,7 +54,7 @@ namespace EHospital.Medications.BusinessLogic.Services
         {
             if (this.IsDrugExistInDatabase(item))
             {
-                throw new ArgumentException(DRUG_IS_EXIST);
+                throw new ArgumentException(DRUG_IS_EXIST_OR_STORES_AS_SOFT_DELETED);
             }
 
             Drug result = this.unitOfWork.Drugs.Insert(item);
@@ -64,12 +66,22 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// <param name="id">The identifier.</param>
         /// <param name="item">The drug with updated properties.</param>
         /// <returns>Updated drug.</returns>
-        /// <exception cref="ArgumentException">DRUG_IS_EXIST</exception>
+        /// <exception cref="ArgumentException">
+        /// Such drug is already exist in database or stores with deleted status.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// No drug with such id.
+        /// </exception>
         public async Task<Drug> UpdateAsync(int id, Drug item)
         {
             if (this.IsDrugExistInDatabase(item))
             {
-                throw new ArgumentException(DRUG_IS_EXIST);
+                throw new ArgumentException(DRUG_IS_EXIST_OR_STORES_AS_SOFT_DELETED);
+            }
+
+            if (this.unitOfWork.Drugs.Get(id).IsDeleted == true)
+            {
+                throw new ArgumentNullException(DRUG_IS_NOT_FOUND);
             }
 
             Drug result = this.unitOfWork.Drugs.Update(item);
@@ -108,7 +120,7 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// </exception>
         public IQueryable<Drug> GetAll()
         {
-            IQueryable<Drug> result = this.unitOfWork.Drugs.GetAll();
+            IQueryable<Drug> result = this.unitOfWork.Drugs.GetAll().Where(d => d.IsDeleted != true);
             if (result.Count() == 0)
             {
                 throw new ArgumentNullException(DRUGS_ARE_NOT_FOUND);
@@ -126,7 +138,7 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// </exception>
         public IQueryable<Drug> GetAllByName(string name)
         {
-            IQueryable<Drug> result = this.unitOfWork.Drugs.GetAll(d => d.Name == name);
+            IQueryable<Drug> result = this.unitOfWork.Drugs.GetAll(d => d.Name == name).Where(d => d.IsDeleted != true);
             if (result.Count() == 0)
             {
                 throw new ArgumentNullException(DRUGS_ARE_NOT_FOUND);
@@ -145,7 +157,7 @@ namespace EHospital.Medications.BusinessLogic.Services
         public Drug GetById(int id)
         {
             Drug result = this.unitOfWork.Drugs.Get(id);
-            if (result == null)
+            if (result == null || result.IsDeleted == true)
             {
                 throw new ArgumentNullException(DRUG_IS_NOT_FOUND);
             }
@@ -153,7 +165,13 @@ namespace EHospital.Medications.BusinessLogic.Services
             return result;
         }
 
-        // TODO: Maksym delete - add issue, documentation missing
+        /// <summary>
+        /// Determines whether drug is already exist in database.
+        /// </summary>
+        /// <param name="item">The drug to check.</param>
+        /// <returns>
+        /// <c>true</c> if drug is already exist in database, otherwise, <c>false</c>.
+        /// </returns>
         private bool IsDrugExistInDatabase(Drug item)
         {
             return this.unitOfWork.Drugs.GetAll()

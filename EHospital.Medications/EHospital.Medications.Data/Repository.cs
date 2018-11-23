@@ -60,7 +60,7 @@ namespace EHospital.Medications.Data
         /// </returns>
         public IQueryable<T> GetAll()
         {
-            return this.entities.Where(e => e.IsDeleted != true).AsNoTracking();
+            return this.entities.AsNoTracking();
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace EHospital.Medications.Data
         /// </returns>
         public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate)
         {
-            return this.entities.Where(e => e.IsDeleted != true).Where(predicate).AsNoTracking();
+            return this.entities.Where(predicate).AsNoTracking();
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace EHospital.Medications.Data
         public T Get(int id)
         {
             T item = this.entities.Find(id);
-            if (item == null || item.IsDeleted == true)
+            if (item == null)
             {
                 return null;
             }
@@ -107,11 +107,6 @@ namespace EHospital.Medications.Data
         /// </exception>
         public T Insert(T entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException("Impossible to insert entity, which is equal null");
-            }
-
             this.entities.Add(entity);
             return entity;
         }

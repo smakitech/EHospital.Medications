@@ -51,8 +51,16 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// <param name="id">The identifier.</param>
         /// <param name="item">The prescription with updated properties.</param>
         /// <returns>Updated prescription.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// No prescription with such id.
+        /// </exception>
         public async Task<Prescription> UpdateAsync(int id, Prescription item)
         {
+            if (this.unitOfWork.Prescriptions.Get(id).IsDeleted == true)
+            {
+                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
+            }
+
             Prescription result = this.unitOfWork.Prescriptions.Update(item);
             await this.unitOfWork.Save();
             return result;
@@ -89,7 +97,7 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// </exception>
         public IQueryable<Prescription> GetAll()
         {
-            IQueryable<Prescription> result = this.unitOfWork.Prescriptions.GetAll();
+            IQueryable<Prescription> result = this.unitOfWork.Prescriptions.GetAll().Where(p => p.IsDeleted != true);
             if (result.Count() == 0)
             {
                 throw new ArgumentNullException(PRESCRIPTIONS_ARE_NOT_FOUND);
@@ -108,7 +116,7 @@ namespace EHospital.Medications.BusinessLogic.Services
         public Prescription GetById(int id)
         {
             Prescription result = this.unitOfWork.Prescriptions.Get(id);
-            if (result == null)
+            if (result == null || result.IsDeleted == true)
             {
                 throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
             }

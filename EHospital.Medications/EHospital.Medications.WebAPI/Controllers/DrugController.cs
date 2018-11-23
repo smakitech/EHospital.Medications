@@ -201,6 +201,10 @@ namespace EHospital.Medications.WebAPI.Controllers
                 Drug drug = await this.service.UpdateAsync(drugId, drugForUpdate);
                 return this.Ok(drug);
             }
+            catch (ArgumentNullException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
             catch (ArgumentException ex)
             {
                 return this.BadRequest(ex.Message);
