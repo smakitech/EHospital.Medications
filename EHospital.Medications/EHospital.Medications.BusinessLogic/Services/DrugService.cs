@@ -96,8 +96,6 @@ namespace EHospital.Medications.BusinessLogic.Services
                 throw new ArgumentNullException(DRUG_IS_NOT_FOUND);
             }
 
-            // TODO: soft delete only
-            result.IsDeleted = true;
             this.unitOfWork.Drugs.Delete(result);
             await this.unitOfWork.Save();
             return result;

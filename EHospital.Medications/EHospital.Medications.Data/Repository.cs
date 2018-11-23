@@ -132,7 +132,7 @@ namespace EHospital.Medications.Data
         }
 
         /// <summary>
-        /// Deletes the specified entity.
+        /// Performs soft deletion of the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns>
@@ -140,18 +140,8 @@ namespace EHospital.Medications.Data
         /// </returns>
         public T Delete(T entity)
         {
-            // TODO: Change logic
-            // TODO: Store procedure
-            T item = this.entities.Find(entity.Id);
-            if (item != null)
-            {
-                this.entities.Remove(entity);
-                return entity;
-            }
-            else
-            {
-                return null;
-            }
+            entity.IsDeleted = true;
+            return this.Update(entity);
         }
 
         /// <summary>

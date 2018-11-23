@@ -68,7 +68,7 @@
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\r\n  \"patientId\": 1,\r\n  \"userId\": 1,\r\n  \"drugId\": 1,\r\n  \"assignmentDate\": \"2018-11-22T08:07:00.391Z\",\r\n  \"duration\": 7,\r\n  \"notes\": \"notes\",\r\n  \"isFinished\": true,\r\n  \"id\": 0,\r\n  \"isDeleted\": false\r\n}"
+                    "raw": "{\r\n  \"patientId\": 1,\r\n  \"userId\": 1,\r\n  \"drugId\": 1,\r\n  \"assignmentDate\": \"2018-11-22T08:07:00.391Z\",\r\n  \"duration\": 7,\r\n  \"notes\": \"notes\",\r\n  \"isFinished\": false,\r\n  \"id\": 0,\r\n  \"isDeleted\": false\r\n}"
                 },
                 "url": {
                     "raw": "https://localhost:44346/patient/drugs/add",

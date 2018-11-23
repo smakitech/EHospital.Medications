@@ -77,7 +77,6 @@ namespace EHospital.Medications.BusinessLogic.Services
                 throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
             }
 
-            result.IsDeleted = true;
             this.unitOfWork.Prescriptions.Delete(result);
             await this.unitOfWork.Save();
             return result;
