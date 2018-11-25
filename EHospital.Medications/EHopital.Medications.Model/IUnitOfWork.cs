@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace EHospital.Medications.Model
 {
@@ -21,10 +22,11 @@ namespace EHospital.Medications.Model
         /// </summary>
         IRepository<Prescription> Prescriptions { get; }
 
-        IRepository<DoctorView> Doctors { get; }
-
         // TODO: change logic and add documentation
         bool UpdatePrescriptionStatus(int id);
+
+        // TODO: view temp
+        IQueryable<DoctorView> GetDoctors();
 
         /// <summary>
         /// Save changes to database in asynchronous mode.

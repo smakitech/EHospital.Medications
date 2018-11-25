@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using EHospital.Medications.Model;
 
@@ -24,17 +25,6 @@ namespace EHospital.Medications.Data
         /// </summary>
         private readonly Lazy<Repository<Prescription>> prescriptions
             = new Lazy<Repository<Prescription>>(() => new Repository<Prescription>(UnitOfWork.context));
-
-        private readonly Lazy<Repository<DoctorView>> doctors
-            = new Lazy<Repository<DoctorView>>(() => new Repository<DoctorView>(UnitOfWork.context));
-
-        public IRepository<DoctorView> Doctors
-        {
-            get
-            {
-                return this.doctors.Value;
-            }
-        }
 
         /// <summary>
         /// Track whether dispose method has been called.
@@ -80,6 +70,12 @@ namespace EHospital.Medications.Data
             {
                 return this.prescriptions.Value;
             }
+        }
+
+        // TODO: view temp
+        public IQueryable<DoctorView> GetDoctors()
+        {
+            return UnitOfWork.context.DoctorsView.Select(d => d).AsQueryable<DoctorView>();
         }
 
         /// <summary>

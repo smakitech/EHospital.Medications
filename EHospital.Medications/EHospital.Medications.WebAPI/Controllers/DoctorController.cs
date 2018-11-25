@@ -9,13 +9,14 @@ using EHospital.Medications.Model;
 
 namespace EHospital.Medications.WebAPI.Controllers
 {
+    // TODO : view temp
     [Route("[controller]")]
     [ApiController]
     public class DoctorController : ControllerBase
     {
-        private readonly IService<DoctorView> service;
+        private readonly IDoctorService service;
 
-        public DoctorController(IService<DoctorView> service)
+        public DoctorController(IDoctorService service)
         {
             this.service = service;
         }
@@ -23,7 +24,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         [HttpGet]
         public IQueryable<DoctorView> GetDoctors()
         {
-            return this.service.GetAll();
+            return this.service.GetDoctors();
         }
     }
 }
