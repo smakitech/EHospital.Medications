@@ -56,12 +56,7 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// </exception>
         public async Task<Prescription> UpdateAsync(int id, Prescription item)
         {
-            if (this.unitOfWork.Prescriptions.Get(id).IsDeleted == true)
-            {
-                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
-            }
-
-            Prescription result = this.unitOfWork.Prescriptions.Update(item);
+            Prescription result = this.unitOfWork.Prescriptions.Update(id, item);
             await this.unitOfWork.Save();
             return result;
         }

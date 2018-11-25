@@ -114,15 +114,23 @@ namespace EHospital.Medications.Data
         /// <summary>
         /// Updates the specified entity.
         /// </summary>
+        /// <param name="id">
+        /// Identifier of the entity to update.
+        /// </param>
         /// <param name="entity">The entity.</param>
         /// <returns>
         /// Updated entity.
         /// </returns>
-        public T Update(T entity)
+        public T Update(int id, T entity)
         {
             // TODO: Don't update id
-            this.entities.Attach(entity);
-            this.context.Entry(entity).State = EntityState.Modified;
+            T original = this.entities.Find(id);
+            entity.Id = id;
+            if (original != null)
+            {
+                this.context.Entry(original).CurrentValues.SetValues(entity);
+            }
+
             return entity;
         }
 
@@ -136,7 +144,7 @@ namespace EHospital.Medications.Data
         public T Delete(T entity)
         {
             entity.IsDeleted = true;
-            return this.Update(entity);
+            return this.Update(entity.Id, entity);
         }
 
         /// <summary>

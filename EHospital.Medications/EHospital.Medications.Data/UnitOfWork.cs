@@ -95,7 +95,7 @@ namespace EHospital.Medications.Data
                 item.IsFinished = true;
             }
 
-            this.prescriptions.Value.Update(item);
+            this.prescriptions.Value.Update(id, item);
             return item.IsFinished;
         }
 

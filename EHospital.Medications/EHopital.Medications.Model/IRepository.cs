@@ -45,9 +45,12 @@ namespace EHospital.Medications.Model
         /// <summary>
         /// Updates the specified entity.
         /// </summary>
+        /// <param name="id">
+        /// Identifier of the entity to update.
+        /// </param>
         /// <param name="entity">The entity.</param>
         /// <returns>Updated entity.</returns>
-        T Update(T entity);
+        T Update(int id, T entity);
 
         /// <summary>
         /// Deletes the specified entity.

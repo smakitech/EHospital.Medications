@@ -84,7 +84,7 @@ namespace EHospital.Medications.BusinessLogic.Services
                 throw new ArgumentNullException(DRUG_IS_NOT_FOUND);
             }
 
-            Drug result = this.unitOfWork.Drugs.Update(item);
+            Drug result = this.unitOfWork.Drugs.Update(id, item);
             await this.unitOfWork.Save();
             return result;
         }

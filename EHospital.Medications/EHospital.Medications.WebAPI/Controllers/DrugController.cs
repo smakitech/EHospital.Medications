@@ -205,10 +205,6 @@ namespace EHospital.Medications.WebAPI.Controllers
             {
                 return this.BadRequest(ex.Message);
             }
-            catch (ArgumentException ex)
-            {
-                return this.BadRequest(ex.Message);
-            }
         }
     }
 }
