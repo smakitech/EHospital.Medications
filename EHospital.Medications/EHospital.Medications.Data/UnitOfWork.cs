@@ -25,6 +25,17 @@ namespace EHospital.Medications.Data
         private readonly Lazy<Repository<Prescription>> prescriptions
             = new Lazy<Repository<Prescription>>(() => new Repository<Prescription>(UnitOfWork.context));
 
+        private readonly Lazy<Repository<DoctorView>> doctors
+            = new Lazy<Repository<DoctorView>>(() => new Repository<DoctorView>(UnitOfWork.context));
+
+        public IRepository<DoctorView> Doctors
+        {
+            get
+            {
+                return this.doctors.Value;
+            }
+        }
+
         /// <summary>
         /// Track whether dispose method has been called.
         /// </summary>

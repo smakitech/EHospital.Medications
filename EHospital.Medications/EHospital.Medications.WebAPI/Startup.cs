@@ -56,6 +56,7 @@ namespace EHospital.Medications.WebAPI
             services.AddScoped<IRepository<Prescription>, Repository<Prescription>>();
             services.AddScoped<IDrugService, DrugService>();
             services.AddScoped<IPrescriptionService, PrescriptionService>();
+            services.AddScoped<IService<DoctorView>, DoctorsService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             ///* Swagger Setting

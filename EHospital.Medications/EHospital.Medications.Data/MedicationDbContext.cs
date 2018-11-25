@@ -41,6 +41,13 @@ namespace EHospital.Medications.Data
         public virtual DbSet<Prescription> Prescriptions { get; set; }
 
         /// <summary>
+        /// Gets or sets the doctors.
+        /// Represents set of doctors which store in the database.
+        /// Helps to interact with DoctorsView view placed in the database.
+        /// </summary>
+        public virtual DbSet<DoctorView> DoctorsView { get; set; }
+
+        /// <summary>
         /// Gets or sets the images.
         /// Represents set of drugs which store in the database.
         /// Helps to interact with Images table placed in the database.
@@ -130,6 +137,13 @@ namespace EHospital.Medications.Data
                     .HasForeignKey(d => d.PatientId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PatientMedications_PatientsInfo");
+            });
+
+            modelBuilder.Entity<DoctorView>(entity =>
+            {
+                // TODO: Birthday Column to configure index?
+                entity.ToTable("DoctorsView");
+                entity.Ignore("IsDeleted");
             });
         }
     }

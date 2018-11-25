@@ -21,6 +21,8 @@ namespace EHospital.Medications.Model
         /// </summary>
         IRepository<Prescription> Prescriptions { get; }
 
+        IRepository<DoctorView> Doctors { get; }
+
         // TODO: change logic and add documentation
         bool UpdatePrescriptionStatus(int id);
 
