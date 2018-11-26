@@ -8,7 +8,7 @@ namespace EHospital.Medications.Model
     /// Represents model of the
     /// Images table in the database.
     /// </summary>
-    public class Image
+    public class Image : BaseEntity
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
@@ -17,10 +17,6 @@ namespace EHospital.Medications.Model
         {
             this.PatientInfo = new HashSet<PatientInfo>();
         }
-
-        /// <summary>Gets or sets the identifier.</summary>
-        [Key]
-        public int Id { get; set; }
 
         /// <summary>Gets or sets the name of the image.</summary>
         [StringLength(100)]

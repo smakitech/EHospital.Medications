@@ -3,7 +3,8 @@
 namespace EHospital.Medications.Model
 {
     /// <summary>
-    /// Contains entities common properties.
+    /// Provides common property Id for entities,
+    /// which represents unique identifier of the record in database.
     /// </summary>
     public abstract class BaseEntity
     {
@@ -12,10 +13,5 @@ namespace EHospital.Medications.Model
         /// </summary>
         [Key]
         public int Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether concrete entity is deleted.
-        /// </summary>
-        public bool IsDeleted { get; set; }
     }
 }

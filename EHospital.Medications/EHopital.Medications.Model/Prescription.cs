@@ -8,7 +8,7 @@ namespace EHospital.Medications.Model
     /// Prescriptions table in the database.
     /// </summary>
     /// <seealso cref="BaseEntity"/>
-    public class Prescription : BaseEntity
+    public class Prescription : BaseEntity, ISoftDeletion
     {
         /// <summary>Gets or sets the patient identifier.</summary>
         public int PatientId { get; set; }
@@ -34,6 +34,12 @@ namespace EHospital.Medications.Model
         /// whether this prescription is finished.
         /// </summary>
         public bool IsFinished { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating
+        /// whether prescription is deleted.
+        /// </summary>
+        public bool IsDeleted { get; set; }
 
         /// <summary>Gets or sets the Drug navigation property.</summary>
         [ForeignKey("DrugId")]

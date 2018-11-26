@@ -7,11 +7,8 @@ namespace EHospital.Medications.Model
     /// Model contain additional information about prescribed drug,
     /// and doctor who has prescribed it.
     /// </summary>
-    public class PrescriptionDetails
+    public class PrescriptionDetails : BaseEntity, ISoftDeletion
     {
-        /// <summary>Gets or sets the identifier./// </summary>
-        public int Id { get; set; }
-
         /// <summary>Gets or sets doctor's first name./// </summary>
         public string FirstName { get; set; }
 

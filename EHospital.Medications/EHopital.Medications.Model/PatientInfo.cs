@@ -10,7 +10,7 @@ namespace EHospital.Medications.Model
     /// PatientInfo table in the database.
     /// </summary>
     /// <seealso cref="BaseEntity"/>
-    public class PatientInfo : BaseEntity
+    public class PatientInfo : BaseEntity, ISoftDeletion
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PatientInfo"/> class.
@@ -58,6 +58,12 @@ namespace EHospital.Medications.Model
 
         /// <summary>Gets or sets the image identifier.</summary>
         public int? ImageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating
+        /// whether patient info is deleted.
+        /// </summary>
+        public bool IsDeleted { get; set; }
 
         /// <summary>
         /// Gets or sets the Image navigation property.

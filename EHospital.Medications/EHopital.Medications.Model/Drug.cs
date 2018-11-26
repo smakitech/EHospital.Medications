@@ -9,7 +9,7 @@ namespace EHospital.Medications.Model
     /// Drugs table in the database.
     /// </summary>
     /// <seealso cref="BaseEntity"/>
-    public class Drug : BaseEntity
+    public class Drug : BaseEntity, ISoftDeletion
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Drug"/> class.
@@ -46,6 +46,12 @@ namespace EHospital.Medications.Model
         /// <summary>Gets or sets the instruction.</summary>
         [Required]
         public string Instruction { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating
+        /// whether drug is deleted.
+        /// </summary>
+        public bool IsDeleted { get; set; }
 
         /// <summary>
         /// Gets or sets the prescriptions navigation property.

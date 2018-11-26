@@ -6,13 +6,9 @@ namespace EHospital.Medications.Model
     /// Represents model of the
     /// DoctorsView view in the database.
     /// </summary>
-    public class DoctorView
+    public class DoctorView : BaseEntity
     {
         // TODO: [DoctorView] DataAnnotations for View?
-
-        /// <summary>Gets or sets the identifier.</summary>
-        [Key]
-        public int Id { get; set; }
 
         /// <summary>Gets or sets the first name.</summary>
         [Required]
