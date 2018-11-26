@@ -172,21 +172,7 @@ namespace EHospital.Medications.WebAPI.Controllers
             }
         }
 
-        // TODO: Change logic of this request
-        // TODO: Add documentation
-        [Route("edit/status/change/{prescriptionId}")]
-        [HttpPut]
-        public async Task<IActionResult> UpdatePrescriptionStatus(int prescriptionId)
-        {
-            try
-            {
-                await this.service.UpdateStatusAsync(prescriptionId);
-                return this.Ok(this.service.GetById(prescriptionId));
-            }
-            catch (ArgumentNullException ex)
-            {
-                return this.NotFound(ex.Message);
-            }
-        }
+        // TODO: UpdateStatus
+        // [Route("edit/status/change/{prescriptionId}")]
     }
 }

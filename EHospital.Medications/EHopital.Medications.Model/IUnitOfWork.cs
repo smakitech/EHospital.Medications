@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace EHospital.Medications.Model
 {
@@ -22,10 +21,23 @@ namespace EHospital.Medications.Model
         /// </summary>
         IRepository<Prescription> Prescriptions { get; }
 
-        // TODO: [Connect Change] UpdatePrescriptionStatus removed
+        // TODO: Supplement methods
 
-        // TODO: [DoctorView] Define only what need
-        IQueryable<DoctorView> GetDoctors();
+        /// <summary>
+        /// Updates the prescription status to historic
+        /// automatically using SQL store procedure.
+        /// Method aimed to be used in get methods and as part of
+        /// UpdateStatusManully method.
+        /// </summary>
+        /// <param name="id">The prescription identifier.</param>
+        void UpdateStatusAutomatically(int id);
+
+        /// <summary>
+        /// Updates the prescription status to historic
+        /// manually using SQL store procedure.
+        /// </summary>
+        /// <param name="id">The prescription identifier.</param>
+        void UpdateStatusManually(int id);
 
         /// <summary>
         /// Save changes to database in asynchronous mode.

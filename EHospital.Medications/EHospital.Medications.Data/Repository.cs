@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using EHospital.Medications.Model;
 
@@ -15,7 +16,7 @@ namespace EHospital.Medications.Data
     /// Entity type, which inherits <see cref="BaseEntity"/>
     /// </typeparam>
     /// <seealso cref="IRepository{T}" />
-    public class Repository<T> : IDisposable, IRepository<T> where T : BaseEntity
+    public class Repository<T> : IRepository<T> where T : BaseEntity, ISoftDeletion
     {
         /// <summary>
         /// The medication database context.
@@ -60,6 +61,7 @@ namespace EHospital.Medications.Data
         /// </returns>
         public IQueryable<T> GetAll()
         {
+            // TODO: Asynchronous GetAll
             return this.entities.AsNoTracking();
         }
 
@@ -76,15 +78,15 @@ namespace EHospital.Medications.Data
         }
 
         /// <summary>
-        /// Gets the entity specified by identifier.
+        /// Gets the entity specified by identifier in asynchronous mode.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>
         /// Concrete entity.
         /// </returns>
-        public T Get(int id)
+        public async Task<T> GetAsync(int id)
         {
-            T item = this.entities.Find(id);
+            T item = await this.entities.FindAsync(id);
             return (item != null) ? item : null;
         }
 
@@ -119,7 +121,6 @@ namespace EHospital.Medications.Data
             T target = this.entities.Find(id);
             if (target != null)
             {
-                // TODO [Issue] Unchangeable Id
                 entity.Id = id;
                 this.context.Entry(target).CurrentValues.SetValues(entity);
                 return entity;

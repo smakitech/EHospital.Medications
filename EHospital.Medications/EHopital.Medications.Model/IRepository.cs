@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace EHospital.Medications.Model
 {
@@ -13,7 +14,7 @@ namespace EHospital.Medications.Model
     /// Entity type, which inherit <see cref="BaseEntity"/>.
     /// </typeparam>
     /// <seealso cref="IDisposable"/>
-    public interface IRepository<T> : IDisposable where T : BaseEntity
+    public interface IRepository<T> : IDisposable where T : BaseEntity, ISoftDeletion
     {
         /// <summary>Gets all entities.</summary>
         /// <returns>All entities.</returns>
@@ -29,11 +30,11 @@ namespace EHospital.Medications.Model
         IQueryable<T> GetAll(Expression<Func<T, bool>> predicate);
 
         /// <summary>
-        /// Gets the entity specified by identifier.
+        /// Gets the entity specified by identifier in asynchronous mode.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Concrete entity.</returns>
-        T Get(int id);
+        Task<T> GetAsync(int id);
 
         /// <summary>
         /// Inserts the specified entity.
@@ -51,8 +52,6 @@ namespace EHospital.Medications.Model
         /// <param name="entity">The entity.</param>
         /// <returns>Updated entity.</returns>
         T Update(int id, T entity);
-
-        // TODO: [Connect Change] Delete signature
 
         /// <summary>
         /// Deletes the specified entity.

@@ -72,12 +72,6 @@ namespace EHospital.Medications.Data
             }
         }
 
-        // TODO: [DoctorView] Define only what need
-        public IQueryable<DoctorView> GetDoctors()
-        {
-            return UnitOfWork.context.DoctorsView.Select(d => d).AsQueryable<DoctorView>();
-        }
-
         /// <summary>
         /// Save changes to database in asynchronous mode.
         /// </summary>
@@ -87,7 +81,16 @@ namespace EHospital.Medications.Data
             await UnitOfWork.context.SaveChangesAsync();
         }
 
-        // TODO: [Connect Change] UpdatePrescriptionStatus removed
+        // TODO: Supplement methods
+        public void UpdateStatusAutomatically(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateStatusManually(int id)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Disposes all resources of instance.

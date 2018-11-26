@@ -11,11 +11,12 @@ namespace EHospital.Medications.BusinessLogic.Contracts
     public interface IPrescriptionService : IService<Prescription>
     {
         /// <summary>
-        /// Gets all prescription details in asynchronous.
+        /// Gets all prescription details specified by patient identifier.
         /// Includes doctor and drug extended details.
         /// </summary>
+        /// <param name="patientId">The Patient identifier.</param>
         /// <returns>All patient prescriptions in details.</returns>
-        Task<IQueryable<PrescriptionDetails>> GetAllDetailsAsync();
+        IQueryable<PrescriptionDetails> GetPrescriptionsDetails(int patientId);
 
         /// <summary>
         /// Gets the guide by identifier in asynchronous mode.
@@ -26,10 +27,20 @@ namespace EHospital.Medications.BusinessLogic.Contracts
         Task<PrescriptionGuide> GetGuideByIdAsync(int id);
 
         /// <summary>
-        /// Allows to update prescription status manually to historic.
+        /// Gets the all details of concrete prescription
+        /// specified by id in asynchronous mode.
+        /// Includes doctor and drug extended details.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Concrete prescription in details.</returns>
+        Task<PrescriptionDetails> GetPrescriptionDetailsAsync(int id);
+
+        /// <summary>
+        /// Allows to update prescription status manually to historic
+        /// in asynchronous mode.
         /// </summary>
         /// <param name="id">The prescription identifier.</param>
         /// <returns>Historic prescription.</returns>
-        Task<Prescription> UpdateStatus(int id);
+        Task<Prescription> UpdateStatusAsync(int id);
     }
 }

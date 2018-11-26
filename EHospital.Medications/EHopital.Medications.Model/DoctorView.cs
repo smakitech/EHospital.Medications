@@ -8,7 +8,7 @@ namespace EHospital.Medications.Model
     /// </summary>
     public class DoctorView : BaseEntity
     {
-        // TODO: [DoctorView] DataAnnotations for View?
+        // TODO: DataAnnotations for View or PairView
 
         /// <summary>Gets or sets the first name.</summary>
         [Required]
