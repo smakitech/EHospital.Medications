@@ -54,7 +54,7 @@ namespace EHospital.Medications.WebAPI
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IRepository<Drug>, Repository<Drug>>();
             services.AddScoped<IRepository<Prescription>, Repository<Prescription>>();
-            services.AddScoped<IDrugService, DrugService>();
+            //services.AddScoped<IDrugService, DrugService>();
             services.AddScoped<IPrescriptionService, PrescriptionService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

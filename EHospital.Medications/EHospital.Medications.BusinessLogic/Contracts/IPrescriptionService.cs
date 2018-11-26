@@ -24,7 +24,7 @@ namespace EHospital.Medications.BusinessLogic.Contracts
         /// </summary>
         /// <param name="id">The prescription identifier.</param>
         /// <returns>Drug instruction and doctor's notes.</returns>
-        Task<PrescriptionGuide> GetGuideByIdAsync(int id);
+        PrescriptionGuide GetGuideById(int id);
 
         /// <summary>
         /// Gets the all details of concrete prescription

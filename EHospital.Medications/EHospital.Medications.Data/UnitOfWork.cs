@@ -84,11 +84,13 @@ namespace EHospital.Medications.Data
         // TODO: Supplement methods
         public void UpdateStatusAutomatically(int id)
         {
+            // TODO: Store Procedure
             throw new NotImplementedException();
         }
 
         public void UpdateStatusManually(int id)
         {
+            // TODO: Store Procedure
             throw new NotImplementedException();
         }
 
