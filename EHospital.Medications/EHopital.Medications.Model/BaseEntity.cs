@@ -14,7 +14,7 @@ namespace EHospital.Medications.Model
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether concrete entity is deleted..
+        /// Gets or sets a value indicating whether concrete entity is deleted.
         /// </summary>
         public bool IsDeleted { get; set; }
     }

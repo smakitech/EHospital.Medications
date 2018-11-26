@@ -72,7 +72,7 @@ namespace EHospital.Medications.Data
             }
         }
 
-        // TODO: view temp
+        // TODO: [DoctorView] Define only what need
         public IQueryable<DoctorView> GetDoctors()
         {
             return UnitOfWork.context.DoctorsView.Select(d => d).AsQueryable<DoctorView>();
@@ -87,24 +87,7 @@ namespace EHospital.Medications.Data
             await UnitOfWork.context.SaveChangesAsync();
         }
 
-        // TODO: Documentation
-        public bool UpdatePrescriptionStatus(int id)
-        {
-            // Change logic
-            // TODO: Replace store procedure
-            Prescription item = this.prescriptions.Value.Get(id);
-            if (item.IsFinished == true)
-            {
-                item.IsFinished = false;
-            }
-            else
-            {
-                item.IsFinished = true;
-            }
-
-            this.prescriptions.Value.Update(id, item);
-            return item.IsFinished;
-        }
+        // TODO: [Connect Change] UpdatePrescriptionStatus removed
 
         /// <summary>
         /// Disposes all resources of instance.

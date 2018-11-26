@@ -10,18 +10,20 @@ namespace EHospital.Medications.BusinessLogic.Contracts
     /// <typeparam name="T">Entity type.</typeparam>
     public interface IService<T>
     {
-        /// <summary>
-        /// Gets all entities.
-        /// </summary>
-        /// <returns>All entities.</returns>
-        IQueryable<T> GetAll();
+        // TODO: [Connect Change] GetAll & GetById asynchronous
 
         /// <summary>
-        /// Gets entity by the identifier.
+        /// Gets all entities in asynchronous mode.
+        /// </summary>
+        /// <returns>All entities.</returns>
+        Task<IQueryable<T>> GetAllAsync();
+
+        /// <summary>
+        /// Gets entity by the identifier in asynchronous mode.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Concrete entity.</returns>
-        T GetById(int id);
+        Task<T> GetByIdAsync(int id);
 
         /// <summary>
         /// Creates entity in asynchronous mode.

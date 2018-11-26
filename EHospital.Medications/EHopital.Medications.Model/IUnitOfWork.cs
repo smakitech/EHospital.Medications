@@ -22,10 +22,9 @@ namespace EHospital.Medications.Model
         /// </summary>
         IRepository<Prescription> Prescriptions { get; }
 
-        // TODO: change logic and add documentation
-        bool UpdatePrescriptionStatus(int id);
+        // TODO: [Connect Change] UpdatePrescriptionStatus removed
 
-        // TODO: view temp
+        // TODO: [DoctorView] Define only what need
         IQueryable<DoctorView> GetDoctors();
 
         /// <summary>

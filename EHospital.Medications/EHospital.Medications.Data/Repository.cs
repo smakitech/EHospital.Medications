@@ -15,7 +15,7 @@ namespace EHospital.Medications.Data
     /// Entity type, which inherits <see cref="BaseEntity"/>
     /// </typeparam>
     /// <seealso cref="IRepository{T}" />
-    public class Repository<T> : IRepository<T> where T : BaseEntity
+    public class Repository<T> : IDisposable, IRepository<T> where T : BaseEntity
     {
         /// <summary>
         /// The medication database context.
@@ -85,14 +85,7 @@ namespace EHospital.Medications.Data
         public T Get(int id)
         {
             T item = this.entities.Find(id);
-            if (item == null)
-            {
-                return null;
-            }
-            else
-            {
-                return item;
-            }
+            return (item != null) ? item : null;
         }
 
         /// <summary>
@@ -123,28 +116,37 @@ namespace EHospital.Medications.Data
         /// </returns>
         public T Update(int id, T entity)
         {
-            // TODO: Don't update id
-            T original = this.entities.Find(id);
-            entity.Id = id;
-            if (original != null)
+            T target = this.entities.Find(id);
+            if (target != null)
             {
-                this.context.Entry(original).CurrentValues.SetValues(entity);
+                // TODO [Issue] Unchangeable Id
+                entity.Id = id;
+                this.context.Entry(target).CurrentValues.SetValues(entity);
+                return entity;
             }
 
-            return entity;
+            return target;
         }
 
         /// <summary>
         /// Performs soft deletion of the specified entity.
         /// </summary>
-        /// <param name="entity">The entity.</param>
+        /// <param name="id">
+        /// Identifier of the entity to delete.
+        /// </param>
         /// <returns>
         /// Deleted entity.
         /// </returns>
-        public T Delete(T entity)
+        public T Delete(int id)
         {
-            entity.IsDeleted = true;
-            return this.Update(entity.Id, entity);
+            T target = this.entities.Find(id);
+            if (target != null)
+            {
+                target.IsDeleted = true;
+                return this.Update(id, target);
+            }
+
+            return target;
         }
 
         /// <summary>

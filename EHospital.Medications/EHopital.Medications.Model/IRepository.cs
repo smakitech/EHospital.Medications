@@ -52,11 +52,13 @@ namespace EHospital.Medications.Model
         /// <returns>Updated entity.</returns>
         T Update(int id, T entity);
 
+        // TODO: [Connect Change] Delete signature
+
         /// <summary>
         /// Deletes the specified entity.
         /// </summary>
-        /// <param name="entity">The entity.</param>
+        /// <param name="id">Identifier of the entity to delete.</param>
         /// <returns>Deleted entity.</returns>
-        T Delete(T entity);
+        T Delete(int id);
     }
 }

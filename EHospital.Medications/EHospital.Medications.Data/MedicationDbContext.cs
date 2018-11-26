@@ -141,7 +141,7 @@ namespace EHospital.Medications.Data
 
             modelBuilder.Entity<DoctorView>(entity =>
             {
-                // TODO: view temp, Birthday Column to configure index?
+                // TODO: [DoctorView] Birthday Column to configure index?
                 entity.ToTable("DoctorsView");
             });
         }

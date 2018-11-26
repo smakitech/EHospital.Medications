@@ -8,7 +8,7 @@ namespace EHospital.Medications.Model
     /// </summary>
     public class DoctorView
     {
-        // TODO: temp view, DataAnnotations For View?
+        // TODO: [DoctorView] DataAnnotations for View?
 
         /// <summary>Gets or sets the identifier.</summary>
         [Key]
