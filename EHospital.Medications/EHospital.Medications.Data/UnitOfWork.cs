@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Linq;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 using EHospital.Medications.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace EHospital.Medications.Data
 {
@@ -81,17 +82,39 @@ namespace EHospital.Medications.Data
             await UnitOfWork.context.SaveChangesAsync();
         }
 
-        // TODO: Supplement methods
-        public void UpdateStatusAutomatically(int id)
+        /// <summary>
+        /// Updates the prescription status to historic
+        /// automatically using SQL store procedure.
+        /// Method aimed to be used in get methods and as part of
+        /// UpdateStatusManully method.
+        /// </summary>
+        /// <param name="id">The prescription identifier.</param>
+        /// <returns>
+        /// Task object.
+        /// </returns>
+        public async Task UpdateStatusAutomatically(int id)
         {
-            // TODO: Store Procedure
-            throw new NotImplementedException();
+            // TODO: Inactive Store Procedure
+            var parameterId = new SqlParameter("@Id", id);
+            string procedure = "UpdateStatusAuthomaticallyPrescription @Id";
+            await UnitOfWork.context.Database.ExecuteSqlCommandAsync(procedure, parameters: parameterId);
         }
 
-        public void UpdateStatusManually(int id)
+        /// <summary>
+        /// Updates the prescription status to historic
+        /// manually using SQL store procedure.
+        /// </summary>
+        /// <param name="id">The prescription identifier.</param>
+        /// <returns>
+        /// Task object.
+        /// </returns>
+        public async Task UpdateStatusManually(int id)
         {
-            // TODO: Store Procedure
-            throw new NotImplementedException();
+            // TODO: Inactive Store Procedure
+            // UpdateStatusAuthomatically is performing before
+            var parameterId = new SqlParameter("@Id", id);
+            string procedure = "UpdateStatusManuallyPrescription @Id";
+            await UnitOfWork.context.Database.ExecuteSqlCommandAsync(procedure, parameters: parameterId);
         }
 
         /// <summary>
