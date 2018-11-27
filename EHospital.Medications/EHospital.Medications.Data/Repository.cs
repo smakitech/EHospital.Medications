@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using EHospital.Medications.Model;
+using System.Collections.Generic;
 
 namespace EHospital.Medications.Data
 {
@@ -54,27 +55,29 @@ namespace EHospital.Medications.Data
         }
 
         /// <summary>
-        /// Gets all entities.
+        /// Gets all entities in asynchronous mode.
         /// </summary>
         /// <returns>
         /// All entities.
         /// </returns>
-        public IQueryable<T> GetAll()
+        public async Task<ICollection<T>> GetAllAsync()
         {
-            // TODO: Asynchronous GetAll
-            return this.entities.AsNoTracking();
+            return await this.entities.ToListAsync();
         }
 
         /// <summary>
-        /// Gets all entities by specified predicate.
+        /// Gets all entities by specified predicate
+        /// in asynchronous mode.
         /// </summary>
-        /// <param name="predicate">Predicate specifies search conditions.</param>
+        /// <param name="predicate">
+        /// Predicate specifies search conditions.
+        /// </param>
         /// <returns>
         /// Set of entities.
         /// </returns>
-        public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate)
+        public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
         {
-            return this.entities.Where(predicate).AsNoTracking();
+            return await this.entities.Where(predicate).ToListAsync();
         }
 
         /// <summary>
@@ -108,6 +111,7 @@ namespace EHospital.Medications.Data
 
         /// <summary>
         /// Updates the specified entity.
+        /// Uses an asynchronous.
         /// </summary>
         /// <param name="id">
         /// Identifier of the entity to update.
@@ -116,9 +120,9 @@ namespace EHospital.Medications.Data
         /// <returns>
         /// Updated entity.
         /// </returns>
-        public T Update(int id, T entity)
+        public async Task<T> UpdateAsync(int id, T entity)
         {
-            T target = this.entities.Find(id);
+            T target = await this.entities.FindAsync(id);
             if (target != null)
             {
                 entity.Id = id;
@@ -131,6 +135,7 @@ namespace EHospital.Medications.Data
 
         /// <summary>
         /// Performs soft deletion of the specified entity.
+        /// Uses an asynchronous.
         /// </summary>
         /// <param name="id">
         /// Identifier of the entity to delete.
@@ -138,13 +143,15 @@ namespace EHospital.Medications.Data
         /// <returns>
         /// Deleted entity.
         /// </returns>
-        public T Delete(int id)
+        public async Task<T> DeleteAsync(int id)
         {
-            T target = this.entities.Find(id);
+            T target = await this.entities.FindAsync(id);
             if (target != null)
             {
                 target.IsDeleted = true;
-                return this.Update(id, target);
+                this.context.Attach(target);
+                var entry = this.context.Entry(target);
+                entry.Property(e => e.IsDeleted).IsModified = true;
             }
 
             return target;

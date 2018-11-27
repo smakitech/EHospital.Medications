@@ -141,7 +141,6 @@ namespace EHospital.Medications.Data
 
             modelBuilder.Entity<DoctorView>(entity =>
             {
-                // TODO: FirstName, LastName, Birthday Index?
                 entity.ToTable("DoctorsView");
             });
         }

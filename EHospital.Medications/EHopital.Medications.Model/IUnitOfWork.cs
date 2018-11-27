@@ -21,8 +21,6 @@ namespace EHospital.Medications.Model
         /// </summary>
         IRepository<Prescription> Prescriptions { get; }
 
-        // TODO: Supplement methods
-
         /// <summary>
         /// Updates the prescription status to historic
         /// automatically using SQL store procedure.
@@ -30,14 +28,16 @@ namespace EHospital.Medications.Model
         /// UpdateStatusManully method.
         /// </summary>
         /// <param name="id">The prescription identifier.</param>
-        void UpdateStatusAutomatically(int id);
+        /// <returns>Task object.</returns>
+        Task UpdateStatusAutomatically(int id);
 
         /// <summary>
         /// Updates the prescription status to historic
         /// manually using SQL store procedure.
         /// </summary>
         /// <param name="id">The prescription identifier.</param>
-        void UpdateStatusManually(int id);
+        /// <returns>Task object.</returns>
+        Task UpdateStatusManually(int id);
 
         /// <summary>
         /// Save changes to database in asynchronous mode.

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -16,18 +17,19 @@ namespace EHospital.Medications.Model
     /// <seealso cref="IDisposable"/>
     public interface IRepository<T> : IDisposable where T : BaseEntity, ISoftDeletion
     {
-        /// <summary>Gets all entities.</summary>
+        /// <summary>Gets all entities in asynchronous mode.</summary>
         /// <returns>All entities.</returns>
-        IQueryable<T> GetAll();
+        Task<ICollection<T>> GetAllAsync();
 
         /// <summary>
-        /// Gets all entities by specified predicate.
+        /// Gets all entities by specified predicate
+        /// in asynchronous mode.
         /// </summary>
         /// <param name="predicate">
         /// Predicate specifies search conditions.
         /// </param>
         /// <returns>Set of entities.</returns>
-        IQueryable<T> GetAll(Expression<Func<T, bool>> predicate);
+        Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate);
 
         /// <summary>
         /// Gets the entity specified by identifier in asynchronous mode.
@@ -44,20 +46,22 @@ namespace EHospital.Medications.Model
         T Insert(T entity);
 
         /// <summary>
-        /// Updates the specified entity.
+        /// Updates the specified entity
+        /// Uses an asynchronous.
         /// </summary>
         /// <param name="id">
         /// Identifier of the entity to update.
         /// </param>
         /// <param name="entity">The entity.</param>
         /// <returns>Updated entity.</returns>
-        T Update(int id, T entity);
+        Task<T> UpdateAsync(int id, T entity);
 
         /// <summary>
         /// Deletes the specified entity.
+        /// Uses an asynchronous.
         /// </summary>
         /// <param name="id">Identifier of the entity to delete.</param>
         /// <returns>Deleted entity.</returns>
-        T Delete(int id);
+        Task<T> DeleteAsync(int id);
     }
 }
