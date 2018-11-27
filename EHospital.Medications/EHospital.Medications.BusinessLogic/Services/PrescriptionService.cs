@@ -87,18 +87,37 @@ namespace EHospital.Medications.BusinessLogic.Services
 
         public PrescriptionGuide GetGuideById(int id)
         {
-            var guide = from p in this.unitOfWork.Prescriptions.GetAll()
-                        where p.Id == id
-                        join d in this.unitOfWork.Drugs.GetAll()
-                        on p.DrugId equals d.Id
-                        select new PrescriptionGuide { Instruction = d.Instruction, Notes = p.Notes };
+            //IQueryable<PrescriptionGuide> guide = from p in this.unitOfWork.Prescriptions.GetAll()
+            //                                      where p.Id == id
+            //                                      join d in this.unitOfWork.Drugs.GetAll()
+            //                                      on p.DrugId equals d.Id
+            //                                      select new PrescriptionGuide { Instruction = d.Instruction, Notes = p.Notes };
+            IQueryable<PrescriptionGuide> guide;
+            try
+            {
+                guide = this.unitOfWork.Prescriptions.GetAll()
+                .Where(p => p.Id == id)
+                .Join(
+                this.unitOfWork.Drugs.GetAll(),
+                p => p.DrugId,
+                d => d.Id,
+                (prescription, drug) => new PrescriptionGuide
+                {
+                    Notes = prescription.Notes,
+                    Instruction = drug.Instruction
+                });
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
+            }
 
             if (guide.FirstOrDefault() == null)
             {
                 throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
             }
 
-            return guide.FirstOrDefault();
+            return guide.First();
         }
 
         public Task<PrescriptionDetails> GetPrescriptionDetailsAsync(int id)

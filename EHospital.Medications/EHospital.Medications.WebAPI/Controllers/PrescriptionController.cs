@@ -30,7 +30,7 @@ namespace EHospital.Medications.WebAPI.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                return this.BadRequest(ex.Message);
+                return this.NotFound(ex.Message);
             }
         }
     }
