@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using EHospital.Medications.Model;
-using System.Collections.Generic;
 
 namespace EHospital.Medications.Data
 {
@@ -60,9 +59,9 @@ namespace EHospital.Medications.Data
         /// <returns>
         /// All entities.
         /// </returns>
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IQueryable<T>> GetAllAsync()
         {
-            return await this.entities.ToListAsync();
+            return await Task.Run(() => this.entities);
         }
 
         /// <summary>
@@ -75,9 +74,9 @@ namespace EHospital.Medications.Data
         /// <returns>
         /// Set of entities.
         /// </returns>
-        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
+        public async Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
         {
-            return await this.entities.Where(predicate).ToListAsync();
+            return await Task.Run(() => this.entities.Where(predicate));
         }
 
         /// <summary>

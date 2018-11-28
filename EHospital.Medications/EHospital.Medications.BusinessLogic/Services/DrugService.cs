@@ -20,12 +20,12 @@ namespace EHospital.Medications.BusinessLogic.Services
             throw new NotImplementedException();
         }
 
-        public IQueryable<Drug> GetAll()
+        public Task<IEnumerable<Drug>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<Drug> GetAllByName(string name)
+        public Task<IEnumerable<Drug>> GetAllByName(string name)
         {
             throw new NotImplementedException();
         }

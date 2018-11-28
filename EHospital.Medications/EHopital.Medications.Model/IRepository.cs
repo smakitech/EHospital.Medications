@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -19,7 +18,7 @@ namespace EHospital.Medications.Model
     {
         /// <summary>Gets all entities in asynchronous mode.</summary>
         /// <returns>All entities.</returns>
-        Task<IEnumerable<T>> GetAllAsync();
+        Task<IQueryable<T>> GetAllAsync();
 
         /// <summary>
         /// Gets all entities by specified predicate
@@ -29,7 +28,7 @@ namespace EHospital.Medications.Model
         /// Predicate specifies search conditions.
         /// </param>
         /// <returns>Set of entities.</returns>
-        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate);
+        Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate);
 
         /// <summary>
         /// Gets the entity specified by identifier in asynchronous mode.

@@ -35,55 +35,19 @@ namespace EHospital.Medications.BusinessLogic.Services
             this.unitOfWork = unitOfWork;
         }
 
-        /// <summary>Adds prescription in asynchronous mode.</summary>
-        /// <param name="item">Prescription to create.</param>
-        /// <returns>Created prescription.</returns>
-        public async Task<Prescription> AddAsync(Prescription item)
+        public Task<Prescription> AddAsync(Prescription item)
         {
-            Prescription prescription = this.unitOfWork.Prescriptions.Insert(item);
-            await this.unitOfWork.Save();
-            return prescription;
+            throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Deletes prescription in asynchronous mode.
-        /// </summary>
-        /// <param name="id">The prescription identifier.</param>
-        /// <returns>Deleted prescription.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// No prescription with such id.
-        /// </exception>
-        public async Task<Prescription> DeleteAsync(int id)
+        public Task<Prescription> DeleteAsync(int id)
         {
-            Prescription prescription = this.unitOfWork.Prescriptions.Delete(id);
-
-            if (prescription == null)
-            {
-                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
-            }
-
-            await this.unitOfWork.Save();
-            return prescription;
+            throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Gets prescription by identifier in asynchronous mode.
-        /// </summary>
-        /// <param name="id">The prescription identifier.</param>
-        /// <returns>Concrete prescription.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// No prescription with such id.
-        /// </exception>
-        public async Task<Prescription> GetByIdAsync(int id)
+        public Task<Prescription> GetByIdAsync(int id)
         {
-            Prescription prescription = await this.unitOfWork.Prescriptions.GetAsync(id);
-
-            if (prescription == null)
-            {
-                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
-            }
-
-            return prescription;
+            throw new NotImplementedException();
         }
 
         public async Task<PrescriptionGuide> GetGuideById(int id)
@@ -93,12 +57,15 @@ namespace EHospital.Medications.BusinessLogic.Services
             //                                      join d in this.unitOfWork.Drugs.GetAll()
             //                                      on p.DrugId equals d.Id
             //                                      select new PrescriptionGuide { Instruction = d.Instruction, Notes = p.Notes };
-           IEnumerable<PrescriptionGuide> guide;
+            IQueryable<PrescriptionGuide> guide;
             try
             {
-                guide = await this.unitOfWork.Prescriptions.GetAllAsync(p => p.Id == id)
+                var prescriptions = await this.unitOfWork.Prescriptions.GetAllAsync(p => p.Id == id);
+                var drugs = await this.unitOfWork.Drugs.GetAllAsync();
+
+                guide = prescriptions.AsQueryable()
                 .Join(
-                this.unitOfWork.Drugs.GetAllAsync(),
+                drugs.AsQueryable(),
                 p => p.DrugId,
                 d => d.Id,
                 (prescription, drug) => new PrescriptionGuide
@@ -125,7 +92,7 @@ namespace EHospital.Medications.BusinessLogic.Services
             throw new NotImplementedException();
         }
 
-        public IQueryable<PrescriptionDetails> GetPrescriptionsDetails(int patientId)
+        public Task<IEnumerable<PrescriptionDetails>> GetPrescriptionsDetails(int patientId)
         {
             throw new NotImplementedException();
         }

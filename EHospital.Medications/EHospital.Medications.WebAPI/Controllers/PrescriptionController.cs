@@ -25,7 +25,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         {
             try
             {
-                PrescriptionGuide guide = this.service.GetGuideById(id);
+                PrescriptionGuide guide = this.service.GetGuideByIdAsync(id);
                 return this.Ok(guide);
             }
             catch (ArgumentNullException ex)
