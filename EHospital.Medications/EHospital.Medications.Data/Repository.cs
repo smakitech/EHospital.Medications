@@ -88,8 +88,7 @@ namespace EHospital.Medications.Data
         /// </returns>
         public async Task<T> GetAsync(int id)
         {
-            T item = await this.entities.FindAsync(id);
-            return (item != null) ? item : null;
+            return await this.entities.FindAsync(id);
         }
 
         /// <summary>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EHospital.Medications.Model;
 using Microsoft.EntityFrameworkCore;
@@ -71,6 +73,17 @@ namespace EHospital.Medications.Data
             {
                 return this.prescriptions.Value;
             }
+        }
+
+        /// <summary>
+        /// Gets the doctors  in asynchronous mode.
+        /// </summary>
+        /// <returns>
+        /// Set of doctors.
+        /// </returns>
+        public async Task<IQueryable<DoctorView>> GetAllDoctorsAsync()
+        {
+            return await Task.Run(() => UnitOfWork.context.DoctorsView);
         }
 
         /// <summary>

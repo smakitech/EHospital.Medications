@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace EHospital.Medications.Model
@@ -20,6 +22,12 @@ namespace EHospital.Medications.Model
         /// Provides access to prescription repository functionality.
         /// </summary>
         IRepository<Prescription> Prescriptions { get; }
+
+        /// <summary>
+        /// Gets the doctors in asynchronous mode.
+        /// </summary>
+        /// <returns>Set of doctors.</returns>
+        Task<IQueryable<DoctorView>> GetAllDoctorsAsync();
 
         /// <summary>
         /// Updates the prescription status to historic

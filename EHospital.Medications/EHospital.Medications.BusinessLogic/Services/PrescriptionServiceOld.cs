@@ -122,15 +122,7 @@
 //        // TODO: Change Logic, add documentation
 //        public async Task<bool> UpdateStatusAsync(int id)
 //        {
-//            Prescription target = this.unitOfWork.Prescriptions.Get(id);
-//            if (target == null)
-//            {
-//                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
-//            }
-
-//            bool result = this.unitOfWork.UpdatePrescriptionStatus(id);
-//            await this.unitOfWork.Save();
-//            return result;
+//            Pres
 //        }
 //    }
 //}

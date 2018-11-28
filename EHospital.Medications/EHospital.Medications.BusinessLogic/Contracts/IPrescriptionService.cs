@@ -27,15 +27,6 @@ namespace EHospital.Medications.BusinessLogic.Contracts
         Task<PrescriptionGuide> GetGuideById(int id);
 
         /// <summary>
-        /// Gets the all details of concrete prescription
-        /// specified by id in asynchronous mode.
-        /// Includes doctor and drug extended details.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns>Concrete prescription in details.</returns>
-        Task<PrescriptionDetails> GetPrescriptionDetailsAsync(int id);
-
-        /// <summary>
         /// Allows to update prescription status manually to historic
         /// in asynchronous mode.
         /// </summary>

@@ -17,6 +17,11 @@ namespace EHospital.Medications.BusinessLogic.Services
         private const string PRESCRIPTION_IS_NOT_FOUND = "No prescription with such id.";
 
         /// <summary>
+        /// Exception message in case any prescription was found in the database.
+        /// </summary>
+        private const string PRESCRIPTIONS_ARE_NOT_FOUND = "No prescriptions found.";
+
+        /// <summary>
         /// Combine usage of unit of work and repository pattern.
         /// It contain repositories for each entity
         /// and one common database context in order
@@ -35,76 +40,138 @@ namespace EHospital.Medications.BusinessLogic.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public Task<Prescription> AddAsync(Prescription item)
+        public async Task<Prescription> AddAsync(Prescription item)
         {
-            throw new NotImplementedException();
+            Prescription result = this.unitOfWork.Prescriptions.Insert(item);
+            await this.unitOfWork.Save();
+            return result;
         }
 
-        public Task<Prescription> DeleteAsync(int id)
+        public async Task<Prescription> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            Prescription result = await this.unitOfWork.Prescriptions.DeleteAsync(id);
+            if (result == null)
+            {
+                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
+            }
+
+            await this.unitOfWork.Save();
+            return result;
         }
 
-        public Task<Prescription> GetByIdAsync(int id)
+        public async Task<Prescription> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            Prescription result = await this.unitOfWork.Prescriptions.GetAsync(id);
+            if (result == null)
+            {
+                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
+            }
+
+            return result;
         }
 
         public async Task<PrescriptionGuide> GetGuideById(int id)
         {
-            //IQueryable<PrescriptionGuide> guide = from p in this.unitOfWork.Prescriptions.GetAll()
-            //                                      where p.Id == id
-            //                                      join d in this.unitOfWork.Drugs.GetAll()
-            //                                      on p.DrugId equals d.Id
-            //                                      select new PrescriptionGuide { Instruction = d.Instruction, Notes = p.Notes };
-            IQueryable<PrescriptionGuide> guide;
-            try
+            // Return IQueryable<Prescription> with one entity
+            var prescriptions = await this.unitOfWork.Prescriptions.GetAllAsync(p => p.Id == id);
+            if (prescriptions == null)
             {
-                var prescriptions = await this.unitOfWork.Prescriptions.GetAllAsync(p => p.Id == id);
-                var drugs = await this.unitOfWork.Drugs.GetAllAsync();
+                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
+            }
 
-                guide = prescriptions.AsQueryable()
-                .Join(
-                drugs.AsQueryable(),
+            // Return IQueryable<Drug> with one entity
+            var drugs = await this.unitOfWork.Drugs.GetAllAsync(d => d.Id == prescriptions.First().DrugId);
+
+            // Return IQueryable<PrescriptionGuide> with one entity
+            var guide = prescriptions.Join(
+                drugs,
                 p => p.DrugId,
                 d => d.Id,
-                (prescription, drug) => new PrescriptionGuide
+                (p, d) => new PrescriptionGuide
                 {
-                    Notes = prescription.Notes,
-                    Instruction = drug.Instruction
+                    Notes = p.Notes,
+                    Instruction = d.Instruction
                 });
-            }
-            catch (ArgumentNullException)
+
+            PrescriptionGuide result = guide.FirstOrDefault();
+
+            if (result == null)
             {
                 throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
             }
 
-            if (guide.FirstOrDefault() == null)
+            return result;
+        }
+
+        public async Task<IEnumerable<PrescriptionDetails>> GetPrescriptionsDetails(int patientId)
+        {
+            // Return IQueryable<Prescription> with prescription of concrete patient which are not deleted
+            var prescriptions = await this.unitOfWork.Prescriptions.GetAllAsync(p => p.PatientId == patientId && p.IsDeleted == false);
+            if (prescriptions == null)
+            {
+                throw new ArgumentNullException(PRESCRIPTIONS_ARE_NOT_FOUND);
+            }
+
+            // Return IQueryable<Drug> with drugs
+            Task<IQueryable<Drug>> drugs = Task.Run(() => this.unitOfWork.Drugs.GetAllAsync());
+
+            // Return IQueryable<DoctorView> with drugs
+            Task<IQueryable<DoctorView>> doctors = Task.Run(() => this.unitOfWork.GetAllDoctorsAsync());
+            await Task.WhenAll(drugs, doctors);
+
+            // Return IQueryable with one entity
+            var details = from prescription in prescriptions
+                          join drug in drugs.Result
+                          on prescription.DrugId equals drug.Id
+                          join doctor in doctors.Result
+                          on prescription.UserId equals doctor.Id
+                          select new PrescriptionDetails
+                          {
+                              Id = prescription.Id,
+                              FirstName = doctor.FirstName,
+                              LastName = doctor.LastName,
+                              Name = drug.Name,
+                              Type = drug.Type,
+                              Dose = drug.Dose,
+                              DoseUnit = drug.DoseUnit,
+                              Direction = drug.Direction,
+                              IsDeleted = drug.IsDeleted,
+                              AssignmentDate = prescription.AssignmentDate,
+                              Duration = prescription.Duration,
+                              IsFinished = prescription.IsFinished
+                          };
+
+            if (details == null)
+            {
+                throw new ArgumentNullException(PRESCRIPTIONS_ARE_NOT_FOUND);
+            }
+
+            return details;
+        }
+
+        public async Task<Prescription> UpdateAsync(int id, Prescription item)
+        {
+            Prescription result = await this.unitOfWork.Prescriptions.UpdateAsync(id, item);
+            if (result == null)
             {
                 throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
             }
 
-            return guide.First();
+            await this.unitOfWork.Save();
+            return result;
         }
 
-        public Task<PrescriptionDetails> GetPrescriptionDetailsAsync(int id)
+        public async Task<Prescription> UpdateStatusAsync(int id)
         {
-            throw new NotImplementedException();
-        }
+            Prescription result = await this.unitOfWork.Prescriptions.GetAsync(id);
+            if (result == null)
+            {
+                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
+            }
 
-        public Task<IEnumerable<PrescriptionDetails>> GetPrescriptionsDetails(int patientId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Prescription> UpdateAsync(int id, Prescription item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Prescription> UpdateStatusAsync(int id)
-        {
-            throw new NotImplementedException();
+            await this.unitOfWork.UpdateStatusManually(id);
+            result = await this.unitOfWork.Prescriptions.GetAsync(id);
+            return result;
         }
     }
 }
