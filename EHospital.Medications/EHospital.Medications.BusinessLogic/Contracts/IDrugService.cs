@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using EHospital.Medications.Model;
 
 namespace EHospital.Medications.BusinessLogic.Contracts
@@ -10,16 +11,17 @@ namespace EHospital.Medications.BusinessLogic.Contracts
     public interface IDrugService : IService<Drug>
     {
         /// <summary>
-        /// Gets all drugs.
+        /// Gets all drugs in asynchronous mode.
         /// </summary>
         /// <returns>Drugs.</returns>
-        IQueryable<Drug> GetAll();
+        Task<IEnumerable<Drug>> GetAll();
 
         /// <summary>
-        /// Gets all drugs by specified name.
+        /// Gets all drugs by specified name
+        /// in asynchronous mode.
         /// </summary>
         /// <param name="name">Specified name.</param>
         /// <returns>Drugs.</returns>
-        IQueryable<Drug> GetAllByName(string name);
+        Task<IEnumerable<Drug>> GetAllByName(string name);
     }
 }

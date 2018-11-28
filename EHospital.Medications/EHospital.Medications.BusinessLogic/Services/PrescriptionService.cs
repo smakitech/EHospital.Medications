@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EHospital.Medications.BusinessLogic.Contracts;
@@ -85,20 +86,19 @@ namespace EHospital.Medications.BusinessLogic.Services
             return prescription;
         }
 
-        public PrescriptionGuide GetGuideById(int id)
+        public async Task<PrescriptionGuide> GetGuideById(int id)
         {
             //IQueryable<PrescriptionGuide> guide = from p in this.unitOfWork.Prescriptions.GetAll()
             //                                      where p.Id == id
             //                                      join d in this.unitOfWork.Drugs.GetAll()
             //                                      on p.DrugId equals d.Id
             //                                      select new PrescriptionGuide { Instruction = d.Instruction, Notes = p.Notes };
-            IQueryable<PrescriptionGuide> guide;
+           IEnumerable<PrescriptionGuide> guide;
             try
             {
-                guide = this.unitOfWork.Prescriptions.GetAll()
-                .Where(p => p.Id == id)
+                guide = await this.unitOfWork.Prescriptions.GetAllAsync(p => p.Id == id)
                 .Join(
-                this.unitOfWork.Drugs.GetAll(),
+                this.unitOfWork.Drugs.GetAllAsync(),
                 p => p.DrugId,
                 d => d.Id,
                 (prescription, drug) => new PrescriptionGuide

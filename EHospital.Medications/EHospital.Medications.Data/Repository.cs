@@ -60,7 +60,7 @@ namespace EHospital.Medications.Data
         /// <returns>
         /// All entities.
         /// </returns>
-        public async Task<ICollection<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await this.entities.ToListAsync();
         }
@@ -75,7 +75,7 @@ namespace EHospital.Medications.Data
         /// <returns>
         /// Set of entities.
         /// </returns>
-        public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
         {
             return await this.entities.Where(predicate).ToListAsync();
         }

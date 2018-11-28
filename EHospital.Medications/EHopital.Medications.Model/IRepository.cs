@@ -19,7 +19,7 @@ namespace EHospital.Medications.Model
     {
         /// <summary>Gets all entities in asynchronous mode.</summary>
         /// <returns>All entities.</returns>
-        Task<ICollection<T>> GetAllAsync();
+        Task<IEnumerable<T>> GetAllAsync();
 
         /// <summary>
         /// Gets all entities by specified predicate
@@ -29,7 +29,7 @@ namespace EHospital.Medications.Model
         /// Predicate specifies search conditions.
         /// </param>
         /// <returns>Set of entities.</returns>
-        Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate);
+        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate);
 
         /// <summary>
         /// Gets the entity specified by identifier in asynchronous mode.

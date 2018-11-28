@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using EHospital.Medications.Model;
 
 namespace EHospital.Medications.BusinessLogic.Contracts
@@ -11,12 +11,12 @@ namespace EHospital.Medications.BusinessLogic.Contracts
     public interface IPrescriptionService : IService<Prescription>
     {
         /// <summary>
-        /// Gets all prescription details specified by patient identifier.
-        /// Includes doctor and drug extended details.
+        /// Gets all prescription details specified by patient identifier
+        /// in asynchronous mode. Includes doctor and drug extended details.
         /// </summary>
         /// <param name="patientId">The Patient identifier.</param>
         /// <returns>All patient prescriptions in details.</returns>
-        IQueryable<PrescriptionDetails> GetPrescriptionsDetails(int patientId);
+        Task<IEnumerable<PrescriptionDetails>> GetPrescriptionsDetails(int patientId);
 
         /// <summary>
         /// Gets the guide by identifier in asynchronous mode.
@@ -24,7 +24,7 @@ namespace EHospital.Medications.BusinessLogic.Contracts
         /// </summary>
         /// <param name="id">The prescription identifier.</param>
         /// <returns>Drug instruction and doctor's notes.</returns>
-        PrescriptionGuide GetGuideById(int id);
+        Task<PrescriptionGuide> GetGuideById(int id);
 
         /// <summary>
         /// Gets the all details of concrete prescription
