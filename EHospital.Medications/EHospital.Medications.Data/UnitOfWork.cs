@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EHospital.Medications.Model;
 using Microsoft.EntityFrameworkCore;
@@ -101,16 +100,14 @@ namespace EHospital.Medications.Data
         /// Method aimed to be used in get methods and as part of
         /// UpdateStatusManully method.
         /// </summary>
-        /// <param name="id">The prescription identifier.</param>
         /// <returns>
         /// Task object.
         /// </returns>
-        public async Task UpdateStatusAutomatically(int id)
+        public async Task UpdateStatusAutomatically()
         {
             // TODO: Inactive Store Procedure
-            var parameterId = new SqlParameter("@Id", id);
-            string procedure = "UpdateStatusAuthomaticallyPrescription @Id";
-            await UnitOfWork.context.Database.ExecuteSqlCommandAsync(procedure, parameters: parameterId);
+            string procedure = "UpdateStatusAuthomaticallyPrescription";
+            await UnitOfWork.context.Database.ExecuteSqlCommandAsync(procedure);
         }
 
         /// <summary>

@@ -9,24 +9,25 @@ using EHospital.Medications.Model;
 
 namespace EHospital.Medications.WebAPI.Controllers
 {
-    [Route("prescriptions")]
+    [Route("[Controller]")]
     [ApiController]
-    public class PrescriptionController : ControllerBase
+    public class PrescriptionsController : ControllerBase
     {
         private readonly IPrescriptionService service;
 
-        public PrescriptionController(IPrescriptionService service)
+        public PrescriptionsController(IPrescriptionService service)
         {
             this.service = service;
         }
 
-        [HttpGet("{id}/guide")]
-        public IActionResult GetPrescriptionById(int id)
+        [Route("details/{patientId}")]
+        [HttpGet]
+        public async Task<IActionResult> GetPrescriptionsDetailsByPatientId(int patientId)
         {
             try
             {
-                PrescriptionGuide guide = this.service.GetGuideByIdAsync(id);
-                return this.Ok(guide);
+                IEnumerable<PrescriptionDetails> result = await this.service.GetPrescriptionsDetails(patientId);
+                return this.Ok(result);
             }
             catch (ArgumentNullException ex)
             {

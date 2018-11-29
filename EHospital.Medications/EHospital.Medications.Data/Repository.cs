@@ -76,7 +76,14 @@ namespace EHospital.Medications.Data
         /// </returns>
         public async Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
         {
-            return await Task.Run(() => this.entities.Where(predicate));
+            try
+            {
+                return await Task.Run(() => this.entities.Where(predicate));
+            }
+            catch (ArgumentNullException)
+            {
+                return null;
+            }
         }
 
         /// <summary>

@@ -35,9 +35,8 @@ namespace EHospital.Medications.Model
         /// Method aimed to be used in get methods and as part of
         /// UpdateStatusManully method.
         /// </summary>
-        /// <param name="id">The prescription identifier.</param>
         /// <returns>Task object.</returns>
-        Task UpdateStatusAutomatically(int id);
+        Task UpdateStatusAutomatically();
 
         /// <summary>
         /// Updates the prescription status to historic

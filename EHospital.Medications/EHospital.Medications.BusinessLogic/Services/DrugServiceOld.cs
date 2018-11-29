@@ -14,7 +14,7 @@
 //        /// Exception message in case drug is already exist in the database
 //        /// or soft deleted - has value <c>true</c> in property IsDeleted.
 //        /// </summary>
-//        private const string DRUG_IS_EXIST_OR_STORES_AS_SOFT_DELETED 
+//        private const string DRUG_IS_EXIST_OR_STORES_AS_SOFT_DELETED
 //            = "Such drug is already exist in database or stores with deleted status.";
 
 //        /// <summary>

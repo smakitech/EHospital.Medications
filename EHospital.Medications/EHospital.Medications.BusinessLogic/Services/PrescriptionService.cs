@@ -40,6 +40,13 @@ namespace EHospital.Medications.BusinessLogic.Services
             this.unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// Creates entity in asynchronous mode.
+        /// </summary>
+        /// <param name="item">Entity to create.</param>
+        /// <returns>
+        /// Created entity.
+        /// </returns>
         public async Task<Prescription> AddAsync(Prescription item)
         {
             Prescription result = this.unitOfWork.Prescriptions.Insert(item);
@@ -47,6 +54,14 @@ namespace EHospital.Medications.BusinessLogic.Services
             return result;
         }
 
+        /// <summary>
+        /// Deletes entity in asynchronous mode.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// Deleted entity.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public async Task<Prescription> DeleteAsync(int id)
         {
             Prescription result = await this.unitOfWork.Prescriptions.DeleteAsync(id);
@@ -59,6 +74,14 @@ namespace EHospital.Medications.BusinessLogic.Services
             return result;
         }
 
+        /// <summary>
+        /// Gets entity by the identifier in asynchronous mode.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// Concrete entity.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public async Task<Prescription> GetByIdAsync(int id)
         {
             Prescription result = await this.unitOfWork.Prescriptions.GetAsync(id);
@@ -70,6 +93,16 @@ namespace EHospital.Medications.BusinessLogic.Services
             return result;
         }
 
+        /// <summary>
+        /// Gets the guide by identifier in asynchronous mode.
+        /// Includes drug instruction and doctor's notes.
+        /// </summary>
+        /// <param name="id">The prescription identifier.</param>
+        /// <returns>
+        /// Drug instruction and doctor's notes.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// </exception>
         public async Task<PrescriptionGuide> GetGuideById(int id)
         {
             // Return IQueryable<Prescription> with one entity
@@ -103,20 +136,31 @@ namespace EHospital.Medications.BusinessLogic.Services
             return result;
         }
 
+        /// <summary>
+        /// Gets all prescription details specified by patient identifier
+        /// in asynchronous mode. Includes doctor and drug extended details.
+        /// </summary>
+        /// <param name="patientId">The Patient identifier.</param>
+        /// <returns>
+        /// All patient prescriptions in details.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Exception
+        /// </exception>
         public async Task<IEnumerable<PrescriptionDetails>> GetPrescriptionsDetails(int patientId)
         {
             // Return IQueryable<Prescription> with prescription of concrete patient which are not deleted
             var prescriptions = await this.unitOfWork.Prescriptions.GetAllAsync(p => p.PatientId == patientId && p.IsDeleted == false);
             if (prescriptions == null)
             {
-                throw new ArgumentNullException(PRESCRIPTIONS_ARE_NOT_FOUND);
+                throw new ArgumentNullException("Got it");
             }
 
             // Return IQueryable<Drug> with drugs
-            Task<IQueryable<Drug>> drugs = Task.Run(() => this.unitOfWork.Drugs.GetAllAsync());
+            Task<IQueryable<Drug>> drugs = this.unitOfWork.Drugs.GetAllAsync();
 
             // Return IQueryable<DoctorView> with drugs
-            Task<IQueryable<DoctorView>> doctors = Task.Run(() => this.unitOfWork.GetAllDoctorsAsync());
+            Task<IQueryable<DoctorView>> doctors = this.unitOfWork.GetAllDoctorsAsync();
             await Task.WhenAll(drugs, doctors);
 
             // Return IQueryable with one entity
@@ -141,14 +185,19 @@ namespace EHospital.Medications.BusinessLogic.Services
                               IsFinished = prescription.IsFinished
                           };
 
-            if (details == null)
-            {
-                throw new ArgumentNullException(PRESCRIPTIONS_ARE_NOT_FOUND);
-            }
-
+            // TODO: AsEnumerable
             return details;
         }
 
+        /// <summary>
+        /// Updates entity in asynchronous mode.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="item">The entity with updated properties.</param>
+        /// <returns>
+        /// Updated entity.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public async Task<Prescription> UpdateAsync(int id, Prescription item)
         {
             Prescription result = await this.unitOfWork.Prescriptions.UpdateAsync(id, item);
@@ -161,6 +210,15 @@ namespace EHospital.Medications.BusinessLogic.Services
             return result;
         }
 
+        /// <summary>
+        /// Allows to update prescription status manually to historic
+        /// in asynchronous mode.
+        /// </summary>
+        /// <param name="id">The prescription identifier.</param>
+        /// <returns>
+        /// Historic prescription.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public async Task<Prescription> UpdateStatusAsync(int id)
         {
             Prescription result = await this.unitOfWork.Prescriptions.GetAsync(id);
