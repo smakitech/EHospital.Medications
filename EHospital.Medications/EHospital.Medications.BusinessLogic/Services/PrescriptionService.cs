@@ -148,7 +148,6 @@ namespace EHospital.Medications.BusinessLogic.Services
             // TODO: GetGuideByIdGetPrescriptionsDetails - UpdateStatusAuto Procedure
             // TODO: GetGuideByIdGetPrescriptionsDetails - OrderBy
             // TODO: GetGuideByIdGetPrescriptionsDetails - IsDeleted
-            // TODO: GetGuideByIdGetPrescriptionsDetails - AsEnumerable
             // Return IQueryable<Prescription> with prescription of concrete patient which are not deleted
             IQueryable<Prescription> prescriptions = await this.unitOfWork.Prescriptions
                 .GetAllAsync(p => p.PatientId == patientId && p.IsDeleted == false);

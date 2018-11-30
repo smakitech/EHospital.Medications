@@ -60,11 +60,10 @@ namespace EHospital.Medications.BusinessLogic.Services
             return result;
         }
 
-        public async Task<IEnumerable<Drug>> GetAll()
+        public async Task<IEnumerable<Drug>> GetAllAsync()
         {
             // TODO: GetAllDrugs - OrderBy
             // TODO: GetAllDrugs - IsDeleted
-            // TODO: GetAllDrugs - AsEnumerable
             IEnumerable<Drug> result = await this.unitOfWork.Drugs.GetAllAsync(d => d.IsDeleted == false);
             if (result.Count() == 0)
             {
@@ -74,12 +73,11 @@ namespace EHospital.Medications.BusinessLogic.Services
             return result.OrderBy(d => d.Name);
         }
 
-        public async Task<IEnumerable<Drug>> GetAllByName(string name)
+        public async Task<IEnumerable<Drug>> GetAllByNameAsync(string name)
         {
             // TODO: GetAllDrugsByName - Handle Invalid Name
             // TODO: GetAllDrugsByName - OrderBy
             // TODO: GetAllDrugsByName - IsDeleted
-            // TODO: GetAllDrugsByName - AsEnumerable
             IEnumerable<Drug> result = await this.unitOfWork.Drugs.GetAllAsync(d => d.Name == name && d.IsDeleted == false);
             if (result.Count() == 0)
             {

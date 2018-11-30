@@ -14,7 +14,7 @@ namespace EHospital.Medications.BusinessLogic.Contracts
         /// Gets all drugs in asynchronous mode.
         /// </summary>
         /// <returns>Drugs.</returns>
-        Task<IEnumerable<Drug>> GetAll();
+        Task<IEnumerable<Drug>> GetAllAsync();
 
         /// <summary>
         /// Gets all drugs by specified name
@@ -22,6 +22,6 @@ namespace EHospital.Medications.BusinessLogic.Contracts
         /// </summary>
         /// <param name="name">Specified name.</param>
         /// <returns>Drugs.</returns>
-        Task<IEnumerable<Drug>> GetAllByName(string name);
+        Task<IEnumerable<Drug>> GetAllByNameAsync(string name);
     }
 }
