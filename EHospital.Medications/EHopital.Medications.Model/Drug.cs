@@ -30,6 +30,7 @@ namespace EHospital.Medications.Model
         public string Type { get; set; }
 
         /// <summary>Gets or sets the dose.</summary>
+        [Required]
         [Range(1, float.MaxValue - 1)]
         public double Dose { get; set; }
 
@@ -51,6 +52,7 @@ namespace EHospital.Medications.Model
         /// Gets or sets a value indicating
         /// whether drug is deleted.
         /// </summary>
+        [Required]
         public bool IsDeleted { get; set; }
 
         /// <summary>

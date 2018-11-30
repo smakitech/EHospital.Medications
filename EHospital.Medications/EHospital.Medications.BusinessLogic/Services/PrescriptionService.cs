@@ -151,10 +151,6 @@ namespace EHospital.Medications.BusinessLogic.Services
         {
             // Return IQueryable<Prescription> with prescription of concrete patient which are not deleted
             var prescriptions = await this.unitOfWork.Prescriptions.GetAllAsync(p => p.PatientId == patientId && p.IsDeleted == false);
-            if (prescriptions == null)
-            {
-                throw new ArgumentNullException("Got it");
-            }
 
             // Return IQueryable<Drug> with drugs
             Task<IQueryable<Drug>> drugs = this.unitOfWork.Drugs.GetAllAsync();
