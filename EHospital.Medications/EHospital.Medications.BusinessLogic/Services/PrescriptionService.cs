@@ -7,6 +7,8 @@ using EHospital.Medications.Model;
 
 namespace EHospital.Medications.BusinessLogic.Services
 {
+    /// TODO: PrescriptionService documentation
+    /// TODO: Remove previous service version
     /// <summary>Represents prescription service.</summary>
     /// <seealso cref="IPrescriptionService"/>
     public class PrescriptionService : IPrescriptionService
@@ -105,12 +107,10 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// </exception>
         public async Task<PrescriptionGuide> GetGuideById(int id)
         {
+            // TODO: GetGuideById - handle invalid id
+            // TODO: GetGuideById - IsDeleted Behavior
             // Return IQueryable<Prescription> with one entity
             var prescriptions = await this.unitOfWork.Prescriptions.GetAllAsync(p => p.Id == id);
-            if (prescriptions == null)
-            {
-                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
-            }
 
             // Return IQueryable<Drug> with one entity
             var drugs = await this.unitOfWork.Drugs.GetAllAsync(d => d.Id == prescriptions.First().DrugId);
@@ -128,11 +128,6 @@ namespace EHospital.Medications.BusinessLogic.Services
 
             PrescriptionGuide result = guide.FirstOrDefault();
 
-            if (result == null)
-            {
-                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
-            }
-
             return result;
         }
 
@@ -149,8 +144,14 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// </exception>
         public async Task<IEnumerable<PrescriptionDetails>> GetPrescriptionsDetails(int patientId)
         {
+            // TODO: GetGuideByIdGetPrescriptionsDetails - Handle Invalid Id
+            // TODO: GetGuideByIdGetPrescriptionsDetails - UpdateStatusAuto Procedure
+            // TODO: GetGuideByIdGetPrescriptionsDetails - OrderBy
+            // TODO: GetGuideByIdGetPrescriptionsDetails - IsDeleted
+            // TODO: GetGuideByIdGetPrescriptionsDetails - AsEnumerable
             // Return IQueryable<Prescription> with prescription of concrete patient which are not deleted
-            var prescriptions = await this.unitOfWork.Prescriptions.GetAllAsync(p => p.PatientId == patientId && p.IsDeleted == false);
+            IQueryable<Prescription> prescriptions = await this.unitOfWork.Prescriptions
+                .GetAllAsync(p => p.PatientId == patientId && p.IsDeleted == false);
 
             // Return IQueryable<Drug> with drugs
             Task<IQueryable<Drug>> drugs = this.unitOfWork.Drugs.GetAllAsync();
@@ -181,7 +182,6 @@ namespace EHospital.Medications.BusinessLogic.Services
                               IsFinished = prescription.IsFinished
                           };
 
-            // TODO: AsEnumerable
             return details;
         }
 

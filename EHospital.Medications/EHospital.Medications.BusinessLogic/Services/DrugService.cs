@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using EHospital.Medications.BusinessLogic.Contracts;
 using EHospital.Medications.Model;
 
 namespace EHospital.Medications.BusinessLogic.Services
 {
+    /// TODO: DrugService documentation
+    /// TODO: Remove previous service version
     /// <summary>Represents drug service.</summary>
     /// <seealso cref="IDrugService"/>
     public class DrugService : IDrugService
@@ -43,6 +44,7 @@ namespace EHospital.Medications.BusinessLogic.Services
 
         public async Task<Drug> AddAsync(Drug item)
         {
+            // TODO: AddDrug Tricky
             throw new NotImplementedException();
         }
 
@@ -60,25 +62,30 @@ namespace EHospital.Medications.BusinessLogic.Services
 
         public async Task<IEnumerable<Drug>> GetAll()
         {
+            // TODO: GetAllDrugs - OrderBy
+            // TODO: GetAllDrugs - IsDeleted
+            // TODO: GetAllDrugs - AsEnumerable
             IEnumerable<Drug> result = await this.unitOfWork.Drugs.GetAllAsync(d => d.IsDeleted == false);
             if (result.Count() == 0)
             {
                 throw new ArgumentNullException(DRUGS_ARE_NOT_FOUND);
             }
 
-            // TODO: AsEnumerable
             return result.OrderBy(d => d.Name);
         }
 
         public async Task<IEnumerable<Drug>> GetAllByName(string name)
         {
+            // TODO: GetAllDrugsByName - Handle Invalid Name
+            // TODO: GetAllDrugsByName - OrderBy
+            // TODO: GetAllDrugsByName - IsDeleted
+            // TODO: GetAllDrugsByName - AsEnumerable
             IEnumerable<Drug> result = await this.unitOfWork.Drugs.GetAllAsync(d => d.Name == name && d.IsDeleted == false);
             if (result.Count() == 0)
             {
                 throw new ArgumentNullException(DRUGS_ARE_NOT_FOUND);
             }
 
-            // TODO: AsEnumerable
             return result.OrderBy(d => d.Name);
         }
 
@@ -95,6 +102,7 @@ namespace EHospital.Medications.BusinessLogic.Services
 
         public Task<Drug> UpdateAsync(int id, Drug item)
         {
+            // TODO: UpdateDrug Tricky
             throw new NotImplementedException();
         }
 

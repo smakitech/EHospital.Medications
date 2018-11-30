@@ -9,6 +9,7 @@ namespace EHospital.Medications.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
+        /// TODO: UnitOfWork Help Methods
         /// <summary>
         /// The medications database context.
         /// </summary>
@@ -105,7 +106,6 @@ namespace EHospital.Medications.Data
         /// </returns>
         public async Task UpdateStatusAutomatically()
         {
-            // TODO: Inactive Store Procedure
             string procedure = "UpdateStatusAuthomaticallyPrescription";
             await UnitOfWork.context.Database.ExecuteSqlCommandAsync(procedure);
         }
@@ -120,8 +120,6 @@ namespace EHospital.Medications.Data
         /// </returns>
         public async Task UpdateStatusManually(int id)
         {
-            // TODO: Inactive Store Procedure
-            // UpdateStatusAuthomatically is performing before
             var parameterId = new SqlParameter("@Id", id);
             string procedure = "UpdateStatusManuallyPrescription @Id";
             await UnitOfWork.context.Database.ExecuteSqlCommandAsync(procedure, parameters: parameterId);

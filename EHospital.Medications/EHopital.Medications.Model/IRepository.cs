@@ -16,6 +16,7 @@ namespace EHospital.Medications.Model
     /// <seealso cref="IDisposable"/>
     public interface IRepository<T> : IDisposable where T : BaseEntity, ISoftDeletion
     {
+        /// TODO: IRepository Help Methods
         /// <summary>Gets all entities in asynchronous mode.</summary>
         /// <returns>All entities.</returns>
         Task<IQueryable<T>> GetAllAsync();
@@ -31,7 +32,8 @@ namespace EHospital.Medications.Model
         Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate);
 
         /// <summary>
-        /// Gets the entity specified by identifier in asynchronous mode.
+        /// Gets the entity specified by identifier
+        /// in asynchronous mode.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Concrete entity.</returns>
