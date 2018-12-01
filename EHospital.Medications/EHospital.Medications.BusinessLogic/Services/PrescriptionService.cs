@@ -21,7 +21,7 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// <summary>
         /// Exception message in case any prescription was found in the database.
         /// </summary>
-        private const string PRESCRIPTIONS_ARE_NOT_FOUND = "No prescriptions found.";
+        private const string PRESCRIPTIONS_ARE_NOT_FOUND = "No prescriptions found by such patient id.";
 
         /// <summary>
         /// Combine usage of unit of work and repository pattern.
@@ -115,7 +115,7 @@ namespace EHospital.Medications.BusinessLogic.Services
             // TODO: GetGuideById - handle invalid id
             // TODO: GetGuideById - IsDeleted Behavior
             // Return IQueryable<Prescription> with one entity
-            var prescriptions = await this.unitOfWork.Prescriptions.GetAllAsync(p => p.Id == id);
+            var prescriptions = await this.unitOfWork.Prescriptions.GetAllAsync(p => p.Id == id && p.IsDeleted == false);
             if (prescriptions.Count() == 0)
             {
                 throw new ArgumentException(PRESCRIPTION_IS_NOT_FOUND);
@@ -148,11 +148,14 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// <returns>
         /// All patient prescriptions in details.
         /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// Exception
+        /// <exception cref="ArgumentException">
+        /// No prescriptions found by such patient id.
         /// </exception>
         public async Task<IEnumerable<PrescriptionDetails>> GetPrescriptionsDetails(int patientId)
         {
+            // Calculates CurrentDate - AssignmentDate, compares with Duration
+            // and changes status to historic for all records where subtraction more the Duration
+            await this.unitOfWork.UpdateStatusAutomatically();
             // TODO: GetGuideByIdGetPrescriptionsDetails - Handle Invalid Id
             // TODO: GetGuideByIdGetPrescriptionsDetails - UpdateStatusAuto Procedure
             // TODO: GetGuideByIdGetPrescriptionsDetails - OrderBy
@@ -160,6 +163,10 @@ namespace EHospital.Medications.BusinessLogic.Services
             // Return IQueryable<Prescription> with prescription of concrete patient which are not deleted
             IQueryable<Prescription> prescriptions = await this.unitOfWork.Prescriptions
                 .GetAllAsync(p => p.PatientId == patientId && p.IsDeleted == false);
+            if (prescriptions.Count() == 0)
+            {
+                throw new ArgumentException(PRESCRIPTIONS_ARE_NOT_FOUND);
+            }
 
             // Return IQueryable<Drug> with drugs
             Task<IQueryable<Drug>> drugs = this.unitOfWork.Drugs.GetAllAsync();
@@ -190,7 +197,7 @@ namespace EHospital.Medications.BusinessLogic.Services
                               IsFinished = prescription.IsFinished
                           };
 
-            return details;
+            return details.OrderBy(pd => pd.AssignmentDate);
         }
 
         /// <summary>
@@ -201,13 +208,15 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// <returns>
         /// Updated entity.
         /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException">
+        /// No prescription with such id.
+        /// </exception>
         public async Task<Prescription> UpdateAsync(int id, Prescription item)
         {
             Prescription result = await this.unitOfWork.Prescriptions.UpdateAsync(id, item);
-            if (result == null)
+            if (result == null || result.IsDeleted == true)
             {
-                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
+                throw new ArgumentException(PRESCRIPTION_IS_NOT_FOUND);
             }
 
             await this.unitOfWork.Save();
@@ -222,18 +231,19 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// <returns>
         /// Historic prescription.
         /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentNullException">
+        /// No prescription with such id.
+        /// </exception>
         public async Task<Prescription> UpdateStatusAsync(int id)
         {
             Prescription result = await this.unitOfWork.Prescriptions.GetAsync(id);
-            if (result == null)
+            if (result == null || result.IsDeleted == true || result.IsFinished == true)
             {
-                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
+                throw new ArgumentException(PRESCRIPTION_IS_NOT_FOUND);
             }
 
             await this.unitOfWork.UpdateStatusManually(id);
-            result = await this.unitOfWork.Prescriptions.GetAsync(id);
-            return result;
+            return await this.unitOfWork.Prescriptions.GetAsync(id);
         }
     }
 }

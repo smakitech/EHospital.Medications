@@ -11,7 +11,7 @@ namespace EHospital.Medications.WebAPI.Controllers
     // TODO: PrescriptionsController - Add documentation
     // TODO: PrescriptionsController - Remove previous version
     // TODO: Handle Exceptions
-    [Route("api/[controller]")]
+    [Route("api/prescriptions")]
     [ApiController]
     public class PrescriptionsController : ControllerBase
     {
@@ -26,8 +26,16 @@ namespace EHospital.Medications.WebAPI.Controllers
         public async Task<IActionResult> GetPrescriptionsDetailsByPatientId(int patientId)
         {
             // TODO: GetPrescriptionsDetailsByPatientId - Handle invalid id
-            IEnumerable<PrescriptionDetails> result = await this.service.GetPrescriptionsDetails(patientId);
-            return this.Ok(result);
+            try
+            {
+                IEnumerable<PrescriptionDetails> result = await this.service.GetPrescriptionsDetails(patientId);
+                return this.Ok(result);
+            }
+            catch (ArgumentException)
+            {
+                return this.NoContent();
+            }
+
         }
 
         [HttpGet("{id}")]
@@ -79,8 +87,15 @@ namespace EHospital.Medications.WebAPI.Controllers
                 return this.ValidationProblem(this.ModelState);
             }
 
-            Prescription result = await this.service.UpdateAsync(id, prescription);
-            return this.Ok(result);
+            try
+            {
+                Prescription result = await this.service.UpdateAsync(id, prescription);
+                return this.Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("remove/{id}")]
@@ -95,14 +110,20 @@ namespace EHospital.Medications.WebAPI.Controllers
             {
                 return this.BadRequest(ex.Message);
             }
-
         }
 
         [HttpPut("edit/status/{id}")]
         public async Task<IActionResult> EditPrescriptionStatus(int id)
         {
-            Prescription prescription = await this.service.UpdateStatusAsync(id);
-            return this.Ok(prescription);
+            try
+            {
+                Prescription prescription = await this.service.UpdateStatusAsync(id);
+                return this.Ok(prescription);
+            }
+            catch (ArgumentException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
         }
     }
 }
