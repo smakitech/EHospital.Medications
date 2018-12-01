@@ -152,6 +152,9 @@ namespace EHospital.Medications.Data
         public async Task<T> DeleteAsync(int id)
         {
             T target = await this.entities.FindAsync(id);
+
+            // Checks whether entity is already deleted and prevent deletion in this case
+            target = (target != null && target.IsDeleted == false) ? target : null;
             if (target != null)
             {
                 target.IsDeleted = true;

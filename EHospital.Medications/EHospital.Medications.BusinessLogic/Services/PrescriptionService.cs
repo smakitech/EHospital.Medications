@@ -91,7 +91,7 @@ namespace EHospital.Medications.BusinessLogic.Services
         public async Task<Prescription> GetByIdAsync(int id)
         {
             Prescription result = await this.unitOfWork.Prescriptions.GetAsync(id);
-            if (result == null)
+            if (result == null || result.IsDeleted == true)
             {
                 throw new ArgumentException(PRESCRIPTION_IS_NOT_FOUND);
             }
@@ -107,12 +107,11 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// <returns>
         /// Drug instruction and doctor's notes.
         /// </returns>
-        /// <exception cref="ArgumentNullException">
+        /// <exception cref="ArgumentException">
         /// No prescription with such id.
         /// </exception>
         public async Task<PrescriptionGuide> GetGuideById(int id)
         {
-
             // TODO: GetGuideById - handle invalid id
             // TODO: GetGuideById - IsDeleted Behavior
             // Return IQueryable<Prescription> with one entity
