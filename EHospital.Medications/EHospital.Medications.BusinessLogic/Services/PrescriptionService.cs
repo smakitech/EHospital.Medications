@@ -108,13 +108,19 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// Drug instruction and doctor's notes.
         /// </returns>
         /// <exception cref="ArgumentNullException">
+        /// No prescription with such id.
         /// </exception>
         public async Task<PrescriptionGuide> GetGuideById(int id)
         {
+
             // TODO: GetGuideById - handle invalid id
             // TODO: GetGuideById - IsDeleted Behavior
             // Return IQueryable<Prescription> with one entity
             var prescriptions = await this.unitOfWork.Prescriptions.GetAllAsync(p => p.Id == id);
+            if (prescriptions.Count() == 0)
+            {
+                throw new ArgumentException(PRESCRIPTION_IS_NOT_FOUND);
+            }
 
             // Return IQueryable<Drug> with one entity
             var drugs = await this.unitOfWork.Drugs.GetAllAsync(d => d.Id == prescriptions.First().DrugId);

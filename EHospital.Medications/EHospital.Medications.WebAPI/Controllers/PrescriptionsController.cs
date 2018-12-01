@@ -48,8 +48,15 @@ namespace EHospital.Medications.WebAPI.Controllers
         public async Task<IActionResult> GetPrescriptionGuideById(int id)
         {
             // TODO: GetPrescriptionGuideById - Handle invalid id
-            PrescriptionGuide result = await this.service.GetGuideById(id);
-            return this.Ok(result);
+            try
+            {
+                PrescriptionGuide result = await this.service.GetGuideById(id);
+                return this.Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return this.NotFound(ex.Message);
+            }
         }
 
         [HttpPost("add")]
