@@ -63,13 +63,15 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// <returns>
         /// Deleted entity.
         /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException">
+        /// No prescription with such id.
+        /// </exception>
         public async Task<Prescription> DeleteAsync(int id)
         {
             Prescription result = await this.unitOfWork.Prescriptions.DeleteAsync(id);
             if (result == null)
             {
-                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
+                throw new ArgumentException(PRESCRIPTION_IS_NOT_FOUND);
             }
 
             await this.unitOfWork.Save();
@@ -83,13 +85,15 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// <returns>
         /// Concrete entity.
         /// </returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException">
+        /// No prescription with such id.
+        /// </exception>
         public async Task<Prescription> GetByIdAsync(int id)
         {
             Prescription result = await this.unitOfWork.Prescriptions.GetAsync(id);
             if (result == null)
             {
-                throw new ArgumentNullException(PRESCRIPTION_IS_NOT_FOUND);
+                throw new ArgumentException(PRESCRIPTION_IS_NOT_FOUND);
             }
 
             return result;

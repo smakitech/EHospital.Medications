@@ -33,8 +33,15 @@ namespace EHospital.Medications.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPrescriptionById(int id)
         {
-            Prescription result = await this.service.GetByIdAsync(id);
-            return this.Ok(result);
+            try
+            {
+                Prescription result = await this.service.GetByIdAsync(id);
+                return this.Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return this.NotFound(ex.Message);
+            }
         }
 
         [HttpGet("guide/{id}")]
@@ -72,8 +79,16 @@ namespace EHospital.Medications.WebAPI.Controllers
         [HttpDelete("remove/{id}")]
         public async Task<IActionResult> RemovePrescription(int id)
         {
-            Prescription prescription = await this.service.DeleteAsync(id);
-            return this.Ok(prescription);
+            try
+            {
+                Prescription prescription = await this.service.DeleteAsync(id);
+                return this.Ok(prescription);
+            }
+            catch (ArgumentException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+
         }
 
         [HttpPut("edit/status/{id}")]
