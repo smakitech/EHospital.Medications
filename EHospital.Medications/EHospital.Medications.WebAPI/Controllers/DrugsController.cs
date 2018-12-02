@@ -73,8 +73,16 @@ namespace EHospital.Medications.WebAPI.Controllers
                 return this.ValidationProblem(this.ModelState);
             }
 
-            Drug result = await this.service.AddAsync(drug);
-            return this.Ok(result);
+            try
+            {
+                Drug result = await this.service.AddAsync(drug);
+                // TODO: extract this route string somehow
+                return this.Created("api/drugs", result.Id);
+            }
+            catch (ArgumentException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("edit/{id}")]

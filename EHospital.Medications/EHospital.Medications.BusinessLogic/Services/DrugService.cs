@@ -24,6 +24,14 @@ namespace EHospital.Medications.BusinessLogic.Services
         private const string DRUGS_ARE_NOT_FOUND = "No drugs found.";
 
         /// <summary>
+        /// Exception message in case drug
+        /// with such name, type, dose, dose unit,
+        /// which represent unique index,
+        /// is already exist in the database.
+        /// </summary>
+        private const string DRUG_IS_ALREADY_EXISTS = "Drug with such name, type, dose and unit is already exist.";
+
+        /// <summary>
         /// Combine usage of unit of work and repository pattern.
         /// It contain repositories for each entity
         /// and one common database context in order
@@ -44,8 +52,32 @@ namespace EHospital.Medications.BusinessLogic.Services
 
         public async Task<Drug> AddAsync(Drug item)
         {
-            // TODO: AddDrug Tricky
-            Drug result = this.unitOfWork.Drugs.Insert(item);
+            Drug result;
+            // Search for existed drug
+            Drug existedDrug = this.unitOfWork.Drugs.GetAllAsync(d => d.Name == item.Name
+                && d.Type == item.Type
+                && d.Dose == item.Dose
+                && d.DoseUnit == item.DoseUnit).Result.FirstOrDefault();
+
+            // If drug is already existed and has deleted status - status changes.
+            // If drug is already existed and has non-deleted status - exception is thrown.
+            if (existedDrug != null)
+            {
+                if (existedDrug.IsDeleted == true)
+                {
+                    existedDrug.IsDeleted = false;
+                    result = await this.unitOfWork.Drugs.UpdateAsync(existedDrug.Id, existedDrug);
+                    await this.unitOfWork.Save();
+                    return result;
+                }
+                else
+                {
+                    throw new ArgumentException(DRUG_IS_ALREADY_EXISTS);
+                }
+            }
+
+            // Usual addition of drug in case it isn't existed in the database.
+            result = this.unitOfWork.Drugs.Insert(item);
             await this.unitOfWork.Save();
             return result;
         }
