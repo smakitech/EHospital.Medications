@@ -31,7 +31,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Handles request [GET] api/drugs/ or api/drugs
+        /// Handles request [GET] api/drugs
         /// Retrieves all drugs records from database in JSON format.
         /// Works in asynchronous mode.
         /// </summary>
