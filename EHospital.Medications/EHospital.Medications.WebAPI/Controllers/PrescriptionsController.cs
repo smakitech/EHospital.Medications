@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using EHospital.Medications.BusinessLogic.Contracts;
@@ -10,7 +9,7 @@ namespace EHospital.Medications.WebAPI.Controllers
 {
     // TODO: PrescriptionsController - Add documentation
     // TODO: PrescriptionsController - Remove previous version
-    // TODO: Handle Exceptions
+
     [Route("api/prescriptions")]
     [ApiController]
     public class PrescriptionsController : ControllerBase
@@ -25,7 +24,6 @@ namespace EHospital.Medications.WebAPI.Controllers
         [HttpGet("details/{patientId}")]
         public async Task<IActionResult> GetPrescriptionsDetailsByPatientId(int patientId)
         {
-            // TODO: GetPrescriptionsDetailsByPatientId - Handle invalid id
             try
             {
                 IEnumerable<PrescriptionDetails> result = await this.service.GetPrescriptionsDetails(patientId);
@@ -55,7 +53,6 @@ namespace EHospital.Medications.WebAPI.Controllers
         [HttpGet("guide/{id}")]
         public async Task<IActionResult> GetPrescriptionGuideById(int id)
         {
-            // TODO: GetPrescriptionGuideById - Handle invalid id
             try
             {
                 PrescriptionGuide result = await this.service.GetGuideById(id);
@@ -76,7 +73,7 @@ namespace EHospital.Medications.WebAPI.Controllers
             }
 
             Prescription result = await this.service.AddAsync(prescription);
-            return this.Created("[controller]", prescription.Id);
+            return this.Created("api/prescriptions", prescription.Id);
         }
 
         [HttpPut("edit/{id}")]

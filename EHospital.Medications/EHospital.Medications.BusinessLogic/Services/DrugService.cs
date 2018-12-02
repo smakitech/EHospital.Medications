@@ -45,54 +45,91 @@ namespace EHospital.Medications.BusinessLogic.Services
         public async Task<Drug> AddAsync(Drug item)
         {
             // TODO: AddDrug Tricky
-            throw new NotImplementedException();
+            Drug result = this.unitOfWork.Drugs.Insert(item);
+            await this.unitOfWork.Save();
+            return result;
         }
 
+        /// <summary>
+        /// Deletes entity in asynchronous mode.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// Deleted entity.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// No drug with such id.
+        /// </exception>
         public async Task<Drug> DeleteAsync(int id)
         {
             Drug result = await this.unitOfWork.Drugs.DeleteAsync(id);
             if (result == null)
             {
-                throw new ArgumentNullException(DRUG_IS_NOT_FOUND);
+                throw new ArgumentException(DRUG_IS_NOT_FOUND);
             }
 
             await this.unitOfWork.Save();
             return result;
         }
 
+        /// <summary>
+        /// Gets all drugs in asynchronous mode.
+        /// </summary>
+        /// <returns>
+        /// Drugs.
+        /// </returns>
+        /// <exception cref="NoContentException">
+        /// No drugs found.
+        /// </exception>
         public async Task<IEnumerable<Drug>> GetAllAsync()
         {
-            // TODO: GetAllDrugs - OrderBy
-            // TODO: GetAllDrugs - IsDeleted
             IEnumerable<Drug> result = await this.unitOfWork.Drugs.GetAllAsync(d => d.IsDeleted == false);
             if (result.Count() == 0)
             {
-                throw new ArgumentNullException(DRUGS_ARE_NOT_FOUND);
+                throw new NoContentException(DRUGS_ARE_NOT_FOUND);
             }
 
             return result.OrderBy(d => d.Name);
         }
 
+        /// <summary>
+        /// Gets all drugs by specified name
+        /// in asynchronous mode.
+        /// </summary>
+        /// <param name="name">Specified name.</param>
+        /// <returns>
+        /// Drugs.
+        /// </returns>
+        /// <exception cref="NoContentException">
+        /// No drugs found.
+        /// </exception>
         public async Task<IEnumerable<Drug>> GetAllByNameAsync(string name)
         {
-            // TODO: GetAllDrugsByName - Handle Invalid Name
-            // TODO: GetAllDrugsByName - OrderBy
-            // TODO: GetAllDrugsByName - IsDeleted
             IEnumerable<Drug> result = await this.unitOfWork.Drugs.GetAllAsync(d => d.Name == name && d.IsDeleted == false);
             if (result.Count() == 0)
             {
-                throw new ArgumentNullException(DRUGS_ARE_NOT_FOUND);
+                throw new NoContentException(DRUGS_ARE_NOT_FOUND);
             }
 
             return result.OrderBy(d => d.Name);
         }
 
+        /// <summary>
+        /// Gets entity by the identifier in asynchronous mode.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// Concrete entity.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// No drug with such id.
+        /// </exception>
         public async Task<Drug> GetByIdAsync(int id)
         {
             Drug result = await this.unitOfWork.Drugs.GetAsync(id);
             if (result == null)
             {
-                throw new ArgumentNullException(DRUG_IS_NOT_FOUND);
+                throw new ArgumentException(DRUG_IS_NOT_FOUND);
             }
 
             return result;

@@ -7,8 +7,6 @@ using EHospital.Medications.Model;
 
 namespace EHospital.Medications.BusinessLogic.Services
 {
-    /// TODO: PrescriptionService documentation
-    /// TODO: Remove previous service version
     /// <summary>Represents prescription service.</summary>
     /// <seealso cref="IPrescriptionService"/>
     public class PrescriptionService : IPrescriptionService
@@ -112,8 +110,6 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// </exception>
         public async Task<PrescriptionGuide> GetGuideById(int id)
         {
-            // TODO: GetGuideById - handle invalid id
-            // TODO: GetGuideById - IsDeleted Behavior
             // Return IQueryable<Prescription> with one entity
             var prescriptions = await this.unitOfWork.Prescriptions.GetAllAsync(p => p.Id == id && p.IsDeleted == false);
             if (prescriptions.Count() == 0)
@@ -156,10 +152,7 @@ namespace EHospital.Medications.BusinessLogic.Services
             // Calculates CurrentDate - AssignmentDate, compares with Duration
             // and changes status to historic for all records where subtraction more the Duration
             await this.unitOfWork.UpdateStatusAutomatically();
-            // TODO: GetGuideByIdGetPrescriptionsDetails - Handle Invalid Id
-            // TODO: GetGuideByIdGetPrescriptionsDetails - UpdateStatusAuto Procedure
-            // TODO: GetGuideByIdGetPrescriptionsDetails - OrderBy
-            // TODO: GetGuideByIdGetPrescriptionsDetails - IsDeleted
+
             // Return IQueryable<Prescription> with prescription of concrete patient which are not deleted
             IQueryable<Prescription> prescriptions = await this.unitOfWork.Prescriptions
                 .GetAllAsync(p => p.PatientId == patientId && p.IsDeleted == false);
@@ -231,7 +224,7 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// <returns>
         /// Historic prescription.
         /// </returns>
-        /// <exception cref="ArgumentNullException">
+        /// <exception cref="ArgumentException">
         /// No prescription with such id.
         /// </exception>
         public async Task<Prescription> UpdateStatusAsync(int id)
@@ -243,6 +236,7 @@ namespace EHospital.Medications.BusinessLogic.Services
             }
 
             await this.unitOfWork.UpdateStatusManually(id);
+            // TODO: Returns old entity anyway
             return await this.unitOfWork.Prescriptions.GetAsync(id);
         }
     }

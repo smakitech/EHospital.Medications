@@ -100,7 +100,7 @@ namespace EHospital.Medications.WebAPI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint($"/swagger/{VERSION}/swagger.json", API_NAME);
+                c.SwaggerEndpoint($"../swagger/{VERSION}/swagger.json", API_NAME);
             });
             //*/
         }

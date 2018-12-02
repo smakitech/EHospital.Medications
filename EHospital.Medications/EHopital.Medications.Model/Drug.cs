@@ -29,9 +29,10 @@ namespace EHospital.Medications.Model
         [StringLength(50)]
         public string Type { get; set; }
 
+        /// TODO: Dose down limit
         /// <summary>Gets or sets the dose.</summary>
         [Required]
-        [Range(1, float.MaxValue - 1)]
+        [Range(0.001, double.MaxValue)]
         public double Dose { get; set; }
 
         /// <summary>Gets or sets the dose unit.</summary>
