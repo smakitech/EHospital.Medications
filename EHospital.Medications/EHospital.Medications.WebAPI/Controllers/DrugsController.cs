@@ -93,8 +93,15 @@ namespace EHospital.Medications.WebAPI.Controllers
                 return this.ValidationProblem(this.ModelState);
             }
 
-            Drug result = await this.service.UpdateAsync(id, drug);
-            return this.Ok(result);
+            try
+            {
+                Drug result = await this.service.UpdateAsync(id, drug);
+                return this.Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("remove/{id}")]

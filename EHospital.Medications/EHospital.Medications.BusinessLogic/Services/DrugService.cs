@@ -50,9 +50,23 @@ namespace EHospital.Medications.BusinessLogic.Services
             this.unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// Creates entity in asynchronous mode.
+        /// Checks whether drug with name, type, dose, dose unit
+        /// specified in the item is already exist.
+        /// If existed drug has deleted status, method changes this status to opposite.
+        /// </summary>
+        /// <param name="item">Entity to create.</param>
+        /// <returns>
+        /// Created entity.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Drug with such name, type, dose and unit is already exist.
+        /// </exception>
         public async Task<Drug> AddAsync(Drug item)
         {
             Drug result;
+
             // Search for existed drug
             Drug existedDrug = this.unitOfWork.Drugs.GetAllAsync(d => d.Name == item.Name
                 && d.Type == item.Type
@@ -78,6 +92,30 @@ namespace EHospital.Medications.BusinessLogic.Services
 
             // Usual addition of drug in case it isn't existed in the database.
             result = this.unitOfWork.Drugs.Insert(item);
+            await this.unitOfWork.Save();
+            return result;
+        }
+
+        public async Task<Drug> UpdateAsync(int id, Drug item)
+        {
+            // Search for existed drug with the same name, type, dose, dose unit that item has.
+            // Exception is throws in case existeDrug id doesn't equals specified in the method parameters.
+            Drug existedDrug = this.unitOfWork.Drugs.GetAllAsync(d => d.Name == item.Name
+                && d.Type == item.Type
+                && d.Dose == item.Dose
+                && d.DoseUnit == item.DoseUnit).Result.FirstOrDefault();
+            if (existedDrug.Id != id)
+            {
+                throw new ArgumentException(DRUG_IS_ALREADY_EXISTS);
+            }
+
+            Drug result = await this.unitOfWork.Drugs.GetAsync(id);
+            if (result == null || result.IsDeleted == true)
+            {
+                throw new ArgumentException(DRUG_IS_NOT_FOUND);
+            }
+
+            result = await this.unitOfWork.Drugs.UpdateAsync(id, item);
             await this.unitOfWork.Save();
             return result;
         }
@@ -165,21 +203,6 @@ namespace EHospital.Medications.BusinessLogic.Services
             }
 
             return result;
-        }
-
-        public Task<Drug> UpdateAsync(int id, Drug item)
-        {
-            // TODO: UpdateDrug Tricky
-            throw new NotImplementedException();
-        }
-
-        private async Task<bool> IsDrugExist(Drug item)
-        {
-            var result = await this.unitOfWork.Drugs.GetAllAsync();
-            return result.Any(d => d.Name == item.Name
-                && d.Type == item.Type
-                && d.Dose == item.Dose
-                && d.DoseUnit == item.DoseUnit);
         }
     }
 }
