@@ -9,7 +9,6 @@ namespace EHospital.Medications.Model
     /// </summary>
     public class PrescriptionDetails : BaseEntity, ISoftDeletion
     {
-        /// TODO: Sub Model Data Annotations
         /// <summary>Gets or sets doctor's first name./// </summary>
         public string FirstName { get; set; }
 

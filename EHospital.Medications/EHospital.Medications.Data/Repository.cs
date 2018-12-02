@@ -18,7 +18,6 @@ namespace EHospital.Medications.Data
     /// <seealso cref="IRepository{T}" />
     public class Repository<T> : IRepository<T> where T : BaseEntity, ISoftDeletion
     {
-        /// TODO: Repository Help Methods
         /// <summary>
         /// The medication database context.
         /// </summary>

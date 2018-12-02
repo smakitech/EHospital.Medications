@@ -9,7 +9,6 @@ namespace EHospital.Medications.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
-        /// TODO: UnitOfWork Help Methods
         /// <summary>
         /// The medications database context.
         /// </summary>

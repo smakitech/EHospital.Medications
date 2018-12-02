@@ -11,10 +11,14 @@ namespace EHospital.Medications.WebAPI.Controllers
     /// Represents prescription controller.
     /// </summary>
     /// <seealso cref="ControllerBase" />
-    [Route("api/prescriptions")]
     [ApiController]
     public class PrescriptionsController : ControllerBase
     {
+        /// <summary>
+        /// Represents default route, which contain all REST requests.
+        /// </summary>
+        private const string DEFAULT_ROUTE = @"api/prescriptions/";
+
         /// <summary>
         /// Interface link on drug service.
         /// </summary>
@@ -44,7 +48,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         /// [Ok] with all prescriptions records with details in JSON format and [Status Code] 200.
         /// [NoContent] and [Status Code] 204.
         /// </returns>
-        [HttpGet("details/{patientId}")]
+        [HttpGet(DEFAULT_ROUTE + "details/{patientId}")]
         public async Task<IActionResult> GetPrescriptionsDetailsByPatientId(int patientId)
         {
             try
@@ -72,7 +76,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         /// [Ok] with concrete prescription in JSON format and [Status Code] 200.
         /// [NotFound] with message and [Status Code] 404.
         /// </returns>
-        [HttpGet("{id}")]
+        [HttpGet(DEFAULT_ROUTE + "{id}")]
         public async Task<IActionResult> GetPrescriptionById(int id)
         {
             try
@@ -100,7 +104,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         /// [Ok] with instruction and notes in JSON format and [Status Code] 200.
         /// [NotFound] with message and [Status Code] 404.
         /// </returns>
-        [HttpGet("guide/{id}")]
+        [HttpGet(DEFAULT_ROUTE + "guide/{id}")]
         public async Task<IActionResult> GetPrescriptionGuideById(int id)
         {
             try
@@ -128,7 +132,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         /// [BadReques] with message and [Status Code] 400..
         /// [ValidationProblem] with the cause of validation error and [Status Code] 400.
         /// </returns>
-        [HttpPost("add")]
+        [HttpPost(DEFAULT_ROUTE + "add")]
         public async Task<IActionResult> AddPrescription([FromBody] Prescription prescription)
         {
             if (!this.ModelState.IsValid)
@@ -137,7 +141,7 @@ namespace EHospital.Medications.WebAPI.Controllers
             }
 
             Prescription result = await this.service.AddAsync(prescription);
-            return this.Created("api/prescriptions", prescription.Id);
+            return this.Created(DEFAULT_ROUTE, prescription.Id);
         }
 
         /// <summary>
@@ -155,7 +159,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         /// [Ok] with updated prescription and [Status Code] 200.
         /// [BadReques] with message and [Status Code] 400.
         /// [ValidationProblem] with the cause of validation error and [Status Code] 400.
-        [HttpPut("edit/{id}")]
+        [HttpPut(DEFAULT_ROUTE + "edit/{id}")]
         public async Task<IActionResult> EditPrescription(int id, [FromBody] Prescription prescription)
         {
             if (!this.ModelState.IsValid)
@@ -184,7 +188,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         /// Returns one of two action results.
         /// [Ok] with deleted prescription and [Status Code] 200.
         /// [BadReques] with message and [Status Code] 400.
-        [HttpDelete("remove/{id}")]
+        [HttpDelete(DEFAULT_ROUTE + "remove/{id}")]
         public async Task<IActionResult> RemovePrescription(int id)
         {
             try
@@ -209,7 +213,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         /// Returns one of three action results.
         /// [Ok] with updated prescription and [Status Code] 200.
         /// [BadReques] with message and [Status Code] 400.
-        [HttpPut("edit/status/{id}")]
+        [HttpPut(DEFAULT_ROUTE + "edit/status/{id}")]
         public async Task<IActionResult> EditPrescriptionStatus(int id)
         {
             try

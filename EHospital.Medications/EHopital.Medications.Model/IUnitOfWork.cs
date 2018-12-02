@@ -10,7 +10,6 @@ namespace EHospital.Medications.Model
     /// <seealso cref="IDisposable"/>
     public interface IUnitOfWork : IDisposable
     {
-        /// TODO: IUnitOfWork Help Methods
         /// <summary>
         /// Gets the drugs.
         /// Provides access to drug repository functionality.

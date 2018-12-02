@@ -12,10 +12,14 @@ namespace EHospital.Medications.WebAPI.Controllers
     /// Represents drug controller.
     /// </summary>
     /// <seealso cref="ControllerBase" />
-    [Route("api/drugs")]
     [ApiController]
     public class DrugsController : ControllerBase
     {
+        /// <summary>
+        /// Represents default route, which contain all REST requests.
+        /// </summary>
+        private const string DEFAULT_ROUTE = @"api/drugs/";
+
         /// <summary>
         /// Interface link on drug service.
         /// </summary>
@@ -40,7 +44,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         /// [Ok] with all drugs records in JSON format and [Status Code] 200.
         /// [NoContent] and [Status Code] 204.
         /// </returns>
-        [HttpGet]
+        [HttpGet(DEFAULT_ROUTE)]
         public async Task<IActionResult> GetDrugs()
         {
             try
@@ -68,7 +72,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         /// [Ok] with drugs match the specified name in JSON format and [Status Code] 200.
         /// [NoContent] and [Status Code] 204.
         /// </returns>
-        [HttpGet("filter")]
+        [HttpGet(DEFAULT_ROUTE + "filter")]
         public async Task<IActionResult> GetDrugsByName([FromQuery] string name)
         {
             try
@@ -94,7 +98,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         /// [Ok] with concrete drug in JSON format and [Status Code] 200.
         /// [NotFound] with message and [Status Code] 404.
         /// </returns>
-        [HttpGet("{id}")]
+        [HttpGet(DEFAULT_ROUTE + "{id}")]
         public async Task<IActionResult> GetDrugById(int id)
         {
             try
@@ -122,7 +126,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         /// [BadReques] with message and [Status Code] 400..
         /// [ValidationProblem] with the cause of validation error and [Status Code] 400.
         /// </returns>
-        [HttpPost("add")]
+        [HttpPost(DEFAULT_ROUTE + "add")]
         public async Task<IActionResult> AddDrug([FromBody] Drug drug)
         {
             if (!this.ModelState.IsValid)
@@ -133,8 +137,7 @@ namespace EHospital.Medications.WebAPI.Controllers
             try
             {
                 Drug result = await this.service.AddAsync(drug);
-                // TODO: extract this route string somehow
-                return this.Created("api/drugs", result.Id);
+                return this.Created(DEFAULT_ROUTE, result.Id);
             }
             catch (ArgumentException ex)
             {
@@ -157,7 +160,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         /// [Ok] with updated drug and [Status Code] 200.
         /// [BadReques] with message and [Status Code] 400.
         /// [ValidationProblem] with the cause of validation error and [Status Code] 400.
-        [HttpPut("edit/{id}")]
+        [HttpPut(DEFAULT_ROUTE + "edit/{id}")]
         public async Task<IActionResult> EditDrug(int id, [FromBody] Drug drug)
         {
             if (!this.ModelState.IsValid)
@@ -186,7 +189,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         /// Returns one of two action results.
         /// [Ok] with deleted drug and [Status Code] 200.
         /// [BadReques] with message and [Status Code] 400.
-        [HttpDelete("remove/{id}")]
+        [HttpDelete(DEFAULT_ROUTE + "remove/{id}")]
         public async Task<IActionResult> RemoveDrug(int id)
         {
             try

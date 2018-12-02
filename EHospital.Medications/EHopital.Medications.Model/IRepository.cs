@@ -16,7 +16,6 @@ namespace EHospital.Medications.Model
     /// <seealso cref="IDisposable"/>
     public interface IRepository<T> : IDisposable where T : BaseEntity, ISoftDeletion
     {
-        /// TODO: IRepository Help Methods
         /// <summary>Gets all entities in asynchronous mode.</summary>
         /// <returns>All entities.</returns>
         Task<IQueryable<T>> GetAllAsync();

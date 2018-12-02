@@ -8,7 +8,6 @@ namespace EHospital.Medications.Model
     /// </summary>
     public class DoctorView : BaseEntity
     {
-        /// TODO: Sub Model Data Annotations
         /// <summary>Gets or sets the first name.</summary>
         public string FirstName { get; set; }
 
