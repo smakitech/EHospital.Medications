@@ -7,8 +7,6 @@ using EHospital.Medications.Model;
 
 namespace EHospital.Medications.BusinessLogic.Services
 {
-    /// TODO: DrugService documentation
-    /// TODO: Remove previous service version
     /// <summary>Represents drug service.</summary>
     /// <seealso cref="IDrugService"/>
     public class DrugService : IDrugService
