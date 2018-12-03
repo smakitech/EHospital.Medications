@@ -94,6 +94,18 @@ namespace EHospital.Medications.BusinessLogic.Services
             return result;
         }
 
+        /// <summary>
+        /// Updates entity in asynchronous mode.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="item">The entity with updated properties.</param>
+        /// <returns>
+        /// Updated entity.
+        /// </returns>
+        /// <exception cref="System.ArgumentException">
+        /// Drug with such name, type, dose and unit is already exist.
+        /// No drug with such id.
+        /// </exception>
         public async Task<Drug> UpdateAsync(int id, Drug item)
         {
             // Search for existed drug with the same name, type, dose, dose unit that item has.

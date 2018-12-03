@@ -236,7 +236,6 @@ namespace EHospital.Medications.BusinessLogic.Services
             }
 
             await this.unitOfWork.UpdateStatusManually(id);
-            // TODO: Returns old entity anyway
             return await this.unitOfWork.Prescriptions.GetAsync(id);
         }
     }

@@ -8,6 +8,11 @@ using EHospital.Medications.Model;
 
 namespace EHospital.Medications.WebAPI.Controllers
 {
+    // TODO: Logging
+    // TODO: Mapper
+    // TODO: UnitTest Coverage
+    // TODO: UpdatePostman
+
     /// <summary>
     /// Represents drug controller.
     /// </summary>

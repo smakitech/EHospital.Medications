@@ -122,6 +122,10 @@ namespace EHospital.Medications.Data
             var parameterId = new SqlParameter("@Id", id);
             string procedure = "UpdateStatusManuallyPrescription @Id";
             await UnitOfWork.context.Database.ExecuteSqlCommandAsync(procedure, parameters: parameterId);
+
+            // Enforce Entity Framework to reload entity after store procedure has been performed
+            Prescription prescription = await UnitOfWork.context.Prescriptions.FindAsync(id);
+            await UnitOfWork.context.Entry(prescription).ReloadAsync();
         }
 
         /// <summary>
