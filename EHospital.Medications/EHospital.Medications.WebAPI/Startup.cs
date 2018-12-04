@@ -9,6 +9,7 @@ using EHospital.Medications.BusinessLogic.Contracts;
 using EHospital.Medications.BusinessLogic.Services;
 using EHospital.Medications.Data;
 using EHospital.Medications.Model;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 
 namespace EHospital.Medications.WebAPI
 {
@@ -74,6 +75,20 @@ namespace EHospital.Medications.WebAPI
             };
             services.AddSwaggerGen(c => { c.SwaggerDoc(VERSION, info); });
             //*/
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                builder => builder.AllowAnyOrigin()
+
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+            });
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("CorsPolicy"));
+            });
         }
 
         /// <summary>
