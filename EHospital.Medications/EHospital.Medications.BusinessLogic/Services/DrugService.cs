@@ -185,7 +185,9 @@ namespace EHospital.Medications.BusinessLogic.Services
         /// </exception>
         public async Task<IEnumerable<Drug>> GetAllByNameAsync(string name)
         {
-            IEnumerable<Drug> result = await this.unitOfWork.Drugs.GetAllAsync(d => d.Name == name && d.IsDeleted == false);
+            // Search for drugs by name with status - isn't deleted
+            IEnumerable<Drug> result = await this.unitOfWork.Drugs
+                .GetAllAsync(d => d.IsDeleted == false && d.Name.ToLower().Contains(name.ToLower()));
             if (result.Count() == 0)
             {
                 throw new NoContentException(DRUGS_ARE_NOT_FOUND);
