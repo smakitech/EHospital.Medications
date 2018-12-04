@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -30,6 +32,11 @@ namespace EHospital.Medications.Tests
         private List<Drug> drugsList;
 
         /// <summary>
+        /// The service under testing.
+        /// </summary>
+        private DrugService service;
+
+        /// <summary>
         /// Initialize required objects before run of every test method.
         /// </summary>
         [TestInitialize]
@@ -55,9 +62,10 @@ namespace EHospital.Medications.Tests
         {
             // Arrange
             this.mockUnitOfWork.Setup(u => u.Drugs.GetAsync(id)).ReturnsAsync(this.drugsList[id - 1]);
+            this.service = new DrugService(this.mockUnitOfWork.Object);
 
             // Act
-            Drug actual = new DrugService(this.mockUnitOfWork.Object).GetByIdAsync(id).Result;
+            Drug actual = this.service.GetByIdAsync(id).Result;
 
             // Assert
             Assert.AreEqual(this.drugsList[id - 1], actual);
@@ -78,9 +86,74 @@ namespace EHospital.Medications.Tests
         {
             // Arrange
             this.mockUnitOfWork.Setup(u => u.Drugs.GetAsync(id)).ReturnsAsync(default(Drug));
+            this.service = new DrugService(this.mockUnitOfWork.Object);
 
             // Act
-            Drug actual = await new DrugService(this.mockUnitOfWork.Object).GetByIdAsync(id);
+            Drug actual = await this.service.GetByIdAsync(id);
+        }
+
+        /// <summary>
+        /// Checks whether DrugService method GetAllByNameAsync throws <see cref="NoContentException"/>
+        /// no any match by name has been passed.
+        /// </summary>
+        /// <param name="name">
+        /// Input to search for drug.
+        /// </param>
+        /// <returns>Task object.</returns>
+        [TestMethod]
+        [DataRow("Nise")]
+        [DataRow("nise")]
+        [ExpectedException(typeof(NoContentException))]
+        public async Task GetAllByNameAsync_ThrowsNoContentException(string name)
+        {
+            // Arrange
+            this.mockUnitOfWork.Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>()))
+                .ReturnsAsync(this.drugsList.Where(d => d.IsDeleted == false && d.Name.StartsWith(name)).AsQueryable());
+            this.service = new DrugService(this.mockUnitOfWork.Object);
+
+            // Act
+            IEnumerable<Drug> actual = await this.service.GetAllByNameAsync(name);
+        }
+
+        /// <summary>
+        /// Checks whether DrugService method GetAllByNameAsync
+        /// finds and returns set of drugs with name which starts from name
+        /// specified by parameter of testing method.
+        /// </summary>
+        /// <param name="name">
+        /// Input to search for drug.
+        /// </param>
+        /// <param name="expected">
+        /// Amount of expected matches.
+        /// </param>
+        /// <returns>
+        /// Task object.
+        /// </returns>
+        [TestMethod]
+        [DataRow("alt", 2)]
+        [DataRow("Alt", 2)]
+        [DataRow("ALT", 2)]
+        [DataRow("Althea", 2)]
+        [DataRow("AltHEa", 2)]
+        [DataRow("Althea root", 2)]
+        [DataRow("a", 2)]
+        [DataRow("A", 2)]
+        public async Task GetAllByNameAsync_ReturnsAllFoundDrugsCorrectly(string name, int expected)
+        {
+            // Arrange
+            this.mockUnitOfWork.Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>()))
+                .ReturnsAsync(this.drugsList.Where(d => d.IsDeleted == false
+                && d.Name.ToLower().StartsWith(name.ToLower())).AsQueryable());
+            this.service = new DrugService(this.mockUnitOfWork.Object);
+            // Amount of actual matches.
+            int actual = 0;
+
+            // Act
+            IEnumerable<Drug> drugs = await this.service.GetAllByNameAsync(name);
+            actual = drugs.Count();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
         }
 
         /// <summary>
