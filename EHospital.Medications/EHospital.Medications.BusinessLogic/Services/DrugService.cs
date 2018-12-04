@@ -187,7 +187,7 @@ namespace EHospital.Medications.BusinessLogic.Services
         {
             // Search for drugs by name with status - isn't deleted
             IEnumerable<Drug> result = await this.unitOfWork.Drugs
-                .GetAllAsync(d => d.IsDeleted == false && d.Name.ToLower().Contains(name.ToLower()));
+                .GetAllAsync(d => d.IsDeleted == false && d.Name.StartsWith(name));
             if (result.Count() == 0)
             {
                 throw new NoContentException(DRUGS_ARE_NOT_FOUND);
