@@ -108,6 +108,7 @@ namespace EHospital.Medications.WebAPI
                 app.UseHsts();
             }
 
+            app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
             app.UseMvc();
 
