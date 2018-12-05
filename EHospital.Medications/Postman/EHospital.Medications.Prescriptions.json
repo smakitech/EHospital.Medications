@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "72361f3e-7ec7-49d1-8357-149d8d63db2b",
+		"name": "EHospital.Medications.Prescriptions",
+		"description": "Collection contains REST requests for PrescriptionController & Service of MedicationWebAPI.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://localhost:44346/api/prescriptions/details/7",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/api/prescriptions/details/7",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"api",
+						"prescriptions",
+						"details",
+						"7"
+					]
+				},
+				"description": "Retrieves prescriptions records from database in JSON format\r\nwith extended details including information about drug and doctor\r\nspecified by patient identifier.Works in asynchronous mode.\r\nReturns one of two action results.\r\n[Ok] with all prescriptions records with details in JSON format and [Status Code] 200.\r\n[NoContent] and [Status Code] 204."
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44346/api/prescriptions/10",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/api/prescriptions/10",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"api",
+						"prescriptions",
+						"10"
+					]
+				},
+				"description": "Retrieves prescription record from database in JSON format\r\nby specified identifier.Works in asynchronous mode.\r\nReturns one of two action results.\r\n[Ok] with concrete prescription in JSON format and [Status Code] 200.\r\n[NotFound] with message and [Status Code] 404."
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44346/api/prescriptions/guide/10",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/api/prescriptions/guide/10",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"api",
+						"prescriptions",
+						"guide",
+						"10"
+					]
+				},
+				"description": "Retrieves drug instruction and doctors notes for\r\nspecified prescription by identifier.Works in asynchronous mode.\r\nReturns one of two action results.\r\n[Ok] with instruction and notes in JSON format and [Status Code] 200.\r\n[NotFound] with message and [Status Code] 404."
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44346/api/prescriptions/add",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"patientId\": 3,\n    \"userId\": 2,\n    \"drugId\": 7,\n    \"assignmentDate\": \"2018-12-04T00:00:00\",\n    \"duration\": 14,\n    \"notes\": \"Doctor notes.\",\n    \"isFinished\": false,\n    \"isDeleted\": false,\n    \"drug\": null,\n    \"patient\": null,\n    \"id\": 0\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44346/api/prescriptions/add",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"api",
+						"prescriptions",
+						"add"
+					]
+				},
+				"description": "Tries to add prescription record to database.\r\nWorks in asynchronous mode.\r\nPrescription to add to the database gets [FromBody].\r\nReturns one of three action results.\r\n[Created] with id of the created record and [Status Code] 201.\r\n[BadReques] with message and [Status Code] 400..\r\n[ValidationProblem] with the cause of validation error and [Status Code] 400."
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44346/api/prescriptions/edit/3",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"patientId\": 3,\n    \"userId\": 2,\n    \"drugId\": 5,\n    \"assignmentDate\": \"2018-12-04T00:00:00\",\n    \"duration\": 14,\n    \"notes\": \"Doctor notes updates.\",\n    \"isFinished\": false,\n    \"isDeleted\": false,\n    \"drug\": null,\n    \"patient\": null,\n    \"id\": 0\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44346/api/prescriptions/edit/3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"api",
+						"prescriptions",
+						"edit",
+						"3"
+					]
+				},
+				"description": "Tries to update prescription record in database\r\nwith specified id.\r\nWorks in asynchronous mode.\r\nPrescription which contains updated properties takes [FromBody].\r\nReturns one of three action results.\r\n[Ok] with updated prescription and [Status Code] 200.\r\n[BadReques] with message and [Status Code] 400.\r\n[ValidationProblem] with the cause of validation error and [Status Code] 400."
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44346/api/prescriptions/remove/12",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/api/prescriptions/remove/12",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"api",
+						"prescriptions",
+						"remove",
+						"12"
+					]
+				},
+				"description": "Perform soft deletion of prescription record in database.\r\nWorks in asynchronous mode.\r\nReturns one of two action results.\r\n[Ok] with deleted prescription and [Status Code] 200.\r\n[BadReques] with message and [Status Code] 400."
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44346/api/prescriptions/edit/status/3",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/api/prescriptions/edit/status/3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"api",
+						"prescriptions",
+						"edit",
+						"status",
+						"3"
+					]
+				},
+				"description": "Retrieves drug instruction and doctors notes for\r\nspecified prescription by identifier.\r\nWorks in asynchronous mode.\r\nReturns one of two action results.\r\n[Ok] with instruction and notes in JSON format and [Status Code] 200.\r\n[NotFound] with message and [Status Code] 404."
+			},
+			"response": []
+		}
+	]
+}

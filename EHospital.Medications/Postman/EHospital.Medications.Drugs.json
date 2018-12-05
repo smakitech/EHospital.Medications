@@ -1,0 +1,245 @@
+{
+	"info": {
+		"_postman_id": "57084022-0a7d-403b-8876-e366508080c7",
+		"name": "EHospital.Medications.Drugs",
+		"description": "Collection contains REST requests for DrugController & Service of MedicationWebAPI.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://localhost:44346/api/drugs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/api/drugs",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"api",
+						"drugs"
+					]
+				},
+				"description": "Retrieves all drugs records from database in JSON format.\r\nWorks in asynchronous mode.\r\nReturns one of two action results.\r\n[Ok] with all drugs records in JSON format and [Status Code] 200.\r\n[NoContent] and [Status Code] 204."
+			},
+			"response": [
+				{
+					"name": "https://localhost:44346/api/drugs",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://localhost:44346/api/prescriptions/details/7",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44346",
+							"path": [
+								"api",
+								"prescriptions",
+								"details",
+								"7"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "X-SourceFiles",
+							"value": "=?UTF-8?B?RTpcRW52aXJvbWVudCBCYWNrVXBcZUhvc3BpdGFsLk1lZGljYXRpb25zLldlYkFQSVxFSG9zcGl0YWwuTWVkaWNhdGlvbnNcRUhvc3BpdGFsLk1lZGljYXRpb25zLldlYkFQSVxhcGlccHJlc2NyaXB0aW9uc1xkZXRhaWxzXDc=?="
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "ASP.NET"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 04 Dec 2018 23:45:40 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"firstName\": \"Katerina\",\n        \"lastName\": \"Bilik\",\n        \"name\": \"Coldrex max grip lemon\",\n        \"type\": \"Powder\",\n        \"dose\": 1000,\n        \"doseUnit\": \"mg\",\n        \"direction\": \"Oral\",\n        \"isDeleted\": false,\n        \"assignmentDate\": \"2018-12-04T00:00:00\",\n        \"duration\": 3,\n        \"isFinished\": false,\n        \"id\": 9\n    },\n    {\n        \"firstName\": \"Katerina\",\n        \"lastName\": \"Bilik\",\n        \"name\": \"Quixx\",\n        \"type\": \"Spray\",\n        \"dose\": 30,\n        \"doseUnit\": \"ml\",\n        \"direction\": \"Nasal\",\n        \"isDeleted\": false,\n        \"assignmentDate\": \"2018-12-04T00:00:00\",\n        \"duration\": 14,\n        \"isFinished\": false,\n        \"id\": 10\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "https://localhost:44346/api/drugs/filter?name=althea",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/api/drugs/filter?name=althea",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"api",
+						"drugs",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "althea",
+							"description": "Drug name to search.\n"
+						}
+					]
+				},
+				"description": "Performs search for records by drug name.\r\nTries to find records which starts from specified name.\r\nRetrieves drug record from database in JSON format.\r\nWorks in asynchronous mode.\r\nReturns one of two action results.\r\n[Ok] with drugs match the specified name in JSON format and [Status Code] 200.\r\n[NoContent] and [Status Code] 204."
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44346/api/drugs/3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/api/drugs/3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"api",
+						"drugs",
+						"3"
+					]
+				},
+				"description": "Retrieves drug record from database in JSON format specified by identifier.\r\nWorks in asynchronous mode.\r\nReturns one of two action results.\r\n[Ok] with concrete drug in JSON format and [Status Code] 200.\r\n[NotFound] with message and [Status Code] 404."
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44346/api/drugs/add",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Paracetamol\",\n    \"type\": \"Pill\",\n    \"dose\": 500,\n    \"doseUnit\": \"mg\",\n    \"direction\": \"Oral\",\n    \"instruction\": \"Paracetamol instruction.\",\n    \"isDeleted\": false,\n    \"id\": 0\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44346/api/drugs/add",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"api",
+						"drugs",
+						"add"
+					]
+				},
+				"description": "Tries to add drug record to database.\r\nWorks in asynchronous mode.\r\nDrug for addition takes [FromBody].\r\nReturns one of three action results.\r\n[Created] with id of the created record and [Status Code] 201.\r\n[BadReques] with message and [Status Code] 400..\r\n[ValidationProblem] with the cause of validation error and [Status Code] 400."
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44346/api/drugs",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Paracetamol\",\n    \"type\": \"Pill\",\n    \"dose\": 500,\n    \"doseUnit\": \"mg\",\n    \"direction\": \"Oral\",\n    \"instruction\": \"Paracetamol instruction version 2.\",\n    \"isDeleted\": false,\n    \"prescriptions\": [],\n    \"id\": 12\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44346/api/drugs/edit/12",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"api",
+						"drugs",
+						"edit",
+						"12"
+					]
+				},
+				"description": "Tries to update drug record in database\r\nwith specified id.\r\nWorks in asynchronous mode.\r\nDrug which contains updated properties takes [FromBody].\r\nReturns one of three action results.\r\n[Ok] with updated drug and [Status Code] 200.\r\n[BadReques] with message and [Status Code] 400.\r\n[ValidationProblem] with the cause of validation error and [Status Code] 400."
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44346/api/drugs/remove/12",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44346/api/drugs/remove/12",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44346",
+					"path": [
+						"api",
+						"drugs",
+						"remove",
+						"12"
+					]
+				},
+				"description": "Perform soft deletion of drug record in database.\r\nWorks in asynchronous mode.\r\nReturns one of two action results.\r\n[Ok] with deleted drug and [Status Code] 200.\r\n[BadReques] with message and [Status Code] 400."
+			},
+			"response": []
+		}
+	]
+}

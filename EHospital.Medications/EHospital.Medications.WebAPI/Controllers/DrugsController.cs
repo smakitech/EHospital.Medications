@@ -165,6 +165,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         /// [Ok] with updated drug and [Status Code] 200.
         /// [BadReques] with message and [Status Code] 400.
         /// [ValidationProblem] with the cause of validation error and [Status Code] 400.
+        /// </returns>
         [HttpPut(DEFAULT_ROUTE + "edit/{id}")]
         public async Task<IActionResult> EditDrug(int id, [FromBody] Drug drug)
         {
@@ -194,6 +195,7 @@ namespace EHospital.Medications.WebAPI.Controllers
         /// Returns one of two action results.
         /// [Ok] with deleted drug and [Status Code] 200.
         /// [BadReques] with message and [Status Code] 400.
+        /// </returns>
         [HttpDelete(DEFAULT_ROUTE + "remove/{id}")]
         public async Task<IActionResult> RemoveDrug(int id)
         {
