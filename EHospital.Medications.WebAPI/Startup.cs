@@ -24,8 +24,8 @@ namespace EHospital.Medications.WebAPI
         private const string CONNECTION_STRING_NAME = "EHospitalDB";
 
         ///* Swagger constants
-        private const string VERSION = "v.2.0";
-        private const string API_NAME = "EHospital.Medications.WebAPI";
+        private const string VERSION = "v.1.0.0";
+        private const string API_NAME = "EHospital.Medications";
         //*/
 
         /// <summary>
@@ -64,13 +64,13 @@ namespace EHospital.Medications.WebAPI
             {
                 Version = VERSION,
                 Title = API_NAME,
-                Description = "Micro service contains business logic "
-                            + "to manage medications and prescriptions to patient.",
+                Description = "Micro-service provides REST request for managing drugs and prescriptions. "
+                            + "Developed using ASP.Net Core WebAPI.",
                 Contact = new Contact()
                 {
                     Name = "Serhii Maksymchuk",
                     Email = "smakdealcase@gmail.com",
-                    Url = "https://github.com/smoukiDev/DP148.eHealth.Medications"
+                    Url = "https://github.com/smoukiDev/EHospital.Medications"
                 }
             };
             services.AddSwaggerGen(c => { c.SwaggerDoc(VERSION, info); });
