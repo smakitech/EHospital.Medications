@@ -136,8 +136,8 @@ namespace EHospital.Medications.Tests
         [DataRow("Althea", 2)]
         [DataRow("AltHEa", 2)]
         [DataRow("Althea root", 2)]
-        [DataRow("a", 2)]
-        [DataRow("A", 2)]
+        [DataRow("a", 3)]
+        [DataRow("A", 3)]
         public async Task GetAllByNameAsync_ReturnsAllFoundDrugsCorrectly(string name, int expected)
         {
             // Arrange
@@ -157,6 +157,89 @@ namespace EHospital.Medications.Tests
         }
 
         /// <summary>
+        /// Checks whether DrugService method GetAllByNameAsync
+        /// finds and returns set of drugs with name which starts from name
+        /// specified by parameter of testing method in descending order by name.
+        /// </summary>
+        /// <param name="name">
+        /// Input to search for drug.
+        /// </param>
+        [TestMethod]
+        [DataRow("a")]
+        [DataRow("A")]
+        public void GetAllByNameAsync_ReturnsAllFoundDrugsInDescendingOrder(string name)
+        {
+            // Arrange
+            List<Drug> expected = this.drugsList.Where(d => d.IsDeleted == false && d.Name.ToLower().StartsWith(name.ToLower())).ToList();
+            expected.OrderBy(d => d.Name);
+            this.mockUnitOfWork.Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>())).ReturnsAsync(expected.AsQueryable());
+            this.service = new DrugService(this.mockUnitOfWork.Object);
+            List<Drug> actual;
+
+            // Act
+            actual = this.service.GetAllByNameAsync(name).Result.ToList();
+
+            // Assert
+            Assert.AreEqual(expected[0], actual[0]);
+            Assert.AreEqual(expected[1], actual[1]);
+            Assert.AreEqual(expected[2], actual[2]);
+        }
+
+        /// <summary>
+        /// Checks whether DrugService method GetAllAsync
+        /// returns correctly all the drugs stored in data source
+        /// and have non-deleted status.
+        /// </summary>
+        /// <returns>
+        /// Task object.
+        /// </returns>
+        [TestMethod]
+        public async Task GetAllAsync_ReturnsAllDrugsCorrectly()
+        {
+            // Arrange
+            // TODO: Get rid of dependency to number
+            // TODO: IsDeleted isn't checked before
+            int expected = 4;
+            int actual;
+            this.mockUnitOfWork.Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>()))
+                .ReturnsAsync(this.drugsList.Where(d => d.IsDeleted == false).AsQueryable());
+            this.service = new DrugService(this.mockUnitOfWork.Object);
+
+            // Act
+            IEnumerable<Drug> drugs = await this.service.GetAllAsync();
+            actual = drugs.Count();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Checks whether DrugService method GetAllAsync
+        /// returns all the drugs stored in data source
+        /// and have non-deleted status in descending order.
+        /// </summary>
+        [TestMethod]
+        public void GetAllAsync_ReturnsAllDrugsInDescendingOrder()
+        {
+            // Arrange
+            List<Drug> expected = this.drugsList.Where(d => d.IsDeleted == false).ToList();
+            this.mockUnitOfWork.Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>())).ReturnsAsync(expected.AsQueryable());
+            this.service = new DrugService(this.mockUnitOfWork.Object);
+            expected.OrderBy(d => d.Name);
+            List<Drug> actual;
+
+            // Act
+            actual = this.service.GetAllAsync().Result.ToList();
+
+            // Assert
+            Assert.AreEqual(expected[0], actual[0]);
+            //for (int index = 0; index < expected.Count; index++)
+            //{
+            //    Assert.AreEqual(expected[index], actual[index]);
+            //}
+        }
+
+        /// <summary>
         /// Gets the drugs list for testing.
         /// </summary>
         /// <returns>List of drugs.</returns>
@@ -173,7 +256,7 @@ namespace EHospital.Medications.Tests
                     DoseUnit = "mg",
                     Direction = "Oral",
                     Instruction = "Septefrilum instruction.",
-                    IsDeleted = false
+                    IsDeleted = true
                 },
                 new Drug()
                 {
@@ -206,6 +289,17 @@ namespace EHospital.Medications.Tests
                     DoseUnit = "g",
                     Direction = "Oral",
                     Instruction = "Althea root instruction.",
+                    IsDeleted = false
+                },
+                new Drug()
+                {
+                    Id = 5,
+                    Name = "Ambroxol",
+                    Type = "Pill",
+                    Dose = 30,
+                    DoseUnit = "mg",
+                    Direction = "Oral",
+                    Instruction = "Ambroxol root instruction.",
                     IsDeleted = false
                 }
             };
