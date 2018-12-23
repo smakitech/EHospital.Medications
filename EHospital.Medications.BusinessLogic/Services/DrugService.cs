@@ -169,7 +169,8 @@ namespace EHospital.Medications.BusinessLogic.Services
                 throw new NoContentException(DRUGS_ARE_NOT_FOUND);
             }
 
-            return result.OrderBy(d => d.Name);
+            // TODO: Customize then by
+            return result.OrderBy(d => d.Name).ThenBy(d => d.Id);
         }
 
         /// <summary>
@@ -193,6 +194,7 @@ namespace EHospital.Medications.BusinessLogic.Services
                 throw new NoContentException(DRUGS_ARE_NOT_FOUND);
             }
 
+            // TODO: Customize then by
             return result.OrderBy(d => d.Name);
         }
 

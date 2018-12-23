@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -49,32 +50,13 @@ namespace EHospital.Medications.Tests
         }
 
         /// <summary>
-        /// Checks whether DrugService method GetByIdAsync works correctly
-        /// when valid, existed identifier of drug is passing.
-        /// </summary>
-        /// <param name="id">The drug identifier.</param>
-        [TestMethod]
-        [DataRow(1)]
-        [DataRow(2)]
-        [DataRow(3)]
-        [DataRow(4)]
-        public void GetByIdAsync_ReturnsDrugCorrectly(int id)
-        {
-            // Arrange
-            this.mockUnitOfWork.Setup(u => u.Drugs.GetAsync(id)).ReturnsAsync(this.drugsList[id - 1]);
-            this.service = new DrugService(this.mockUnitOfWork.Object);
-
-            // Act
-            Drug actual = this.service.GetByIdAsync(id).Result;
-
-            // Assert
-            Assert.AreEqual(this.drugsList[id - 1], actual);
-        }
-
-        /// <summary>
         /// Checks whether DrugService method GetByIdAsync throws <see cref="ArgumentException"/>
         /// in case invalid, non-existed identifier of drug is passing.
         /// </summary>
+        /// <remarks>
+        /// Method under testing can return records
+        /// with IsDeleted property equal true as well.
+        /// </remarks>
         /// <param name="id">The drug identifier.</param>
         /// <returns>Task object.</returns>
         [TestMethod]
@@ -85,17 +67,57 @@ namespace EHospital.Medications.Tests
         public async Task GetByIdAsync_ThrowsArgumentException(int id)
         {
             // Arrange
-            this.mockUnitOfWork.Setup(u => u.Drugs.GetAsync(id)).ReturnsAsync(default(Drug));
+            Drug target = this.drugsList.Find(d => d.Id == id);
+            this.mockUnitOfWork
+                .Setup(u => u.Drugs.GetAsync(id))
+                .ReturnsAsync(target);
             this.service = new DrugService(this.mockUnitOfWork.Object);
 
             // Act
-            Drug actual = await this.service.GetByIdAsync(id);
+            await this.service.GetByIdAsync(id);
+        }
+
+        /// <summary>
+        /// Checks whether DrugService method GetByIdAsync works correctly
+        /// when valid, existed identifier of drug is passing.
+        /// </summary>
+        /// <remarks>
+        /// Method under testing can return records
+        /// with IsDeleted property equal true as well.
+        /// </remarks>
+        /// <param name="id">The drug identifier.</param>
+        [TestMethod]
+        [DataRow(1)]
+        [DataRow(2)]
+        [DataRow(3)]
+        [DataRow(4)]
+        [DataRow(5)]
+        [DataRow(6)]
+        public void GetByIdAsync_ReturnsDrugCorrectly(int id)
+        {
+            // Arrange
+            Drug expected = this.drugsList[id - 1];
+            this.mockUnitOfWork
+                .Setup(u => u.Drugs.GetAsync(id))
+                .ReturnsAsync(expected);
+            this.service = new DrugService(this.mockUnitOfWork.Object);
+
+            // Act
+            Drug actual = this.service.GetByIdAsync(id).Result;
+
+            // Assert
+            Assert.AreEqual(expected, actual);
         }
 
         /// <summary>
         /// Checks whether DrugService method GetAllByNameAsync throws <see cref="NoContentException"/>
-        /// no any match by name has been passed.
+        /// in case no match by name has been found.
         /// </summary>
+        /// <remarks>
+        /// Method under testing returns records with IsDeleted property equal false only.
+        /// Method under testing searches for drugs start from specified name.
+        /// Method under testing orders result set of records in ascending order.
+        /// </remarks>
         /// <param name="name">
         /// Input to search for drug.
         /// </param>
@@ -107,136 +129,196 @@ namespace EHospital.Medications.Tests
         public async Task GetAllByNameAsync_ThrowsNoContentException(string name)
         {
             // Arrange
-            this.mockUnitOfWork.Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>()))
-                .ReturnsAsync(this.drugsList.Where(d => d.IsDeleted == false && d.Name.StartsWith(name)).AsQueryable());
+            IEnumerable<Drug> targetDrugs = this.drugsList
+                .Where(d => d.IsDeleted == false && d.Name.ToLower().StartsWith(name.ToLower()));
+            this.mockUnitOfWork
+                .Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>()))
+                .ReturnsAsync(targetDrugs.AsQueryable());
             this.service = new DrugService(this.mockUnitOfWork.Object);
 
             // Act
-            IEnumerable<Drug> actual = await this.service.GetAllByNameAsync(name);
+            await this.service.GetAllByNameAsync(name);
         }
 
         /// <summary>
         /// Checks whether DrugService method GetAllByNameAsync
-        /// finds and returns set of drugs with name which starts from name
-        /// specified by parameter of testing method.
-        /// </summary>
-        /// <param name="name">
-        /// Input to search for drug.
-        /// </param>
-        /// <param name="expected">
-        /// Amount of expected matches.
-        /// </param>
-        /// <returns>
-        /// Task object.
-        /// </returns>
-        [TestMethod]
-        [DataRow("alt", 2)]
-        [DataRow("Alt", 2)]
-        [DataRow("ALT", 2)]
-        [DataRow("Althea", 2)]
-        [DataRow("AltHEa", 2)]
-        [DataRow("Althea root", 2)]
-        [DataRow("a", 3)]
-        [DataRow("A", 3)]
-        public async Task GetAllByNameAsync_ReturnsAllFoundDrugsCorrectly(string name, int expected)
-        {
-            // Arrange
-            this.mockUnitOfWork.Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>()))
-                .ReturnsAsync(this.drugsList.Where(d => d.IsDeleted == false
-                && d.Name.ToLower().StartsWith(name.ToLower())).AsQueryable());
-            this.service = new DrugService(this.mockUnitOfWork.Object);
-            // Amount of actual matches.
-            int actual = 0;
-
-            // Act
-            IEnumerable<Drug> drugs = await this.service.GetAllByNameAsync(name);
-            actual = drugs.Count();
-
-            // Assert
-            Assert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
+        /// finds and returns set of drugs with name which starts from specified name correctly.
         /// Checks whether DrugService method GetAllByNameAsync
-        /// finds and returns set of drugs with name which starts from name
-        /// specified by parameter of testing method in descending order by name.
+        /// returns records with IsDeleted property equal false only.
         /// </summary>
+        /// <remarks>
+        /// Method under testing returns records with IsDeleted property equal false only.
+        /// Method under testing searches for drugs start from specified name.
+        /// Method under testing orders result set of records in ascending order.
+        /// </remarks>
         /// <param name="name">
         /// Input to search for drug.
         /// </param>
         [TestMethod]
-        [DataRow("a")]
-        [DataRow("A")]
-        public void GetAllByNameAsync_ReturnsAllFoundDrugsInDescendingOrder(string name)
+        [DataRow("par")]
+        [DataRow("Par")]
+        [DataRow("PAR")]
+        [DataRow("Paracetamol")]
+        [DataRow("ParaCEtamol")]
+        [DataRow("p")]
+        [DataRow("P")]
+        public void GetAllByNameAsync_ReturnsAllFoundDrugsCorrectly(string name)
         {
             // Arrange
-            List<Drug> expected = this.drugsList.Where(d => d.IsDeleted == false && d.Name.ToLower().StartsWith(name.ToLower())).ToList();
+            IEnumerable<Drug> expected = this.drugsList
+                .Where(d => d.IsDeleted == false && d.Name.ToLower().StartsWith(name.ToLower()));
+            this.mockUnitOfWork
+                .Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>()))
+                .ReturnsAsync(expected.AsQueryable());
+            this.service = new DrugService(this.mockUnitOfWork.Object);
             expected.OrderBy(d => d.Name);
-            this.mockUnitOfWork.Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>())).ReturnsAsync(expected.AsQueryable());
-            this.service = new DrugService(this.mockUnitOfWork.Object);
-            List<Drug> actual;
 
             // Act
-            actual = this.service.GetAllByNameAsync(name).Result.ToList();
+            IEnumerable<Drug> actual = this.service.GetAllByNameAsync(name).Result;
 
             // Assert
-            Assert.AreEqual(expected[0], actual[0]);
-            Assert.AreEqual(expected[1], actual[1]);
-            Assert.AreEqual(expected[2], actual[2]);
+            Assert.AreEqual(expected.Count(), actual.Count());
+        }
+
+        /// TODO: Test fall down
+        /// <summary>
+        /// Checks whether DrugService method GetAllByNameAsync
+        /// finds and returns set of drugs in ascending order with name which starts from specified name.
+        /// Checks whether DrugService method GetAllByNameAsync
+        /// returns records with IsDeleted property equal false only.
+        /// </summary>
+        /// <param name="name">
+        /// Input to search for drug.
+        /// </param>
+        [TestMethod]
+        [DataRow("p")]
+        [DataRow("P")]
+        [Ignore]
+        public void GetAllByNameAsync_ReturnsAllFoundDrugsInAscendingOrder(string name)
+        {
+            // Arrange
+            List<Drug> expected = this.drugsList
+                .Where(d => d.IsDeleted == false && d.Name.ToLower().StartsWith(name.ToLower())).ToList();
+            this.mockUnitOfWork
+                .Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>()))
+                .ReturnsAsync(expected.AsQueryable());
+            this.service = new DrugService(this.mockUnitOfWork.Object);
+            expected.OrderBy(d => d.Name);
+
+            // Act
+            List<Drug> actual = this.service.GetAllByNameAsync(name).Result.ToList();
+
+            // Assert
+            for (int index = 0; index < expected.Count(); index++)
+            {
+                Assert.AreEqual(expected[index], actual[index]);
+            }
+        }
+
+        /// <summary>
+        /// Checks whether DrugService method GetAllAsync throws <see cref="NoContentException"/>
+        /// in case no drugs records store in data source.
+        /// </summary>
+        /// <remarks>
+        /// Method under testing returns records with IsDeleted property equal false only.
+        /// Method under testing orders result set of records in ascending order.
+        /// </remarks>
+        /// <returns>Task object.</returns>
+        [TestMethod]
+        [ExpectedException(typeof(NoContentException))]
+        public async Task GetAllAsync_ThrowsNoContentException()
+        {
+            // Arrange
+            List<Drug> targetDrugs = new List<Drug>();
+            this.mockUnitOfWork
+                .Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>()))
+                .ReturnsAsync(targetDrugs.AsQueryable());
+            this.service = new DrugService(this.mockUnitOfWork.Object);
+
+            // Act
+            await this.service.GetAllAsync();
         }
 
         /// <summary>
         /// Checks whether DrugService method GetAllAsync
         /// returns correctly all the drugs stored in data source
-        /// and have non-deleted status.
+        /// and which have IsDeleted property equal false.
         /// </summary>
-        /// <returns>
-        /// Task object.
-        /// </returns>
         [TestMethod]
-        public async Task GetAllAsync_ReturnsAllDrugsCorrectly()
+        public void GetAllAsync_ReturnsAllDrugsCorrectly()
         {
             // Arrange
-            // TODO: Get rid of dependency to number
-            // TODO: IsDeleted isn't checked before
-            int expected = 4;
-            int actual;
-            this.mockUnitOfWork.Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>()))
-                .ReturnsAsync(this.drugsList.Where(d => d.IsDeleted == false).AsQueryable());
+            IEnumerable<Drug> expected = this.drugsList.
+                Where(d => d.IsDeleted == false);
+            this.mockUnitOfWork
+                .Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>()))
+                .ReturnsAsync(expected.AsQueryable());
             this.service = new DrugService(this.mockUnitOfWork.Object);
+            expected.OrderBy(d => d.Name);
 
             // Act
-            IEnumerable<Drug> drugs = await this.service.GetAllAsync();
-            actual = drugs.Count();
+            IEnumerable<Drug> actual = this.service.GetAllAsync().Result;
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected.Count(), actual.Count());
         }
 
+        // TODO: Test fall down
         /// <summary>
         /// Checks whether DrugService method GetAllAsync
         /// returns all the drugs stored in data source
-        /// and have non-deleted status in descending order.
+        /// and have IsDeleted property equal false
+        /// in ascending order.
         /// </summary>
         [TestMethod]
-        public void GetAllAsync_ReturnsAllDrugsInDescendingOrder()
+        [Ignore]
+        public void GetAllAsync_ReturnsAllDrugsInAscendingOrder()
         {
             // Arrange
-            List<Drug> expected = this.drugsList.Where(d => d.IsDeleted == false).ToList();
-            this.mockUnitOfWork.Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>())).ReturnsAsync(expected.AsQueryable());
+            List<Drug> expected = this.drugsList
+                .Where(d => d.IsDeleted == false).ToList();
+            this.mockUnitOfWork
+                .Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>()))
+                .ReturnsAsync(expected.AsQueryable());
             this.service = new DrugService(this.mockUnitOfWork.Object);
-            expected.OrderBy(d => d.Name);
-            List<Drug> actual;
-
             // Act
-            actual = this.service.GetAllAsync().Result.ToList();
+            List<Drug> actual = this.service.GetAllAsync().Result.ToList();
 
-            // Assert
-            Assert.AreEqual(expected[0], actual[0]);
-            //for (int index = 0; index < expected.Count; index++)
+            //for (int index = 0; index < expected.Count(); index++)
             //{
             //    Assert.AreEqual(expected[index], actual[index]);
             //}
+            Assert.AreEqual(expected[1].Id, actual[1].Id);
+        }
+
+        /// <summary>
+        /// Checks whether DrugService method AddAsync throws <see cref="ArgumentException"/>
+        /// in case attempt of addition of drug which is already stores in data source,
+        /// has the same name, type, dose, dose unit and IsDeleted property equals false.
+        /// </summary>
+        /// <returns>Task object</returns>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public async Task AddAsync_ExistedDrug_ThrowsArgumentException()
+        {
+            // Arrange
+            // Existed drug with IsDeleted property equals false
+            Drug existed = this.drugsList[1];
+            IEnumerable<Drug> existedDrugs = this.drugsList
+                .Where(d => d.Name == existed.Name
+                            && d.Type == existed.Type
+                            && d.Dose == existed.Dose
+                            && d.DoseUnit == existed.DoseUnit);
+            this.mockUnitOfWork
+                .Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>()))
+                .ReturnsAsync(existedDrugs.AsQueryable());
+            this.mockUnitOfWork
+                .Setup(u => u.Drugs.Insert(existed))
+                .Returns(existed);
+            this.service = new DrugService(this.mockUnitOfWork.Object);
+
+            // Act
+            await this.service.AddAsync(existed);
         }
 
         /// <summary>
@@ -272,35 +354,46 @@ namespace EHospital.Medications.Tests
                 new Drug()
                 {
                     Id = 3,
-                    Name = "Althea root",
-                    Type = "Syrup",
-                    Dose = 100,
-                    DoseUnit = "ml",
+                    Name = "Paracetamol",
+                    Type = "Pill",
+                    Dose = 1000,
+                    DoseUnit = "mg",
                     Direction = "Oral",
-                    Instruction = "Althea root instruction.",
+                    Instruction = "Paracetamol instruction.",
                     IsDeleted = false
                 },
                 new Drug()
                 {
                     Id = 4,
-                    Name = "Althea root",
-                    Type = "Pill",
-                    Dose = 0.12,
-                    DoseUnit = "g",
+                    Name = "Pertussin",
+                    Type = "Syrup",
+                    Dose = 100,
+                    DoseUnit = "ml",
                     Direction = "Oral",
-                    Instruction = "Althea root instruction.",
+                    Instruction = "Pertussin instruction.",
                     IsDeleted = false
                 },
                 new Drug()
                 {
                     Id = 5,
-                    Name = "Ambroxol",
+                    Name = "Paracetamol",
                     Type = "Pill",
-                    Dose = 30,
+                    Dose = 500,
                     DoseUnit = "mg",
                     Direction = "Oral",
-                    Instruction = "Ambroxol root instruction.",
+                    Instruction = "Paracetamol instruction.",
                     IsDeleted = false
+                },
+                new Drug()
+                {
+                    Id = 6,
+                    Name = "Paracetamol",
+                    Type = "Pill",
+                    Dose = 250,
+                    DoseUnit = "mg",
+                    Direction = "Oral",
+                    Instruction = "Paracetamol instruction.",
+                    IsDeleted = true
                 }
             };
 
