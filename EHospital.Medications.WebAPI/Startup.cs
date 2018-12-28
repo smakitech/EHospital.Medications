@@ -10,6 +10,10 @@ using EHospital.Medications.BusinessLogic.Services;
 using EHospital.Medications.Data;
 using EHospital.Medications.Model;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
+using EHospital.Shared.AuditTrail;
+using EHospital.Shared.Authorization;
+using EHospital.Shared.HttpClientWrapper.Generic;
+using EHospital.Shared.Logging;
 
 namespace EHospital.Medications.WebAPI
 {
@@ -58,6 +62,13 @@ namespace EHospital.Medications.WebAPI
             services.AddScoped<IDrugService, DrugService>();
             services.AddScoped<IPrescriptionService, PrescriptionService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddScoped<IAuthDetailsProvider, AuthDetailsProvider>();
+            services.AddScoped<Shared.Configuration.IConfigurationProvider, Shared.Configuration.ConfigurationProvider>();
+            services.AddScoped<ILoggingProvider, LoggingProvider>();
+            services.AddScoped<IAuditTrailProvider, AuditTrailProvider>();
+
+            services.AddHttpClient<IHttpClientWrapper, HttpClientWrapper>();
+            services.AddHttpClient<Shared.HttpClientWrapper.IHttpClientWrapper, Shared.HttpClientWrapper.HttpClientWrapper>();
 
             ///* Swagger Setting
             Info info = new Info
