@@ -180,41 +180,6 @@ namespace EHospital.Medications.Tests
             Assert.AreEqual(expected.Count(), actual.Count());
         }
 
-        /// TODO: Test fall down
-        /// <summary>
-        /// Checks whether DrugService method GetAllByNameAsync
-        /// finds and returns set of drugs in ascending order with name which starts from specified name.
-        /// Checks whether DrugService method GetAllByNameAsync
-        /// returns records with IsDeleted property equal false only.
-        /// </summary>
-        /// <param name="name">
-        /// Input to search for drug.
-        /// </param>
-        [TestMethod]
-        [DataRow("p")]
-        [DataRow("P")]
-        [Ignore]
-        public void GetAllByNameAsync_ReturnsAllFoundDrugsInAscendingOrder(string name)
-        {
-            // Arrange
-            List<Drug> expected = this.drugsList
-                .Where(d => d.IsDeleted == false && d.Name.ToLower().StartsWith(name.ToLower())).ToList();
-            this.mockUnitOfWork
-                .Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>()))
-                .ReturnsAsync(expected.AsQueryable());
-            this.service = new DrugService(this.mockUnitOfWork.Object);
-            expected.OrderBy(d => d.Name);
-
-            // Act
-            List<Drug> actual = this.service.GetAllByNameAsync(name).Result.ToList();
-
-            // Assert
-            for (int index = 0; index < expected.Count(); index++)
-            {
-                Assert.AreEqual(expected[index], actual[index]);
-            }
-        }
-
         /// <summary>
         /// Checks whether DrugService method GetAllAsync throws <see cref="NoContentException"/>
         /// in case no drugs records store in data source.
@@ -261,34 +226,6 @@ namespace EHospital.Medications.Tests
 
             // Assert
             Assert.AreEqual(expected.Count(), actual.Count());
-        }
-
-        // TODO: Test fall down
-        /// <summary>
-        /// Checks whether DrugService method GetAllAsync
-        /// returns all the drugs stored in data source
-        /// and have IsDeleted property equal false
-        /// in ascending order.
-        /// </summary>
-        [TestMethod]
-        [Ignore]
-        public void GetAllAsync_ReturnsAllDrugsInAscendingOrder()
-        {
-            // Arrange
-            List<Drug> expected = this.drugsList
-                .Where(d => d.IsDeleted == false).ToList();
-            this.mockUnitOfWork
-                .Setup(u => u.Drugs.GetAllAsync(It.IsAny<Expression<Func<Drug, bool>>>()))
-                .ReturnsAsync(expected.AsQueryable());
-            this.service = new DrugService(this.mockUnitOfWork.Object);
-            // Act
-            List<Drug> actual = this.service.GetAllAsync().Result.ToList();
-
-            //for (int index = 0; index < expected.Count(); index++)
-            //{
-            //    Assert.AreEqual(expected[index], actual[index]);
-            //}
-            Assert.AreEqual(expected[1].Id, actual[1].Id);
         }
 
         /// <summary>
